@@ -273,18 +273,24 @@
           </div>
         </div>
         
-        <!-- Detailed Results -->
+        <!-- Cutting Sheet for Technician -->
         <div class="bg-white rounded-xl border border-slate-200 card">
-          <div class="px-4 py-3 border-b border-slate-100">
+          <div class="px-4 py-3 border-b border-slate-100 flex items-center justify-between">
             <h2 class="font-bold text-slate-800">
-              <span class="lang-ar">تفاصيل التوزيع</span>
-              <span class="lang-en">Distribution Details</span>
+              <span class="lang-ar">ورقة القص (للفني)</span>
+              <span class="lang-en">Cutting Sheet (for Technician)</span>
             </h2>
+            <div class="flex gap-2">
+              <button onclick="window.print()" class="text-xs px-3 py-1 rounded-lg border border-slate-300 hover:bg-slate-50">
+                <span class="lang-ar">طباعة</span>
+                <span class="lang-en">Print</span>
+              </button>
+            </div>
           </div>
           <div class="p-4" id="detailsArea">
             <p class="text-sm text-slate-400 text-center py-8">
-              <span class="lang-ar">ستظهر هنا تفاصيل توزيع القطع على كل عود</span>
-              <span class="lang-en">Cutting distribution details will appear here</span>
+              <span class="lang-ar">ستظهر هنا ورقة القص الجاهزة لإعطائها للفني</span>
+              <span class="lang-en">The cutting sheet for the technician will appear here</span>
             </p>
           </div>
         </div>
@@ -374,7 +380,7 @@
         scrap90: 5
       });
       renderProfiles();
-      renderParts(); // refresh profile dropdowns
+      renderParts();
     }
 
     function removeProfile(id) {
@@ -466,7 +472,6 @@
       const kerf = +document.getElementById('kerf').value || 0;
       const minOffcut = +document.getElementById('minOffcut').value || 0;
 
-      // Expand parts according to quantity
       let allPieces = [];
       parts.forEach(p => {
         const profile = profiles.find(pr => pr.id === p.profileId);
@@ -474,7 +479,6 @@
         
         for (let i = 0; i < p.qty; i++) {
           const startScrap = getScrap(profile, p.startAngle);
-          // Consumption = start scrap + length + kerf (kerf applied between pieces later)
           allPieces.push({
             profileCode: profile.code,
             length: p.length,
@@ -486,10 +490,8 @@
         }
       });
 
-      // Sort by consumption descending (simple heuristic)
       allPieces.sort((a, b) => b.consumption - a.consumption);
 
-      // Simple First Fit Decreasing
       let bars = [];
       
       allPieces.forEach(piece => {
@@ -516,7 +518,6 @@
         }
       });
 
-      // Update Summary
       const totalWaste = bars.reduce((sum, b) => sum + b.remaining, 0);
       const totalMaterial = bars.length * stockLength;
       const wastePercent = totalMaterial > 0 ? ((totalWaste / totalMaterial) * 100).toFixed(1) : 0;
@@ -527,10 +528,7 @@
       document.getElementById('summaryWastePercent').textContent = wastePercent + '%';
       document.getElementById('summaryOffcuts').textContent = usefulOffcuts;
 
-      // Render Visualization
       renderVisualization(bars, stockLength, kerf);
-      
-      // Render Details
       renderDetails(bars, stockLength);
     }
 
@@ -561,19 +559,13 @@
             <div class="relative h-14 bg-slate-100 rounded-lg overflow-hidden border border-slate-200 flex">
         `;
         
-        let currentPos = 0;
-        
         bar.pieces.forEach((piece, pIdx) => {
-          const totalPieceWidth = piece.consumption + (pIdx > 0 ? kerf : 0);
-          const widthPercent = (piece.consumption / stockLength) * 100;
           const kerfPercent = pIdx > 0 ? (kerf / stockLength) * 100 : 0;
           
-          // Kerf separator
           if (pIdx > 0 && kerf > 0) {
             html += `<div class="h-full bg-slate-400" style="width: ${kerfPercent}%" title="Kerf: ${kerf}mm"></div>`;
           }
           
-          // Start scrap
           if (piece.startScrap > 0) {
             const scrapPercent = (piece.startScrap / stockLength) * 100;
             html += `<div class="h-full bg-rose-300 flex items-center justify-center" style="width: ${scrapPercent}%" title="Scrap: ${piece.startScrap}mm">
@@ -581,7 +573,6 @@
             </div>`;
           }
           
-          // Main piece
           const mainPercent = (piece.length / stockLength) * 100;
           const angleLabel = `${piece.startAngle || '—'} / ${piece.endAngle || '—'}`;
           
@@ -594,11 +585,8 @@
               <span class="text-[8px] opacity-75">${angleLabel}</span>
             </div>
           `;
-          
-          currentPos += totalPieceWidth;
         });
         
-        // Remaining waste
         if (bar.remaining > 0) {
           const remainPercent = (bar.remaining / stockLength) * 100;
           const isUseful = bar.remaining >= (+document.getElementById('minOffcut').value || 0);
@@ -625,51 +613,137 @@
     function renderDetails(bars, stockLength) {
       const container = document.getElementById('detailsArea');
       
-      let html = '<div class="space-y-4">';
-      
-      bars.forEach(bar => {
+      if (bars.length === 0) {
+        container.innerHTML = `<p class="text-sm text-slate-400 text-center py-8">
+          <span class="lang-ar">لا توجد بيانات</span>
+          <span class="lang-en">No data</span>
+        </p>`;
+        return;
+      }
+
+      const totalUsed = bars.reduce((sum, b) => sum + b.used, 0);
+      const totalRemaining = bars.reduce((sum, b) => sum + b.remaining, 0);
+      const totalBars = bars.length;
+
+      let html = `
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+          <div class="bg-blue-50 border border-blue-100 rounded-lg p-4 text-center">
+            <p class="text-xs text-blue-600 mb-1">
+              <span class="lang-ar">عدد العيدان المستخدمة</span>
+              <span class="lang-en">Bars Used</span>
+            </p>
+            <p class="text-2xl font-bold text-blue-800">${totalBars}</p>
+          </div>
+          <div class="bg-emerald-50 border border-emerald-100 rounded-lg p-4 text-center">
+            <p class="text-xs text-emerald-600 mb-1">
+              <span class="lang-ar">الكمية المستهلكة</span>
+              <span class="lang-en">Consumed Quantity</span>
+            </p>
+            <p class="text-2xl font-bold text-emerald-800">${totalUsed.toLocaleString()} <span class="text-sm font-normal">مم</span></p>
+          </div>
+          <div class="bg-amber-50 border border-amber-100 rounded-lg p-4 text-center">
+            <p class="text-xs text-amber-600 mb-1">
+              <span class="lang-ar">الكمية المتبقية</span>
+              <span class="lang-en">Remaining Quantity</span>
+            </p>
+            <p class="text-2xl font-bold text-amber-800">${totalRemaining.toLocaleString()} <span class="text-sm font-normal">مم</span></p>
+          </div>
+        </div>
+
+        <div class="border-b-2 border-slate-800 pb-2 mb-4">
+          <h3 class="text-lg font-bold text-slate-900">
+            <span class="lang-ar">ورقة القص — تعليمات للفني</span>
+            <span class="lang-en">Cutting Sheet — Instructions for Technician</span>
+          </h3>
+          <p class="text-xs text-slate-500 mt-1">
+            <span class="lang-ar">اطبع هذه الورقة وأعطها للفني ليقوم بالقص حسب الترتيب</span>
+            <span class="lang-en">Print this sheet and give it to the technician</span>
+          </p>
+        </div>
+      `;
+
+      bars.forEach((bar) => {
         html += `
-          <div class="border border-slate-200 rounded-lg overflow-hidden">
-            <div class="bg-slate-50 px-4 py-2 font-medium text-sm">
-              <span class="lang-ar">عود رقم ${bar.id}</span>
-              <span class="lang-en">Bar #${bar.id}</span>
-              <span class="text-slate-500 font-normal mr-2">— ${bar.used} مم مستخدم / ${bar.remaining} مم متبقي</span>
+          <div class="mb-6 border border-slate-300 rounded-lg overflow-hidden print:break-inside-avoid">
+            <div class="bg-slate-800 text-white px-4 py-2 flex justify-between items-center">
+              <span class="font-bold">
+                <span class="lang-ar">العود رقم ${bar.id}</span>
+                <span class="lang-en">Bar #${bar.id}</span>
+              </span>
+              <span class="text-sm">
+                <span class="lang-ar">الطول: ${stockLength} مم</span>
+                <span class="lang-en">Length: ${stockLength} mm</span>
+              </span>
             </div>
+            
             <table class="w-full text-sm">
               <thead>
-                <tr class="text-xs text-slate-500 border-b">
-                  <th class="px-4 py-2 text-right">#</th>
-                  <th class="px-4 py-2 text-right"><span class="lang-ar">القطاع</span><span class="lang-en">Profile</span></th>
-                  <th class="px-4 py-2 text-right"><span class="lang-ar">الطول</span><span class="lang-en">Length</span></th>
-                  <th class="px-4 py-2 text-right"><span class="lang-ar">زوايا</span><span class="lang-en">Angles</span></th>
-                  <th class="px-4 py-2 text-right"><span class="lang-ar">سكراب</span><span class="lang-en">Scrap</span></th>
-                  <th class="px-4 py-2 text-right"><span class="lang-ar">الاستهلاك</span><span class="lang-en">Consumption</span></th>
+                <tr class="bg-slate-100 text-slate-700 text-xs">
+                  <th class="px-3 py-2 text-right border-b">#</th>
+                  <th class="px-3 py-2 text-right border-b">
+                    <span class="lang-ar">القطاع</span>
+                    <span class="lang-en">Profile</span>
+                  </th>
+                  <th class="px-3 py-2 text-right border-b">
+                    <span class="lang-ar">الطول المطلوب</span>
+                    <span class="lang-en">Required Length</span>
+                  </th>
+                  <th class="px-3 py-2 text-right border-b">
+                    <span class="lang-ar">زاوية البداية</span>
+                    <span class="lang-en">Start Angle</span>
+                  </th>
+                  <th class="px-3 py-2 text-right border-b">
+                    <span class="lang-ar">زاوية النهاية</span>
+                    <span class="lang-en">End Angle</span>
+                  </th>
+                  <th class="px-3 py-2 text-right border-b">
+                    <span class="lang-ar">ملاحظات</span>
+                    <span class="lang-en">Notes</span>
+                  </th>
                 </tr>
               </thead>
               <tbody>
         `;
-        
+
         bar.pieces.forEach((piece, idx) => {
+          const startAngleText = piece.startAngle ? piece.startAngle + '°' : '—';
+          const endAngleText = piece.endAngle ? piece.endAngle + '°' : '—';
+          const note = piece.startScrap > 0 
+            ? `<span class="text-rose-600 text-xs"><span class="lang-ar">سكراب بداية: ${piece.startScrap} مم</span><span class="lang-en">Start scrap: ${piece.startScrap} mm</span></span>` 
+            : '—';
+
           html += `
-            <tr class="border-b border-slate-50">
-              <td class="px-4 py-2">${idx + 1}</td>
-              <td class="px-4 py-2 font-medium">${piece.profileCode}</td>
-              <td class="px-4 py-2">${piece.length} مم</td>
-              <td class="px-4 py-2">${piece.startAngle || '—'}° / ${piece.endAngle || '—'}°</td>
-              <td class="px-4 py-2 text-rose-600">${piece.startScrap} مم</td>
-              <td class="px-4 py-2 font-medium">${piece.consumption} مم</td>
+            <tr class="border-b border-slate-200 hover:bg-slate-50">
+              <td class="px-3 py-2.5 font-medium">${idx + 1}</td>
+              <td class="px-3 py-2.5 font-bold text-primary-700">${piece.profileCode}</td>
+              <td class="px-3 py-2.5 font-bold text-lg">${piece.length} <span class="text-xs font-normal text-slate-500">مم</span></td>
+              <td class="px-3 py-2.5">${startAngleText}</td>
+              <td class="px-3 py-2.5">${endAngleText}</td>
+              <td class="px-3 py-2.5">${note}</td>
             </tr>
           `;
         });
-        
+
         html += `
               </tbody>
             </table>
+            
+            <div class="bg-slate-50 px-4 py-2 text-xs text-slate-600 flex justify-between border-t">
+              <span>
+                <span class="lang-ar">المستهلك من هذا العود:</span>
+                <span class="lang-en">Used from this bar:</span>
+                <strong class="text-slate-900">${bar.used} مم</strong>
+              </span>
+              <span>
+                <span class="lang-ar">المتبقي:</span>
+                <span class="lang-en">Remaining:</span>
+                <strong class="${bar.remaining > 0 ? 'text-amber-700' : 'text-slate-500'}">${bar.remaining} مم</strong>
+              </span>
+            </div>
           </div>
         `;
       });
-      
-      html += '</div>';
+
       container.innerHTML = html;
     }
 
