@@ -17,7 +17,7 @@
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
-  <!-- Google Fonts: IBM Plex Sans Arabic (Geometric Technical Font) & JetBrains Mono -->
+  <!-- Google Fonts: IBM Plex Sans Arabic & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -38,7 +38,7 @@
   <style>
     @page {
       size: A4 portrait;
-      margin: 8mm 6mm;
+      margin: 10mm 8mm;
     }
 
     :root {
@@ -66,15 +66,16 @@
 
     /* Minimalist CAD Drafting Patterns */
     .cad-scrap-pattern {
-      background-color: #f1f5f9;
-      background-image: repeating-linear-gradient(45deg, #94a3b8 0, #94a3b8 1px, #f1f5f9 0, #f1f5f9 6px);
+      background-color: #e2e8f0;
+      background-image: repeating-linear-gradient(45deg, #94a3b8 0, #94a3b8 1px, #e2e8f0 0, #e2e8f0 5px);
     }
 
     .cad-offcut-pattern {
       background-color: #ffffff;
-      background-image: repeating-linear-gradient(-45deg, #cbd5e1 0, #cbd5e1 1px, #ffffff 0, #ffffff 8px);
+      background-image: repeating-linear-gradient(-45deg, #cbd5e1 0, #cbd5e1 1px, #ffffff 0, #ffffff 6px);
     }
 
+    /* Prevent Page Break Splitting in A4 Print */
     .tech-card {
       break-inside: avoid !important;
       page-break-inside: avoid !important;
@@ -88,7 +89,7 @@
     @media print {
       body {
         background: #ffffff !important;
-        font-size: 8.5pt !important;
+        font-size: 8pt !important;
         color: #000000 !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
@@ -99,7 +100,10 @@
       .tech-card {
         box-shadow: none !important;
         border: 1.5px solid #000000 !important;
-        margin-bottom: 8px !important;
+        margin-bottom: 12px !important;
+      }
+      table {
+        page-break-inside: avoid !important;
       }
     }
 
@@ -110,7 +114,7 @@
 </head>
 <body class="min-h-screen flex flex-col antialiased text-slate-900 bg-slate-100">
 
-  <!-- Header (Clean Monochrome CAD Style) -->
+  <!-- Header -->
   <header class="bg-white border-b border-slate-300 sticky top-0 z-40 no-print">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex items-center justify-between">
       <div class="flex items-center gap-3">
@@ -122,10 +126,10 @@
             <h1 class="text-sm sm:text-base font-bold text-slate-900 leading-tight">
               محسن ومخطط قص الألمنيوم والزجاج الهندسي
             </h1>
-            <span class="px-1.5 py-0.2 text-[10px] font-mono font-bold bg-slate-100 text-slate-700 rounded border border-slate-300">v6.0 CAD</span>
+            <span class="px-1.5 py-0.2 text-[10px] font-mono font-bold bg-slate-100 text-slate-700 rounded border border-slate-300">v6.5 A4 CAD Pro</span>
           </div>
           <p class="text-[11px] text-slate-500 font-medium">
-            تخصيم متسلسل وهندسي مستقل لكل قطاع | أرقام ومقاسات بالمليمتر (كميات وأطوال فقط)
+            تخطيط هندسي معياري مصمم خصيصاً لمقاس A4 مع جداول تسلسلية تمنع تداخل وتشويه الأرقام
           </p>
         </div>
       </div>
@@ -177,7 +181,7 @@
   <!-- Main Content -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex-1 w-full">
 
-    <!-- Global Parameters Bar (Clean Drafting Design) -->
+    <!-- Global Parameters Bar -->
     <div class="bg-white rounded border border-slate-300 p-3 mb-4 no-print">
       <div class="flex flex-wrap items-center justify-between gap-3">
         
@@ -264,11 +268,11 @@
                 <th class="py-1.5 px-2 text-center w-8 font-mono">#</th>
                 <th class="py-1.5 px-2">كود النافذة</th>
                 <th class="py-1.5 px-2">نوع الوحدة</th>
-                <th class="py-1.5 px-2 text-center">مقاس الحلق (W × H)</th>
-                <th class="py-1.5 px-2 text-center">العدد</th>
+                <th class="py-1.5 px-2 text-center font-mono">Frame (W × H)</th>
+                <th class="py-1.5 px-2 text-center font-mono">Qty</th>
                 <th class="py-1.5 px-2">نظام القطاع المطابق</th>
                 <th class="py-1.5 px-2 text-center border-x border-slate-300 bg-slate-50">تفصيل الدرفة الصافي (Ws × Hs)</th>
-                <th class="py-1.5 px-2 text-center border-x border-slate-300 bg-slate-50">مقاس الزجاج الصافي (Wg × Hg)</th>
+                <th class="py-1.5 px-2 text-center border-x border-slate-300 bg-slate-50 font-mono">Glass Cut (Wg × Hg)</th>
                 <th class="py-1.5 px-2 text-center w-14"></th>
               </tr>
             </thead>
@@ -335,10 +339,10 @@
               <thead>
                 <tr class="bg-slate-50 text-slate-800 border-b border-slate-300 font-bold text-[11px]">
                   <th class="py-1.5 px-2">اسم السيستم</th>
-                  <th class="py-1.5 px-2">كود الحلق</th>
-                  <th class="py-1.5 px-2 font-mono">درفة جنب</th>
-                  <th class="py-1.5 px-2 font-mono">درفة شنكل</th>
-                  <th class="py-1.5 px-2 font-mono">درفة كعب</th>
+                  <th class="py-1.5 px-2 font-mono">Frame</th>
+                  <th class="py-1.5 px-2 font-mono">Side Stile</th>
+                  <th class="py-1.5 px-2 font-mono">Interlock</th>
+                  <th class="py-1.5 px-2 font-mono">Rail</th>
                   <th class="py-1.5 px-2 text-center">عرض الدرفة (mm)</th>
                   <th class="py-1.5 px-2 text-center">خلوص الارتفاع (mm)</th>
                   <th class="py-1.5 px-2 text-center">تراكب العرض (mm)</th>
@@ -362,12 +366,12 @@
               <thead>
                 <tr class="bg-slate-50 text-slate-800 border-b border-slate-300 font-bold text-[11px]">
                   <th class="py-1.5 px-2">اسم السيستم</th>
-                  <th class="py-1.5 px-2">كود الحلق المفصلي</th>
-                  <th class="py-1.5 px-2 font-mono">كود درفة المفصلي</th>
-                  <th class="py-1.5 px-2 font-mono">كود باكتة الزجاج</th>
-                  <th class="py-1.5 px-2 text-center">عرض بروفيل الدرفة (mm)</th>
-                  <th class="py-1.5 px-2 text-center">خصم عرض الدرفة (mm)</th>
-                  <th class="py-1.5 px-2 text-center">خصم ارتفاع الدرفة (mm)</th>
+                  <th class="py-1.5 px-2 font-mono">Frame</th>
+                  <th class="py-1.5 px-2 font-mono">Sash</th>
+                  <th class="py-1.5 px-2 font-mono">Bead</th>
+                  <th class="py-1.5 px-2 text-center">عرض الدرفة (mm)</th>
+                  <th class="py-1.5 px-2 text-center">خصم العرض (mm)</th>
+                  <th class="py-1.5 px-2 text-center">خصم الارتفاع (mm)</th>
                   <th class="py-1.5 px-2 text-center">فرزة الزجاج (mm)</th>
                   <th class="py-1.5 px-2 text-center w-8"></th>
                 </tr>
@@ -388,11 +392,11 @@
               <thead>
                 <tr class="bg-slate-50 text-slate-800 border-b border-slate-300 font-bold text-[11px]">
                   <th class="py-1.5 px-2">اسم السيستم</th>
-                  <th class="py-1.5 px-2">حلق الباب (3 جهات)</th>
-                  <th class="py-1.5 px-2 font-mono">قائم الباب (Stile)</th>
-                  <th class="py-1.5 px-2 font-mono">كعب الباب السفلي</th>
-                  <th class="py-1.5 px-2 font-mono">باكتة الزجاج</th>
-                  <th class="py-1.5 px-2 text-center">عرض قائم الباب (mm)</th>
+                  <th class="py-1.5 px-2 font-mono">Frame</th>
+                  <th class="py-1.5 px-2 font-mono">Door Stile</th>
+                  <th class="py-1.5 px-2 font-mono">Bottom Rail</th>
+                  <th class="py-1.5 px-2 font-mono">Bead</th>
+                  <th class="py-1.5 px-2 text-center">عرض القائم (mm)</th>
                   <th class="py-1.5 px-2 text-center">خصم العرض (mm)</th>
                   <th class="py-1.5 px-2 text-center">خصم الارتفاع (mm)</th>
                   <th class="py-1.5 px-2 text-center w-8"></th>
@@ -414,8 +418,8 @@
               <thead>
                 <tr class="bg-slate-50 text-slate-800 border-b border-slate-300 font-bold text-[11px]">
                   <th class="py-1.5 px-2">اسم السيستم الثابت</th>
-                  <th class="py-1.5 px-2">كود الحلق الثابت</th>
-                  <th class="py-1.5 px-2 font-mono">كود باكتة الزجاج</th>
+                  <th class="py-1.5 px-2 font-mono">Fixed Frame</th>
+                  <th class="py-1.5 px-2 font-mono">Glass Bead</th>
                   <th class="py-1.5 px-2 text-center">سماكة الفريم (mm)</th>
                   <th class="py-1.5 px-2 text-center">عمق فرزة الزجاج (mm)</th>
                   <th class="py-1.5 px-2 text-center">خلوص الزجاج والكاوتشوك (mm)</th>
@@ -513,7 +517,7 @@
     </div>
 
     <!-- ========================================================================= -->
-    <!-- TAB 5: TECHNICIAN WORKSHOP SHEET (CAD 2D BAR MAPS + GLASS SCHEDULE) -->
+    <!-- TAB 5: TECHNICIAN WORKSHOP SHEET (A4 OPTIMIZED WITH DEDICATED TABLES) -->
     <!-- ========================================================================= -->
     <div id="tab-sheet" class="tab-content space-y-4">
       
@@ -529,7 +533,7 @@
         <div class="flex items-center gap-2">
           <button onclick="window.print()" class="px-3.5 py-1.5 bg-slate-900 hover:bg-black text-white font-bold text-xs rounded transition flex items-center gap-1">
             <i data-lucide="printer" class="w-3.5 h-3.5"></i>
-            <span>طباعة المخطط الهندسي (Print / PDF)</span>
+            <span>طباعة المخطط الهندسي (A4 Print / PDF)</span>
           </button>
           
           <button onclick="exportSheetToPDF()" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-800 text-white font-bold text-xs rounded transition flex items-center gap-1">
@@ -545,7 +549,7 @@
       </div>
 
       <!-- Printable Engineering Sheet Container -->
-      <div id="printableSheetContent" class="bg-white rounded border-2 border-slate-900 p-4 sm:p-5 print:border-slate-900 print:p-0 space-y-4">
+      <div id="printableSheetContent" class="bg-white rounded border-2 border-slate-900 p-4 sm:p-5 print:border-slate-900 print:p-0 space-y-4 max-w-[900px] mx-auto">
         
         <!-- TECHNICAL TITLE BLOCK -->
         <div class="border-2 border-slate-900 rounded p-2.5 bg-slate-50 flex flex-wrap items-center justify-between gap-3 text-xs">
@@ -557,14 +561,14 @@
               </h2>
             </div>
             <p class="text-[11px] text-slate-700">
-              المشروع: <strong id="metaProjName" class="text-slate-900">Project-01</strong> | 
+              المشروع: <strong id="metaProjName" class="text-slate-900 font-mono">Project-01</strong> | 
               العميل: <strong id="metaClientName" class="text-slate-900">—</strong> | 
               التاريخ: <strong id="metaDate" class="text-slate-900 font-mono">—</strong>
             </p>
           </div>
           <div class="text-left font-mono text-[10px] text-slate-600 border-l border-slate-300 pl-3">
-            <p>SCALE: 2D SHOP DRAWING (1:1 PROPORTIONAL)</p>
-            <p>ENGINEERING CAD OPTIMIZER</p>
+            <p>SCALE: A4 PROPORTIONAL CAD</p>
+            <p>CUTTING & GLASS SCHEDULE</p>
             <p id="printTimestamp"></p>
           </div>
         </div>
@@ -660,7 +664,7 @@
   </footer>
 
   <!-- ============================================== -->
-  <!-- JAVASCRIPT LOGIC (ENGLISH NUMBERS ONLY) -->
+  <!-- JAVASCRIPT LOGIC (CLEAN CAD A4 ARCHITECTURE) -->
   <!-- ============================================== -->
   <script>
     let currentProject = {
@@ -672,7 +676,7 @@
 
     // 4 Independent Categories of Systems
     let systems = [
-      // 1. Sliding Systems (سحاب: جنب • شنكل • كعب)
+      // 1. Sliding Systems
       {
         id: 1,
         category: 'sliding',
@@ -706,7 +710,7 @@
         scrap45: 40
       },
 
-      // 2. Hinged Windows (مفصلي شبابيك: حلق + درفة مفصلي + باكتة)
+      // 2. Hinged Windows
       {
         id: 3,
         category: 'hinged-window',
@@ -723,7 +727,7 @@
         scrap45: 35
       },
 
-      // 3. Hinged Doors (أبواب مفصلية: حلق 3 جهات + قائم باب + كعب باب سفلي + باكتة)
+      // 3. Hinged Doors
       {
         id: 4,
         category: 'hinged-door',
@@ -741,7 +745,7 @@
         scrap45: 35
       },
 
-      // 4. Fixed Systems (ثابت: حلق ثابت + باكتة زجاج - بدون درف نهائياً)
+      // 4. Fixed Systems
       {
         id: 5,
         category: 'fixed',
@@ -1025,7 +1029,6 @@
     // RENDER SYSTEMS BY INDEPENDENT CATEGORIES
     // ===============================================
     function renderSystemsTable() {
-      // 1. Sliding Systems
       const slidingBody = document.getElementById('slidingSystemsBody');
       if (slidingBody) {
         const slidingList = systems.filter(s => s.category === 'sliding');
@@ -1045,7 +1048,6 @@
         `).join('');
       }
 
-      // 2. Hinged Windows
       const hingedBody = document.getElementById('hingedSystemsBody');
       if (hingedBody) {
         const hingedList = systems.filter(s => s.category === 'hinged-window');
@@ -1064,7 +1066,6 @@
         `).join('');
       }
 
-      // 3. Hinged Doors
       const doorBody = document.getElementById('doorSystemsBody');
       if (doorBody) {
         const doorList = systems.filter(s => s.category === 'hinged-door');
@@ -1083,7 +1084,6 @@
         `).join('');
       }
 
-      // 4. Fixed Systems
       const fixedBody = document.getElementById('fixedSystemsBody');
       if (fixedBody) {
         const fixedList = systems.filter(s => s.category === 'fixed');
@@ -1621,11 +1621,12 @@
     }
 
     // =========================================================================
-    // 2D CAD VECTOR BAR HTML RENDERER (MONOCHROME DRAFTING)
+    // 2D CAD VECTOR BAR HTML RENDERER (CLEAN A4 FIT WITHOUT TEXT OVERFLOW)
     // =========================================================================
     function generate2DTechnicalBarHTML(bar, kerf, minOffcut) {
       const totalLen = bar.stockLength;
       let segmentsHtml = '';
+      let cutIndexCounter = 1;
 
       bar.cuts.forEach((cut) => {
         const pct = ((cut.length / totalLen) * 100);
@@ -1637,28 +1638,27 @@
         }
         else if (cut.type === 'trim' || cut.type === 'scrap') {
           segmentsHtml += `
-            <div style="width: ${pct}%; min-width: 16px;" class="h-full cad-scrap-pattern border-r border-slate-900 flex flex-col items-center justify-center text-[9px] font-mono font-bold text-slate-800 flex-shrink-0 px-0.5" title="${cut.label}: ${cut.length} mm">
-              <span class="leading-none">S</span>
-              <span class="text-[8px] leading-none">${cut.length}</span>
+            <div style="width: ${pct}%; min-width: 14px;" class="h-full cad-scrap-pattern border-r border-slate-900 flex items-center justify-center font-mono font-bold text-[8px] text-slate-800 flex-shrink-0" title="${cut.label}: ${cut.length} mm">
+              ${cut.length}
             </div>
           `;
         }
         else if (cut.type === 'part') {
+          const seq = cutIndexCounter++;
           const is45Start = cut.startAngle === 45;
           const is45End = cut.endAngle === 45;
-          const dimBadge = cut.dimType ? `(${cut.dimType})` : '';
 
           segmentsHtml += `
-            <div style="width: ${pct}%; min-width: 48px;" class="h-full bg-white border-r-2 border-slate-900 flex flex-col items-center justify-center text-center px-1 relative flex-shrink-0">
-              ${is45Start ? '<div class="absolute left-0 top-0 bottom-0 w-1 bg-slate-300 border-r border-slate-900"></div>' : ''}
-              ${is45End ? '<div class="absolute right-0 top-0 bottom-0 w-1 bg-slate-300 border-l border-slate-900"></div>' : ''}
+            <div style="width: ${pct}%; min-width: 28px;" class="h-full bg-white border-r-2 border-slate-900 flex flex-col items-center justify-center text-center px-0.5 relative flex-shrink-0 overflow-hidden">
+              ${is45Start ? '<div class="absolute left-0 top-0 bottom-0 w-0.5 bg-slate-400 border-r border-slate-900"></div>' : ''}
+              ${is45End ? '<div class="absolute right-0 top-0 bottom-0 w-0.5 bg-slate-400 border-l border-slate-900"></div>' : ''}
 
-              <span class="text-[10px] font-bold text-slate-900 leading-tight truncate w-full font-sans">
-                ${cut.label} ${dimBadge}
+              <!-- Clean Sequence Index inside Bar Map -->
+              <span class="w-4 h-4 rounded-full bg-slate-900 text-white font-mono font-bold text-[9px] flex items-center justify-center leading-none">
+                ${seq}
               </span>
-              <span class="text-xs font-black text-slate-950 font-mono leading-tight">
-                ${cut.length} <span class="text-[9px] font-normal">mm</span>
-                <span class="text-[9px] font-bold text-slate-700 font-mono">[${cut.startAngle}°/${cut.endAngle}°]</span>
+              <span class="text-[10px] font-black text-slate-950 font-mono leading-none mt-0.5 truncate max-w-full">
+                ${cut.length}
               </span>
             </div>
           `;
@@ -1670,22 +1670,22 @@
         const isUseful = bar.remainingLength >= minOffcut;
 
         segmentsHtml += `
-          <div style="width: ${remainPct}%; min-width: 42px;" class="h-full ${isUseful ? 'cad-offcut-pattern text-slate-900' : 'bg-slate-200 text-slate-600'} border-r-2 border-slate-900 flex flex-col items-center justify-center text-center px-1 font-mono font-bold flex-shrink-0">
-            <span class="text-xs font-black leading-none">${bar.remainingLength} <span class="text-[9px] font-normal">mm</span></span>
-            <span class="text-[9px] font-sans leading-none mt-0.5">${isUseful ? 'فضلة صالحة' : 'هالك'}</span>
+          <div style="width: ${remainPct}%; min-width: 32px;" class="h-full ${isUseful ? 'cad-offcut-pattern text-slate-950' : 'bg-slate-200 text-slate-600'} border-r-2 border-slate-900 flex flex-col items-center justify-center text-center px-1 font-mono font-bold flex-shrink-0">
+            <span class="text-[10px] font-black leading-none">${bar.remainingLength}</span>
+            <span class="text-[8px] font-sans leading-none mt-0.5">${isUseful ? 'فضلة' : 'هالك'}</span>
           </div>
         `;
       }
 
       return `
-        <div class="border-2 border-slate-900 rounded overflow-hidden bg-slate-50 relative flex h-10 w-full">
+        <div class="border-2 border-slate-900 rounded overflow-hidden bg-slate-50 relative flex h-8 w-full shadow-2xs">
           ${segmentsHtml}
         </div>
       `;
     }
 
     // =========================================================================
-    // RENDER WORKSHOP TECHNICIAN SHEET (CLEAN CAD DRAFTING LOOK)
+    // RENDER WORKSHOP TECHNICIAN SHEET (A4 DRAFTING + INTEGRATED TABLES)
     // =========================================================================
     function renderWorkshopSheet(allBars, kerf, trimCut, minOffcut) {
       const container = document.getElementById('technicianSheetContainer');
@@ -1727,54 +1727,54 @@
         <!-- SECTION 1: WINDOWS & STOCK SCHEDULE -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-3">
           
-          <div class="lg:col-span-7 border-2 border-slate-900 rounded p-2.5 bg-white space-y-1.5 tech-card">
+          <div class="lg:col-span-7 border-2 border-slate-900 rounded p-2 bg-white space-y-1 tech-card">
             <div class="flex items-center justify-between border-b border-slate-900 pb-1 text-xs font-bold">
               <span class="text-slate-900">1. قائمة النوافذ الداخلة في أمر القص والتفصيل</span>
               <span class="font-mono">COUNT: ${windowUnits.reduce((s, u) => s + (u.qty || 1), 0)} UNITS</span>
             </div>
             
-            <table class="w-full text-xs text-right border border-slate-300">
+            <table class="w-full text-xs text-right border border-slate-300 font-mono">
               <thead>
-                <tr class="bg-slate-100 text-slate-900 border-b border-slate-300 font-bold text-[11px]">
-                  <th class="py-1 px-1.5 font-mono">Code</th>
-                  <th class="py-1 px-1.5 text-center font-mono">Frame (W × H)</th>
-                  <th class="py-1 px-1.5 text-center font-mono">Qty</th>
-                  <th class="py-1 px-1.5">السيستم / القطاع</th>
+                <tr class="bg-slate-100 text-slate-900 border-b border-slate-300 font-bold text-[10px]">
+                  <th class="py-0.5 px-1.5 font-mono">Code</th>
+                  <th class="py-0.5 px-1.5 text-center font-mono">Frame (W × H)</th>
+                  <th class="py-0.5 px-1.5 text-center font-mono">Qty</th>
+                  <th class="py-0.5 px-1.5 font-sans">السيستم / القطاع</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-slate-200 text-[11px] font-mono">
+              <tbody class="divide-y divide-slate-200 text-[10px]">
                 ${windowUnits.map(u => `
                   <tr>
-                    <td class="py-1 px-1.5 font-bold">${u.code}</td>
-                    <td class="py-1 px-1.5 text-center font-bold">${u.width} × ${u.height} mm</td>
-                    <td class="py-1 px-1.5 text-center font-bold">${u.qty}</td>
-                    <td class="py-1 px-1.5 font-sans text-[11px]">${systems.find(s => s.id === u.systemId)?.name || '—'}</td>
+                    <td class="py-0.5 px-1.5 font-bold">${u.code}</td>
+                    <td class="py-0.5 px-1.5 text-center font-bold">${u.width} × ${u.height} mm</td>
+                    <td class="py-0.5 px-1.5 text-center font-bold">${u.qty}</td>
+                    <td class="py-0.5 px-1.5 font-sans text-[10px]">${systems.find(s => s.id === u.systemId)?.name || '—'}</td>
                   </tr>
                 `).join('')}
               </tbody>
             </table>
           </div>
 
-          <div class="lg:col-span-5 border-2 border-slate-900 rounded p-2.5 bg-white space-y-1.5 tech-card">
+          <div class="lg:col-span-5 border-2 border-slate-900 rounded p-2 bg-white space-y-1 tech-card">
             <div class="flex items-center justify-between border-b border-slate-900 pb-1 text-xs font-bold">
               <span class="text-slate-900">2. إذن سحب الأعواد من المستودع</span>
               <span class="font-mono">TOTAL: ${totalNewBarsAll} BARS</span>
             </div>
 
-            <table class="w-full text-xs text-right border border-slate-300">
+            <table class="w-full text-xs text-right border border-slate-300 font-mono">
               <thead>
-                <tr class="bg-slate-100 text-slate-900 border-b border-slate-300 font-bold text-[11px]">
-                  <th class="py-1 px-1.5">القطاع المطلوب</th>
-                  <th class="py-1 px-1.5 text-center font-mono">New Bars (6000mm)</th>
-                  <th class="py-1 px-1.5">الفضلات المطلوبة</th>
+                <tr class="bg-slate-100 text-slate-900 border-b border-slate-300 font-bold text-[10px]">
+                  <th class="py-0.5 px-1.5 font-sans">القطاع المطلوب</th>
+                  <th class="py-0.5 px-1.5 text-center font-mono">New Bars</th>
+                  <th class="py-0.5 px-1.5 font-sans">الفضلات المطلوبة</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-slate-200 text-[11px] font-mono">
+              <tbody class="divide-y divide-slate-200 text-[10px]">
                 ${Object.values(requisition).filter(r => r.newBars > 0 || r.offcuts.length > 0).map(r => `
                   <tr>
-                    <td class="py-1 px-1.5 font-bold font-sans">${r.code}</td>
-                    <td class="py-1 px-1.5 text-center font-bold">${r.newBars}</td>
-                    <td class="py-1 px-1.5 text-[10px] text-slate-700">
+                    <td class="py-0.5 px-1.5 font-bold font-sans">${r.code}</td>
+                    <td class="py-0.5 px-1.5 text-center font-bold">${r.newBars}</td>
+                    <td class="py-0.5 px-1.5 text-[9px] text-slate-700">
                       ${r.offcuts.length > 0 ? r.offcuts.map(o => `${o.length}mm`).join(', ') : '—'}
                     </td>
                   </tr>
@@ -1785,10 +1785,10 @@
 
         </div>
 
-        <!-- SECTION 2: 2D CAD CUTTING DIAGRAMS PER BAR -->
+        <!-- SECTION 2: 2D CAD CUTTING DIAGRAMS PER BAR (A4 COMPACT & CLEAN) -->
         <div class="space-y-3">
           <div class="border-b-2 border-slate-900 pb-1 flex items-center justify-between font-mono text-xs font-bold">
-            <span class="text-sm text-slate-900 font-sans">3. خرائط ومخططات القص التنفيذية على المنشار (2D Bar Cutting Maps)</span>
+            <span class="text-xs sm:text-sm text-slate-900 font-sans">3. خرائط ومخططات القص التنفيذية على المنشار (2D Bar Maps + Cut Schedule)</span>
             <span class="text-slate-600">KERF: ${kerf}mm | TRIM: ${trimCut}mm</span>
           </div>
       `;
@@ -1799,46 +1799,53 @@
         const isRemainUseful = bar.remainingLength >= minOffcut;
 
         html += `
-          <div class="border-2 border-slate-900 rounded p-2.5 bg-white space-y-1.5 tech-card">
+          <div class="border-2 border-slate-900 rounded p-2 bg-white space-y-1.5 tech-card">
             
+            <!-- Bar Header -->
             <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-300 pb-1 font-mono text-xs">
               <div class="flex items-center gap-2">
-                <span class="px-2 py-0.5 bg-slate-900 text-white font-mono font-bold text-xs rounded">
+                <span class="px-1.5 py-0.2 bg-slate-900 text-white font-mono font-bold text-xs rounded">
                   BAR #${bar.globalId}
                 </span>
                 <strong class="text-slate-900 text-xs font-sans">${bar.profileCode}</strong>
-                <span class="text-slate-600">(${bar.isOffcut ? 'Offcut: ' + bar.stockLength + ' mm' : 'New Stock: ' + bar.stockLength + ' mm'})</span>
+                <span class="text-slate-600 text-[11px]">(${bar.isOffcut ? 'Offcut: ' + bar.stockLength + ' mm' : 'Stock: ' + bar.stockLength + ' mm'})</span>
               </div>
-              <div class="text-[11px] text-slate-700">
+              <div class="text-[11px] text-slate-700 font-mono">
                 USED: <strong>${bar.usedLength} mm</strong> | 
                 REMAIN: <strong>${bar.remainingLength} mm</strong> 
                 (${isRemainUseful ? 'Offcut' : 'Scrap'})
               </div>
             </div>
 
+            <!-- Proportional Bar Visual Map (Clean without overflowing text) -->
             <div class="w-full">
               ${barVisualHTML}
             </div>
 
-            <table class="w-full text-xs text-right border border-slate-300 font-mono mt-1">
+            <!-- Immediate Structured Cutting Table (Exact references matching the # tag above) -->
+            <table class="w-full text-xs text-right border border-slate-300 font-mono">
               <thead>
                 <tr class="bg-slate-100 text-slate-900 border-b border-slate-300 font-bold text-[10px]">
-                  <th class="py-0.5 px-1.5 text-center w-8">#</th>
-                  <th class="py-0.5 px-1.5 font-sans">الوحدة والقطعة</th>
+                  <th class="py-0.5 px-1.5 text-center w-6">#</th>
+                  <th class="py-0.5 px-1.5 font-sans">الوحدة ومسمى القطعة</th>
                   <th class="py-0.5 px-1.5 text-center">Type</th>
                   <th class="py-0.5 px-1.5 text-center text-xs font-black">Length (mm)</th>
                   <th class="py-0.5 px-1.5 text-center">Angle 1</th>
                   <th class="py-0.5 px-1.5 text-center">Angle 2</th>
-                  <th class="py-0.5 px-1.5 text-center w-14 font-sans">تم [✔]</th>
+                  <th class="py-0.5 px-1.5 text-center w-12 font-sans">تم [✔]</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-slate-200 text-[11px]">
+              <tbody class="divide-y divide-slate-200 text-[10px]">
                 ${partsInBar.map((p, idx) => `
                   <tr>
-                    <td class="py-0.5 px-1.5 text-center font-bold">${idx + 1}</td>
-                    <td class="py-0.5 px-1.5 font-sans font-bold">${p.label}</td>
+                    <td class="py-0.5 px-1.5 text-center font-bold">
+                      <span class="w-4 h-4 rounded-full bg-slate-900 text-white font-mono text-[9px] inline-flex items-center justify-center">
+                        ${idx + 1}
+                      </span>
+                    </td>
+                    <td class="py-0.5 px-1.5 font-sans font-bold text-slate-900">${p.label}</td>
                     <td class="py-0.5 px-1.5 text-center font-bold">${p.dimType}</td>
-                    <td class="py-0.5 px-1.5 text-center font-black text-xs text-slate-900">${p.length} mm</td>
+                    <td class="py-0.5 px-1.5 text-center font-black text-xs text-slate-950">${p.length} mm</td>
                     <td class="py-0.5 px-1.5 text-center font-bold ${p.startAngle === 45 ? 'text-slate-950 font-black' : 'text-slate-700'}">${p.startAngle}°</td>
                     <td class="py-0.5 px-1.5 text-center font-bold ${p.endAngle === 45 ? 'text-slate-950 font-black' : 'text-slate-700'}">${p.endAngle}°</td>
                     <td class="py-0.5 px-1.5 text-center">
@@ -1861,13 +1868,13 @@
 
       html += `
         <!-- SECTION 3: GLASS CUTTING & FABRICATION SCHEDULE -->
-        <div class="border-2 border-slate-900 rounded p-3 bg-white space-y-2 tech-card page-break">
-          <div class="flex flex-wrap items-center justify-between border-b-2 border-slate-900 pb-1.5 font-mono text-xs">
+        <div class="border-2 border-slate-900 rounded p-2.5 bg-white space-y-1.5 tech-card page-break">
+          <div class="flex flex-wrap items-center justify-between border-b-2 border-slate-900 pb-1 font-mono text-xs">
             <div class="flex items-center gap-2">
               <span class="w-2.5 h-2.5 bg-slate-900 inline-block rounded"></span>
               <h3 class="font-sans text-xs sm:text-sm font-bold text-slate-900">4. كشف تفصيل ومقاسات ومساحات الزجاج (Glass Cutting Schedule)</h3>
             </div>
-            <div class="text-xs text-slate-900 font-bold bg-slate-100 px-2.5 py-0.5 rounded border border-slate-300 font-mono">
+            <div class="text-xs text-slate-900 font-bold bg-slate-100 px-2 py-0.5 rounded border border-slate-300 font-mono">
               TOTAL PANES: <strong>${totalPanesSum}</strong> | TOTAL AREA: <strong>${totalAreaSum} m²</strong>
             </div>
           </div>
@@ -1875,31 +1882,31 @@
           <table class="w-full text-xs text-right border border-slate-300 font-mono">
             <thead>
               <tr class="bg-slate-100 text-slate-900 border-b border-slate-300 font-bold text-[10px]">
-                <th class="py-1 px-1.5">Code</th>
-                <th class="py-1 px-1.5 font-sans">نوع الوحدة</th>
-                <th class="py-1 px-1.5 font-sans">السيستم</th>
-                <th class="py-1 px-1.5 text-center">Sash Size (Ws × Hs)</th>
-                <th class="py-1 px-1.5 text-center font-black text-xs bg-slate-200/60 border-x border-slate-300">Glass Cut (Wg × Hg)</th>
-                <th class="py-1 px-1.5 text-center">Panes</th>
-                <th class="py-1 px-1.5 text-center">Area / Pane (m²)</th>
-                <th class="py-1 px-1.5 text-center">Total Area (m²)</th>
-                <th class="py-1 px-1.5 text-center w-14 font-sans">تم [✔]</th>
+                <th class="py-0.5 px-1.5">Code</th>
+                <th class="py-0.5 px-1.5 font-sans">نوع الوحدة</th>
+                <th class="py-0.5 px-1.5 font-sans">السيستم</th>
+                <th class="py-0.5 px-1.5 text-center">Sash Size (Ws × Hs)</th>
+                <th class="py-0.5 px-1.5 text-center font-black text-xs bg-slate-200/60 border-x border-slate-300">Glass Cut (Wg × Hg)</th>
+                <th class="py-0.5 px-1.5 text-center">Panes</th>
+                <th class="py-0.5 px-1.5 text-center">Area / Pane (m²)</th>
+                <th class="py-0.5 px-1.5 text-center">Total Area (m²)</th>
+                <th class="py-0.5 px-1.5 text-center w-12 font-sans">تم [✔]</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-slate-200 text-[11px]">
+            <tbody class="divide-y divide-slate-200 text-[10px]">
               ${glassSchedule.map(g => `
                 <tr class="hover:bg-slate-50">
-                  <td class="py-1 px-1.5 font-bold">${g.unitCode}</td>
-                  <td class="py-1 px-1.5 font-sans text-slate-700">${g.sashType}</td>
-                  <td class="py-1 px-1.5 font-sans text-[10px] text-slate-600">${g.systemName}</td>
-                  <td class="py-1 px-1.5 text-center font-bold">${g.sashSize}</td>
-                  <td class="py-1 px-1.5 text-center font-black text-xs text-slate-950 bg-slate-100/60 border-x border-slate-300">
+                  <td class="py-0.5 px-1.5 font-bold">${g.unitCode}</td>
+                  <td class="py-0.5 px-1.5 font-sans text-slate-700">${g.sashType}</td>
+                  <td class="py-0.5 px-1.5 font-sans text-[9px] text-slate-600">${g.systemName}</td>
+                  <td class="py-0.5 px-1.5 text-center font-bold">${g.sashSize}</td>
+                  <td class="py-0.5 px-1.5 text-center font-black text-xs text-slate-950 bg-slate-100/60 border-x border-slate-300">
                     ${g.glassW} × ${g.glassH} mm
                   </td>
-                  <td class="py-1 px-1.5 text-center font-bold">${g.qtyPanes}</td>
-                  <td class="py-1 px-1.5 text-center">${g.singleArea} m²</td>
-                  <td class="py-1 px-1.5 text-center font-bold text-slate-900">${g.totalArea} m²</td>
-                  <td class="py-1 px-1.5 text-center">
+                  <td class="py-0.5 px-1.5 text-center font-bold">${g.qtyPanes}</td>
+                  <td class="py-0.5 px-1.5 text-center">${g.singleArea} m²</td>
+                  <td class="py-0.5 px-1.5 text-center font-bold text-slate-900">${g.totalArea} m²</td>
+                  <td class="py-0.5 px-1.5 text-center">
                     <input type="checkbox" class="w-3.5 h-3.5 text-slate-900 rounded">
                   </td>
                 </tr>
@@ -2136,7 +2143,6 @@
       if (!lastOptimizationResult) { alert('يرجى تشغيل الحساب أولاً.'); return; }
       const wb = XLSX.utils.book_new();
 
-      // Sheet 1: Windows & Glass Schedule
       let glassData = [
         ['Glass Cutting Schedule'],
         ['Project:', currentProject.name, 'Client:', currentProject.client, 'Date:', new Date().toISOString().slice(0, 10)],
@@ -2149,7 +2155,6 @@
       const wsGlass = XLSX.utils.aoa_to_sheet(glassData);
       XLSX.utils.book_append_sheet(wb, wsGlass, 'Glass Schedule');
 
-      // Sheet 2: Aluminum Cutting Bars
       let sheetData = [
         ['Aluminum Cutting Plan - Technical CAD'],
         ['Project:', currentProject.name, 'Client:', currentProject.client, 'Date:', new Date().toISOString().slice(0, 10)],
