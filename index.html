@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>مخطط ومحسن قص وتفصيل الألمنيوم والزجاج الهندسي | Aluminum & Glass CAD Optimizer</title>
+  <title>مخطط ومحسن قص وتفصيل الألمنيوم والزجاج الهندسي | CAD Cutting Optimizer</title>
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -17,18 +17,18 @@
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
-  <!-- Google Fonts: Cairo & JetBrains Mono -->
+  <!-- Google Fonts: IBM Plex Sans Arabic (Geometric Technical Font) & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
-            cairo: ['Cairo', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace'],
+            sans: ['"IBM Plex Sans Arabic"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
           }
         }
       }
@@ -41,39 +41,38 @@
       margin: 8mm 6mm;
     }
 
-    body {
-      font-family: 'Cairo', sans-serif;
-      letter-spacing: 0 !important;
-    }
-    
-    .tech-font {
-      font-family: 'JetBrains Mono', 'Cairo', monospace;
+    :root {
+      font-feature-settings: "tnum" 1, "ss01" 1;
     }
 
-    body.en {
-      direction: ltr;
+    body {
+      font-family: "IBM Plex Sans Arabic", -apple-system, BlinkMacSystemFont, sans-serif;
+      letter-spacing: 0 !important;
+      background-color: #f8fafc;
+      color: #0f172a;
     }
     
-    .lang-ar { display: inline-block; }
-    .lang-en { display: none; }
-    
-    body.en .lang-ar { display: none; }
-    body.en .lang-en { display: inline-block; }
-    
+    .tech-mono {
+      font-family: "JetBrains Mono", monospace;
+      direction: ltr;
+      display: inline-block;
+    }
+
     .tab-btn.active {
       background-color: #0f172a;
       color: #ffffff;
-      border-bottom: 2px solid #0f172a;
+      border-color: #0f172a;
     }
 
+    /* Minimalist CAD Drafting Patterns */
     .cad-scrap-pattern {
       background-color: #f1f5f9;
-      background-image: repeating-linear-gradient(45deg, #cbd5e1 0, #cbd5e1 1.5px, #f1f5f9 0, #f1f5f9 6px);
+      background-image: repeating-linear-gradient(45deg, #94a3b8 0, #94a3b8 1px, #f1f5f9 0, #f1f5f9 6px);
     }
 
     .cad-offcut-pattern {
-      background-color: #ecfdf5;
-      background-image: repeating-linear-gradient(45deg, #a7f3d0 0, #a7f3d0 1.5px, #ecfdf5 0, #ecfdf5 7px);
+      background-color: #ffffff;
+      background-image: repeating-linear-gradient(-45deg, #cbd5e1 0, #cbd5e1 1px, #ffffff 0, #ffffff 8px);
     }
 
     .tech-card {
@@ -97,98 +96,80 @@
       header, .no-print, #navTabs, .btn-action, footer {
         display: none !important;
       }
-      .print-only {
-        display: block !important;
-      }
       .tech-card {
         box-shadow: none !important;
         border: 1.5px solid #000000 !important;
-        margin-bottom: 10px !important;
+        margin-bottom: 8px !important;
       }
     }
 
-    ::-webkit-scrollbar { width: 5px; height: 5px; }
-    ::-webkit-scrollbar-track { background: #f1f5f9; }
-    ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 2px; }
+    input, select, textarea {
+      font-feature-settings: "tnum" 1;
+    }
   </style>
 </head>
-<body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col font-cairo antialiased">
+<body class="min-h-screen flex flex-col antialiased text-slate-900 bg-slate-100">
 
-  <!-- Header -->
-  <header class="bg-white border-b border-slate-300 sticky top-0 z-40 shadow-xs no-print">
+  <!-- Header (Clean Monochrome CAD Style) -->
+  <header class="bg-white border-b border-slate-300 sticky top-0 z-40 no-print">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-lg bg-slate-900 flex items-center justify-center text-white font-mono font-black text-sm">
+        <div class="w-8 h-8 rounded bg-slate-900 flex items-center justify-center text-white font-mono font-bold text-xs">
           CAD
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <h1 class="text-base font-black text-slate-900 leading-tight">
-              <span class="lang-ar">محسن وقاص الألمنيوم والزجاج المتسلسل</span>
-              <span class="lang-en">Aluminum & Glass Cascading Optimizer</span>
+            <h1 class="text-sm sm:text-base font-bold text-slate-900 leading-tight">
+              محسن ومخطط قص الألمنيوم والزجاج الهندسي
             </h1>
-            <span class="px-1.5 py-0.2 text-[10px] font-mono font-bold bg-slate-200 text-slate-800 rounded border border-slate-300">v5.5 Architecture Pro</span>
+            <span class="px-1.5 py-0.2 text-[10px] font-mono font-bold bg-slate-100 text-slate-700 rounded border border-slate-300">v6.0 CAD</span>
           </div>
           <p class="text-[11px] text-slate-500 font-medium">
-            <span class="lang-ar">فصل كامل لمنطق كل قطاع: سحاب (جنب/شنكل/كعب) • مفصلي • أبواب • ثابت (بدون درف)</span>
-            <span class="lang-en">Dedicated Engineering Logic per System (Sliding, Hinged, Doors, Fixed)</span>
+            تخصيم متسلسل وهندسي مستقل لكل قطاع | أرقام ومقاسات بالمليمتر (كميات وأطوال فقط)
           </p>
         </div>
       </div>
       
       <div class="flex items-center gap-2">
-        <div class="hidden md:flex items-center gap-1.5 px-2.5 py-1 bg-slate-50 border border-slate-200 rounded text-xs font-mono font-bold text-slate-700">
+        <div class="hidden md:flex items-center gap-1.5 px-2.5 py-1 bg-slate-50 border border-slate-300 rounded text-xs font-mono font-bold text-slate-700">
           <i data-lucide="folder" class="w-3.5 h-3.5 text-slate-500"></i>
-          <span id="activeProjectBadge">مشروع فيلا الياسمين</span>
+          <span id="activeProjectBadge">Project-01</span>
         </div>
-
-        <button onclick="toggleLanguage()" class="px-2.5 py-1 text-xs font-bold rounded border border-slate-300 hover:bg-slate-50 transition flex items-center gap-1">
-          <i data-lucide="languages" class="w-3.5 h-3.5"></i>
-          <span class="lang-ar">EN</span>
-          <span class="lang-en">عربي</span>
-        </button>
 
         <button onclick="saveCurrentProject(true)" class="px-3 py-1 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded transition flex items-center gap-1">
           <i data-lucide="save" class="w-3.5 h-3.5"></i>
-          <span class="lang-ar">حفظ</span>
-          <span class="lang-en">Save</span>
+          <span>حفظ</span>
         </button>
       </div>
     </div>
 
     <!-- Navigation Tabs -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 flex gap-1 border-t border-slate-200 overflow-x-auto" id="navTabs">
-      <button onclick="switchTab('tab-windows')" id="btn-tab-windows" class="tab-btn active px-3.5 py-2 text-xs font-bold rounded-t transition flex items-center gap-1.5">
+      <button onclick="switchTab('tab-windows')" id="btn-tab-windows" class="tab-btn active px-3.5 py-2 text-xs font-bold rounded-t transition flex items-center gap-1.5 border-b-2 border-transparent">
         <i data-lucide="layout-template" class="w-3.5 h-3.5"></i>
-        <span class="lang-ar">1. جدول النوافذ وتفصيل المقاسات</span>
-        <span class="lang-en">1. Windows & Glass Schedule</span>
+        <span>1. جدول النوافذ وتفصيل المقاسات</span>
       </button>
-      <button onclick="switchTab('tab-systems')" id="btn-tab-systems" class="tab-btn px-3.5 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 rounded-t transition flex items-center gap-1.5">
+      <button onclick="switchTab('tab-systems')" id="btn-tab-systems" class="tab-btn px-3.5 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 rounded-t transition flex items-center gap-1.5 border-b-2 border-transparent">
         <i data-lucide="sliders" class="w-3.5 h-3.5"></i>
-        <span class="lang-ar">2. تعريف قطاعات السيستم (مفصولة بالنوع)</span>
-        <span class="lang-en">2. Systems by Category</span>
+        <span>2. تعريف قطاعات السيستم (مفصولة بالنوع)</span>
       </button>
-      <button onclick="switchTab('tab-parts')" id="btn-tab-parts" class="tab-btn px-3.5 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 rounded-t transition flex items-center gap-1.5">
+      <button onclick="switchTab('tab-parts')" id="btn-tab-parts" class="tab-btn px-3.5 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 rounded-t transition flex items-center gap-1.5 border-b-2 border-transparent">
         <i data-lucide="list-checks" class="w-3.5 h-3.5"></i>
-        <span class="lang-ar">3. قطع الألمنيوم للقص</span>
-        <span class="lang-en">3. Derived Cutting Parts</span>
+        <span>3. قطع الألمنيوم المحسوبة للقص</span>
         <span id="totalPartsBadge" class="px-1.5 py-0.2 bg-slate-200 text-slate-800 rounded font-mono text-[10px]">0</span>
       </button>
-      <button onclick="switchTab('tab-offcuts')" id="btn-tab-offcuts" class="tab-btn px-3.5 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 rounded-t transition flex items-center gap-1.5">
+      <button onclick="switchTab('tab-offcuts')" id="btn-tab-offcuts" class="tab-btn px-3.5 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 rounded-t transition flex items-center gap-1.5 border-b-2 border-transparent">
         <i data-lucide="recycle" class="w-3.5 h-3.5"></i>
-        <span class="lang-ar">4. مخزون الفضلات</span>
-        <span class="lang-en">4. Offcuts Stock</span>
+        <span>4. مخزون الفضلات</span>
         <span id="offcutsCountBadge" class="px-1.5 py-0.2 bg-slate-200 text-slate-700 rounded font-mono text-[10px]">0</span>
       </button>
-      <button onclick="switchTab('tab-sheet')" id="btn-tab-sheet" class="tab-btn px-3.5 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 rounded-t transition flex items-center gap-1.5">
+      <button onclick="switchTab('tab-sheet')" id="btn-tab-sheet" class="tab-btn px-3.5 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 rounded-t transition flex items-center gap-1.5 border-b-2 border-transparent">
         <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
-        <span class="lang-ar">5. ورقة الفني ومخطط القص والزجاج</span>
-        <span class="lang-en">5. Workshop CAD & Glass Sheet</span>
+        <span>5. ورقة الفني ومخطط القص والزجاج</span>
       </button>
-      <button onclick="switchTab('tab-projects')" id="btn-tab-projects" class="tab-btn px-3.5 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 rounded-t transition flex items-center gap-1.5">
+      <button onclick="switchTab('tab-projects')" id="btn-tab-projects" class="tab-btn px-3.5 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 rounded-t transition flex items-center gap-1.5 border-b-2 border-transparent">
         <i data-lucide="folder-open" class="w-3.5 h-3.5"></i>
-        <span class="lang-ar">6. المشاريع والتصدير</span>
-        <span class="lang-en">6. Projects & Export</span>
+        <span>6. المشاريع والتصدير</span>
       </button>
     </div>
   </header>
@@ -196,69 +177,55 @@
   <!-- Main Content -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex-1 w-full">
 
-    <!-- Global Parameters Bar -->
-    <div class="bg-white rounded-lg border border-slate-300 p-3.5 mb-5 shadow-2xs no-print">
+    <!-- Global Parameters Bar (Clean Drafting Design) -->
+    <div class="bg-white rounded border border-slate-300 p-3 mb-4 no-print">
       <div class="flex flex-wrap items-center justify-between gap-3">
         
-        <div class="flex flex-wrap items-center gap-4 sm:gap-6 font-mono text-xs">
+        <div class="flex flex-wrap items-center gap-4 sm:gap-6 text-xs">
           <div>
-            <label class="block text-[11px] font-bold text-slate-600 mb-0.5 font-cairo">
-              <span class="lang-ar">طول العود الخام</span>
-              <span class="lang-en">Stock Length</span>
-            </label>
+            <label class="block text-[11px] font-bold text-slate-600 mb-0.5">طول العود الخام</label>
             <div class="flex items-center gap-1">
-              <input type="number" id="stockLength" value="6000" min="500" max="12000" class="w-20 px-2 py-1 border border-slate-300 rounded font-bold text-center focus:ring-1 focus:ring-slate-800 outline-none">
-              <span class="text-slate-500 font-cairo text-[10px]">مم</span>
+              <input type="number" id="stockLength" value="6000" min="500" max="12000" class="w-20 px-2 py-1 border border-slate-300 rounded font-mono font-bold text-center focus:border-slate-900 outline-none">
+              <span class="text-slate-500 font-mono text-[11px]">mm</span>
             </div>
           </div>
           
           <div>
-            <label class="block text-[11px] font-bold text-slate-600 mb-0.5 font-cairo">
-              <span class="lang-ar">سماكة السلاح (Kerf)</span>
-              <span class="lang-en">Blade Kerf</span>
-            </label>
+            <label class="block text-[11px] font-bold text-slate-600 mb-0.5">سماكة السلاح (Kerf)</label>
             <div class="flex items-center gap-1">
-              <input type="number" id="kerf" value="3.5" step="0.1" min="0" max="15" class="w-16 px-2 py-1 border border-slate-300 rounded font-bold text-center focus:ring-1 focus:ring-slate-800 outline-none">
-              <span class="text-slate-500 font-cairo text-[10px]">مم</span>
+              <input type="number" id="kerf" value="3.5" step="0.1" min="0" max="15" class="w-16 px-2 py-1 border border-slate-300 rounded font-mono font-bold text-center focus:border-slate-900 outline-none">
+              <span class="text-slate-500 font-mono text-[11px]">mm</span>
             </div>
           </div>
           
           <div>
-            <label class="block text-[11px] font-bold text-slate-600 mb-0.5 font-cairo">
-              <span class="lang-ar">الحد الأدنى للفضلة</span>
-              <span class="lang-en">Min Offcut</span>
-            </label>
+            <label class="block text-[11px] font-bold text-slate-600 mb-0.5">الحد الأدنى للفضلة</label>
             <div class="flex items-center gap-1">
-              <input type="number" id="minOffcut" value="300" min="50" max="2000" class="w-20 px-2 py-1 border border-slate-300 rounded font-bold text-center focus:ring-1 focus:ring-slate-800 outline-none">
-              <span class="text-slate-500 font-cairo text-[10px]">مم</span>
+              <input type="number" id="minOffcut" value="300" min="50" max="2000" class="w-20 px-2 py-1 border border-slate-300 rounded font-mono font-bold text-center focus:border-slate-900 outline-none">
+              <span class="text-slate-500 font-mono text-[11px]">mm</span>
             </div>
           </div>
 
           <div>
-            <label class="block text-[11px] font-bold text-slate-600 mb-0.5 font-cairo">
-              <span class="lang-ar">قصة تنظيف (Trim)</span>
-              <span class="lang-en">Trim Cut</span>
-            </label>
+            <label class="block text-[11px] font-bold text-slate-600 mb-0.5">قصة تنظيف (Trim)</label>
             <div class="flex items-center gap-1">
-              <input type="number" id="trimCut" value="10" min="0" max="100" class="w-16 px-2 py-1 border border-slate-300 rounded font-bold text-center focus:ring-1 focus:ring-slate-800 outline-none">
-              <span class="text-slate-500 font-cairo text-[10px]">مم</span>
+              <input type="number" id="trimCut" value="10" min="0" max="100" class="w-16 px-2 py-1 border border-slate-300 rounded font-mono font-bold text-center focus:border-slate-900 outline-none">
+              <span class="text-slate-500 font-mono text-[11px]">mm</span>
             </div>
           </div>
 
           <div class="flex items-center gap-1.5 pt-4">
             <input type="checkbox" id="useOffcutsFirst" checked class="w-3.5 h-3.5 text-slate-900 rounded border-slate-300">
-            <label for="useOffcutsFirst" class="text-xs font-bold text-slate-700 cursor-pointer font-cairo">
-              <span class="lang-ar">استهلاك الفضلات أولاً</span>
-              <span class="lang-en">Use Offcuts First</span>
+            <label for="useOffcutsFirst" class="text-xs font-bold text-slate-700 cursor-pointer">
+              استهلاك الفضلات أولاً
             </label>
           </div>
         </div>
 
         <div>
-          <button onclick="runAdvancedOptimization()" class="w-full sm:w-auto px-5 py-2 bg-slate-900 hover:bg-black text-white font-bold text-xs rounded shadow transition flex items-center justify-center gap-1.5">
+          <button onclick="runAdvancedOptimization()" class="w-full sm:w-auto px-5 py-2 bg-slate-900 hover:bg-black text-white font-bold text-xs rounded transition flex items-center justify-center gap-1.5">
             <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i>
-            <span class="lang-ar">حساب وتوليد المخطط الهندسي والزجاج</span>
-            <span class="lang-en">Calculate CAD & Glass Schedule</span>
+            <span>حساب وتوليد المخطط الهندسي والزجاج</span>
           </button>
         </div>
 
@@ -270,57 +237,55 @@
     <!-- ============================================== -->
     <div id="tab-windows" class="tab-content space-y-4">
       
-      <div class="bg-white rounded-lg border border-slate-300 shadow-2xs">
+      <div class="bg-white rounded border border-slate-300">
         <div class="px-4 py-2.5 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2 bg-slate-50">
           <div class="flex items-center gap-2">
             <i data-lucide="layout-template" class="w-4 h-4 text-slate-700"></i>
             <div>
-              <h2 class="font-black text-slate-900 text-xs sm:text-sm">
-                <span class="lang-ar">جدول مقاسات النوافذ وحسابات التخصيم المتسلسل (Windows & Glass Schedule)</span>
-                <span class="lang-en">Windows & Glass Schedule</span>
+              <h2 class="font-bold text-slate-900 text-xs sm:text-sm">
+                جدول مقاسات النوافذ وحسابات التخصيم المتسلسل (Windows & Glass Schedule)
               </h2>
               <p class="text-[11px] text-slate-500 font-medium">
-                <span class="lang-ar">اختر نوع الوحدة (سحاب / مفصلي / باب / ثابت) وسيقوم النظام بتطبيق المنطق الهندسي الخاص به تلقائياً</span>
+                اختر نوع الوحدة (سحاب / مفصلي / باب / ثابت) وسيقوم النظام بتطبيق المنطق الهندسي الخاص به تلقائياً
               </p>
             </div>
           </div>
           
           <button onclick="addWindowUnit()" class="px-2.5 py-1 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded transition flex items-center gap-1">
             <i data-lucide="plus" class="w-3 h-3"></i>
-            <span class="lang-ar">إضافة نافذة جديدة</span>
-            <span class="lang-en">Add Unit</span>
+            <span>إضافة نافذة جديدة</span>
           </button>
         </div>
 
         <div class="p-3 overflow-x-auto">
           <table class="w-full text-xs text-right border-collapse" id="windowsTable">
             <thead>
-              <tr class="bg-slate-100 text-slate-800 border-b border-slate-300 font-bold font-mono text-[11px]">
-                <th class="py-1.5 px-2 text-center w-8">#</th>
-                <th class="py-1.5 px-2 font-cairo"><span class="lang-ar">كود النافذة</span><span class="lang-en">Code</span></th>
-                <th class="py-1.5 px-2 font-cairo"><span class="lang-ar">نوع الوحدة</span><span class="lang-en">Type</span></th>
-                <th class="py-1.5 px-2 text-center"><span class="lang-ar">مقاس الحلق W×H</span><span class="lang-en">Frame WxH</span></th>
-                <th class="py-1.5 px-2 text-center"><span class="lang-ar">العدد</span><span class="lang-en">Qty</span></th>
-                <th class="py-1.5 px-2 font-cairo"><span class="lang-ar">نظام القطاع المطابق</span><span class="lang-en">Matching System</span></th>
-                <th class="py-1.5 px-2 text-center font-cairo bg-blue-50/70 text-blue-900 border-x border-blue-200"><span class="lang-ar">تفصيل الدرفة الصافي (Ws × Hs)</span></th>
-                <th class="py-1.5 px-2 text-center font-cairo bg-emerald-50/70 text-emerald-900 border-x border-emerald-200"><span class="lang-ar">مقاس الزجاج الصافي (Wg × Hg)</span></th>
+              <tr class="bg-slate-100 text-slate-800 border-b border-slate-300 font-bold text-[11px]">
+                <th class="py-1.5 px-2 text-center w-8 font-mono">#</th>
+                <th class="py-1.5 px-2">كود النافذة</th>
+                <th class="py-1.5 px-2">نوع الوحدة</th>
+                <th class="py-1.5 px-2 text-center">مقاس الحلق (W × H)</th>
+                <th class="py-1.5 px-2 text-center">العدد</th>
+                <th class="py-1.5 px-2">نظام القطاع المطابق</th>
+                <th class="py-1.5 px-2 text-center border-x border-slate-300 bg-slate-50">تفصيل الدرفة الصافي (Ws × Hs)</th>
+                <th class="py-1.5 px-2 text-center border-x border-slate-300 bg-slate-50">مقاس الزجاج الصافي (Wg × Hg)</th>
                 <th class="py-1.5 px-2 text-center w-14"></th>
               </tr>
             </thead>
-            <tbody id="windowsBody" class="divide-y divide-slate-200 font-mono text-xs">
+            <tbody id="windowsBody" class="divide-y divide-slate-200 text-xs">
               <!-- Dynamically populated -->
             </tbody>
           </table>
         </div>
 
-        <div class="px-4 py-2 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center justify-between text-xs text-slate-700 font-mono">
+        <div class="px-4 py-2 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center justify-between text-xs text-slate-700">
           <div>
-            إجمالي النوافذ: <strong id="totalUnitsCount" class="text-slate-900 font-bold">0 وحدة</strong> | 
-            إجمالي ألواح الزجاج: <strong id="totalGlassPanesCount" class="text-emerald-800 font-bold">0 لوح</strong> | 
-            إجمالي مساحة الزجاج: <strong id="totalGlassAreaSquareMeters" class="text-emerald-800 font-bold">0.00 م²</strong>
+            إجمالي النوافذ: <strong id="totalUnitsCount" class="text-slate-900 font-mono font-bold">0</strong> وحدة | 
+            إجمالي ألواح الزجاج: <strong id="totalGlassPanesCount" class="text-slate-900 font-mono font-bold">0</strong> لوح | 
+            إجمالي مساحة الزجاج: <strong id="totalGlassAreaSquareMeters" class="text-slate-900 font-mono font-bold">0.00</strong> m²
           </div>
-          <div class="text-[11px] text-slate-500 font-cairo">
-            حسابات كميات وأمتار فقط (Quantities & Cut Measurements Only)
+          <div class="text-[11px] text-slate-500 font-mono">
+            Quantities & Cut Measurements Only
           </div>
         </div>
       </div>
@@ -330,31 +295,30 @@
     <!-- ============================================== -->
     <!-- TAB 2: SYSTEM DEDUCTION RULES BY CATEGORY -->
     <!-- ============================================== -->
-    <div id="tab-systems" class="tab-content hidden space-y-6">
+    <div id="tab-systems" class="tab-content hidden space-y-4">
       
-      <!-- System Category Tabs / Nav inside Systems -->
-      <div class="bg-white rounded-lg border border-slate-300 p-4 shadow-2xs space-y-4">
+      <div class="bg-white rounded border border-slate-300 p-4 space-y-4">
         
         <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-3">
           <div>
-            <h3 class="font-black text-slate-900 text-sm">
+            <h3 class="font-bold text-slate-900 text-sm">
               أنظمة القطاعات المخصصة (مفصولة هندسياً حسب نوع النظام)
             </h3>
             <p class="text-xs text-slate-500 font-medium">
               لكل نوع نظام منطق ومقاطع تختلف تماماً عن غيره:
             </p>
           </div>
-          <div class="flex items-center gap-1">
-            <button onclick="addNewSystem('sliding')" class="px-2.5 py-1 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded transition flex items-center gap-1">
-              + إضافة سيستم سحاب
+          <div class="flex items-center gap-1.5">
+            <button onclick="addNewSystem('sliding')" class="px-2.5 py-1 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded transition">
+              + سيستم سحاب
             </button>
-            <button onclick="addNewSystem('hinged-window')" class="px-2.5 py-1 bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs rounded transition flex items-center gap-1">
+            <button onclick="addNewSystem('hinged-window')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs rounded transition">
               + سيستم مفصلي
             </button>
-            <button onclick="addNewSystem('hinged-door')" class="px-2.5 py-1 bg-amber-700 hover:bg-amber-800 text-white font-bold text-xs rounded transition flex items-center gap-1">
+            <button onclick="addNewSystem('hinged-door')" class="px-2.5 py-1 bg-slate-700 hover:bg-slate-600 text-white font-bold text-xs rounded transition">
               + سيستم أبواب
             </button>
-            <button onclick="addNewSystem('fixed')" class="px-2.5 py-1 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs rounded transition flex items-center gap-1">
+            <button onclick="addNewSystem('fixed')" class="px-2.5 py-1 bg-slate-600 hover:bg-slate-500 text-white font-bold text-xs rounded transition">
               + سيستم ثابت
             </button>
           </div>
@@ -362,24 +326,24 @@
 
         <!-- CATEGORY 1: SLIDING SYSTEMS -->
         <div class="space-y-2">
-          <div class="flex items-center gap-2 text-xs font-bold text-slate-900 bg-slate-100 px-3 py-1.5 rounded border border-slate-300">
-            <span class="w-2.5 h-2.5 rounded-full bg-slate-900 inline-block"></span>
+          <div class="flex items-center justify-between text-xs font-bold text-slate-900 bg-slate-100 px-3 py-1.5 rounded border border-slate-300">
             <span>1. أنظمة السحاب (Sliding) ⬅ تتكون الدرفة من: [درفة جنب + درفة شنكل + درفة كعب]</span>
+            <span class="font-mono text-[10px] text-slate-600">SLIDING SECTIONS</span>
           </div>
           <div class="overflow-x-auto">
-            <table class="w-full text-xs text-right border-collapse font-mono" id="slidingSystemsTable">
+            <table class="w-full text-xs text-right border-collapse" id="slidingSystemsTable">
               <thead>
-                <tr class="bg-slate-50 text-slate-800 border-b border-slate-300 font-bold font-cairo text-[11px]">
-                  <th class="py-1 px-2">اسم السيستم</th>
-                  <th class="py-1 px-2">كود الحلق</th>
-                  <th class="py-1 px-2 text-blue-900 bg-blue-50">كود درفة جنب</th>
-                  <th class="py-1 px-2 text-amber-900 bg-amber-50">كود درفة شنكل</th>
-                  <th class="py-1 px-2 text-emerald-900 bg-emerald-50">كود درفة كعب</th>
-                  <th class="py-1 px-2 text-center">عرض الدرفة (مم)</th>
-                  <th class="py-1 px-2 text-center">خلوص الارتفاع (مم)</th>
-                  <th class="py-1 px-2 text-center">تراكب العرض (مم)</th>
-                  <th class="py-1 px-2 text-center">فرزة الزجاج (مم)</th>
-                  <th class="py-1 px-2 text-center w-8"></th>
+                <tr class="bg-slate-50 text-slate-800 border-b border-slate-300 font-bold text-[11px]">
+                  <th class="py-1.5 px-2">اسم السيستم</th>
+                  <th class="py-1.5 px-2">كود الحلق</th>
+                  <th class="py-1.5 px-2 font-mono">درفة جنب</th>
+                  <th class="py-1.5 px-2 font-mono">درفة شنكل</th>
+                  <th class="py-1.5 px-2 font-mono">درفة كعب</th>
+                  <th class="py-1.5 px-2 text-center">عرض الدرفة (mm)</th>
+                  <th class="py-1.5 px-2 text-center">خلوص الارتفاع (mm)</th>
+                  <th class="py-1.5 px-2 text-center">تراكب العرض (mm)</th>
+                  <th class="py-1.5 px-2 text-center">فرزة الزجاج (mm)</th>
+                  <th class="py-1.5 px-2 text-center w-8"></th>
                 </tr>
               </thead>
               <tbody id="slidingSystemsBody" class="divide-y divide-slate-200"></tbody>
@@ -388,24 +352,24 @@
         </div>
 
         <!-- CATEGORY 2: HINGED WINDOWS -->
-        <div class="space-y-2 pt-2 border-t border-slate-200">
-          <div class="flex items-center gap-2 text-xs font-bold text-blue-900 bg-blue-50 px-3 py-1.5 rounded border border-blue-200">
-            <span class="w-2.5 h-2.5 rounded-full bg-blue-600 inline-block"></span>
+        <div class="space-y-2 pt-3 border-t border-slate-200">
+          <div class="flex items-center justify-between text-xs font-bold text-slate-900 bg-slate-100 px-3 py-1.5 rounded border border-slate-300">
             <span>2. أنظمة الشبابيك المفصلية والقلاب (Casement Windows) ⬅ تتكون من: [حلق مفصلي + درفة مفصلي موحدة + باكتة زجاج]</span>
+            <span class="font-mono text-[10px] text-slate-600">CASEMENT SECTIONS</span>
           </div>
           <div class="overflow-x-auto">
-            <table class="w-full text-xs text-right border-collapse font-mono" id="hingedSystemsTable">
+            <table class="w-full text-xs text-right border-collapse" id="hingedSystemsTable">
               <thead>
-                <tr class="bg-slate-50 text-slate-800 border-b border-slate-300 font-bold font-cairo text-[11px]">
-                  <th class="py-1 px-2">اسم السيستم</th>
-                  <th class="py-1 px-2">كود الحلق المفصلي</th>
-                  <th class="py-1 px-2 text-blue-900">كود درفة المفصلي</th>
-                  <th class="py-1 px-2 text-emerald-900">كود باكتة الزجاج</th>
-                  <th class="py-1 px-2 text-center">عرض بروفيل الدرفة (مم)</th>
-                  <th class="py-1 px-2 text-center">خصم عرض الدرفة (مم)</th>
-                  <th class="py-1 px-2 text-center">خصم ارتفاع الدرفة (مم)</th>
-                  <th class="py-1 px-2 text-center">فرزة الزجاج (مم)</th>
-                  <th class="py-1 px-2 text-center w-8"></th>
+                <tr class="bg-slate-50 text-slate-800 border-b border-slate-300 font-bold text-[11px]">
+                  <th class="py-1.5 px-2">اسم السيستم</th>
+                  <th class="py-1.5 px-2">كود الحلق المفصلي</th>
+                  <th class="py-1.5 px-2 font-mono">كود درفة المفصلي</th>
+                  <th class="py-1.5 px-2 font-mono">كود باكتة الزجاج</th>
+                  <th class="py-1.5 px-2 text-center">عرض بروفيل الدرفة (mm)</th>
+                  <th class="py-1.5 px-2 text-center">خصم عرض الدرفة (mm)</th>
+                  <th class="py-1.5 px-2 text-center">خصم ارتفاع الدرفة (mm)</th>
+                  <th class="py-1.5 px-2 text-center">فرزة الزجاج (mm)</th>
+                  <th class="py-1.5 px-2 text-center w-8"></th>
                 </tr>
               </thead>
               <tbody id="hingedSystemsBody" class="divide-y divide-slate-200"></tbody>
@@ -414,24 +378,24 @@
         </div>
 
         <!-- CATEGORY 3: HINGED DOORS -->
-        <div class="space-y-2 pt-2 border-t border-slate-200">
-          <div class="flex items-center gap-2 text-xs font-bold text-amber-900 bg-amber-50 px-3 py-1.5 rounded border border-amber-200">
-            <span class="w-2.5 h-2.5 rounded-full bg-amber-600 inline-block"></span>
-            <span>3. أنظمة الأبواب المفصلية (Doors) ⬅ تتكون من: [حلق باب 3 جهات + قائم باب + رأس وكعب باب سفلي + باكتة]</span>
+        <div class="space-y-2 pt-3 border-t border-slate-200">
+          <div class="flex items-center justify-between text-xs font-bold text-slate-900 bg-slate-100 px-3 py-1.5 rounded border border-slate-300">
+            <span>3. أنظمة الأبواب المفصلية (Doors) ⬅ تتكون من: [حلق باب 3 جهات + قائم باب + كعب باب سفلي + باكتة]</span>
+            <span class="font-mono text-[10px] text-slate-600">DOOR SECTIONS</span>
           </div>
           <div class="overflow-x-auto">
-            <table class="w-full text-xs text-right border-collapse font-mono" id="doorSystemsTable">
+            <table class="w-full text-xs text-right border-collapse" id="doorSystemsTable">
               <thead>
-                <tr class="bg-slate-50 text-slate-800 border-b border-slate-300 font-bold font-cairo text-[11px]">
-                  <th class="py-1 px-2">اسم السيستم</th>
-                  <th class="py-1 px-2">حلق الباب (3 جهات)</th>
-                  <th class="py-1 px-2 text-amber-900">قائم الباب (Stile)</th>
-                  <th class="py-1 px-2 text-emerald-900">كعب الباب السفلي</th>
-                  <th class="py-1 px-2">باكتة الزجاج</th>
-                  <th class="py-1 px-2 text-center">عرض قائم الباب (مم)</th>
-                  <th class="py-1 px-2 text-center">خصم العرض (مم)</th>
-                  <th class="py-1 px-2 text-center">خصم الارتفاع (مم)</th>
-                  <th class="py-1 px-2 text-center w-8"></th>
+                <tr class="bg-slate-50 text-slate-800 border-b border-slate-300 font-bold text-[11px]">
+                  <th class="py-1.5 px-2">اسم السيستم</th>
+                  <th class="py-1.5 px-2">حلق الباب (3 جهات)</th>
+                  <th class="py-1.5 px-2 font-mono">قائم الباب (Stile)</th>
+                  <th class="py-1.5 px-2 font-mono">كعب الباب السفلي</th>
+                  <th class="py-1.5 px-2 font-mono">باكتة الزجاج</th>
+                  <th class="py-1.5 px-2 text-center">عرض قائم الباب (mm)</th>
+                  <th class="py-1.5 px-2 text-center">خصم العرض (mm)</th>
+                  <th class="py-1.5 px-2 text-center">خصم الارتفاع (mm)</th>
+                  <th class="py-1.5 px-2 text-center w-8"></th>
                 </tr>
               </thead>
               <tbody id="doorSystemsBody" class="divide-y divide-slate-200"></tbody>
@@ -440,22 +404,22 @@
         </div>
 
         <!-- CATEGORY 4: FIXED SYSTEMS -->
-        <div class="space-y-2 pt-2 border-t border-slate-200">
-          <div class="flex items-center gap-2 text-xs font-bold text-emerald-900 bg-emerald-50 px-3 py-1.5 rounded border border-emerald-200">
-            <span class="w-2.5 h-2.5 rounded-full bg-emerald-600 inline-block"></span>
+        <div class="space-y-2 pt-3 border-t border-slate-200">
+          <div class="flex items-center justify-between text-xs font-bold text-slate-900 bg-slate-100 px-3 py-1.5 rounded border border-slate-300">
             <span>4. الأنظمة الثابتة (Fixed Windows) ⬅ تتكون فقط من: [حلق ثابت + باكتة زجاج] (بدون أي درف نهائياً)</span>
+            <span class="font-mono text-[10px] text-slate-600">FIXED SECTIONS</span>
           </div>
           <div class="overflow-x-auto">
-            <table class="w-full text-xs text-right border-collapse font-mono" id="fixedSystemsTable">
+            <table class="w-full text-xs text-right border-collapse" id="fixedSystemsTable">
               <thead>
-                <tr class="bg-slate-50 text-slate-800 border-b border-slate-300 font-bold font-cairo text-[11px]">
-                  <th class="py-1 px-2">اسم السيستم الثابت</th>
-                  <th class="py-1 px-2">كود الحلق الثابت</th>
-                  <th class="py-1 px-2 text-emerald-900">كود باكتة الزجاج</th>
-                  <th class="py-1 px-2 text-center">سماكة الفريم (مم)</th>
-                  <th class="py-1 px-2 text-center">عمق فرزة الزجاج بالفريم (مم)</th>
-                  <th class="py-1 px-2 text-center">خلوص الزجاج والكاوتشوك (مم)</th>
-                  <th class="py-1 px-2 text-center w-8"></th>
+                <tr class="bg-slate-50 text-slate-800 border-b border-slate-300 font-bold text-[11px]">
+                  <th class="py-1.5 px-2">اسم السيستم الثابت</th>
+                  <th class="py-1.5 px-2">كود الحلق الثابت</th>
+                  <th class="py-1.5 px-2 font-mono">كود باكتة الزجاج</th>
+                  <th class="py-1.5 px-2 text-center">سماكة الفريم (mm)</th>
+                  <th class="py-1.5 px-2 text-center">عمق فرزة الزجاج (mm)</th>
+                  <th class="py-1.5 px-2 text-center">خلوص الزجاج والكاوتشوك (mm)</th>
+                  <th class="py-1.5 px-2 text-center w-8"></th>
                 </tr>
               </thead>
               <tbody id="fixedSystemsBody" class="divide-y divide-slate-200"></tbody>
@@ -471,11 +435,10 @@
     <!-- TAB 3: DERIVED PARTS -->
     <!-- ============================================== -->
     <div id="tab-parts" class="tab-content hidden space-y-4">
-      <div class="bg-white rounded-lg border border-slate-300 shadow-2xs">
+      <div class="bg-white rounded border border-slate-300">
         <div class="px-3.5 py-2 border-b border-slate-200 flex items-center justify-between bg-slate-50">
-          <h3 class="font-black text-slate-900 text-xs">
-            <span class="lang-ar">قائمة قطع الألمنيوم المحسوبة للقص (مفصلة حسب نوع القطاع)</span>
-            <span class="lang-en">Derived Aluminum Cutting Pieces</span>
+          <h3 class="font-bold text-slate-900 text-xs">
+            قائمة قطع الألمنيوم المحسوبة للقص (مفصلة حسب نوع القطاع)
           </h3>
           <button onclick="recalculateAllPartsFromWindows()" class="px-2.5 py-1 text-xs bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold rounded">
             تحديث الحسابات
@@ -483,19 +446,19 @@
         </div>
         
         <div class="p-3 overflow-x-auto max-h-[420px]">
-          <table class="w-full text-xs text-right font-mono" id="partsTable">
+          <table class="w-full text-xs text-right" id="partsTable">
             <thead>
-              <tr class="text-slate-600 border-b border-slate-200 font-bold font-cairo">
+              <tr class="text-slate-600 border-b border-slate-200 font-bold">
                 <th class="pb-1.5">القطاع المطلوب سحبه</th>
                 <th class="pb-1.5">الوحدة / مسمى القطعة</th>
-                <th class="pb-1.5 text-center">النوع (W/H)</th>
-                <th class="pb-1.5 text-center">المقاس (مم)</th>
-                <th class="pb-1.5 text-center">العدد</th>
-                <th class="pb-1.5 text-center">الزوايا</th>
+                <th class="pb-1.5 text-center font-mono">Type (W/H)</th>
+                <th class="pb-1.5 text-center font-mono">Length (mm)</th>
+                <th class="pb-1.5 text-center font-mono">Qty</th>
+                <th class="pb-1.5 text-center font-mono">Angles</th>
                 <th class="pb-1.5 text-center"></th>
               </tr>
             </thead>
-            <tbody id="partsBody" class="divide-y divide-slate-100">
+            <tbody id="partsBody" class="divide-y divide-slate-100 font-mono text-xs">
               <!-- Parts -->
             </tbody>
           </table>
@@ -507,13 +470,12 @@
     <!-- TAB 4: OFFCUTS STOCK -->
     <!-- ============================================== -->
     <div id="tab-offcuts" class="tab-content hidden space-y-4">
-      <div class="bg-white rounded-lg border border-slate-300 shadow-2xs">
+      <div class="bg-white rounded border border-slate-300">
         <div class="px-4 py-2.5 border-b border-slate-200 flex items-center justify-between bg-slate-50">
           <div class="flex items-center gap-2">
             <i data-lucide="recycle" class="w-4 h-4 text-slate-700"></i>
-            <h3 class="font-black text-slate-900 text-xs sm:text-sm">
-              <span class="lang-ar">مخزون الفضلات المتوفرة بالورشة</span>
-              <span class="lang-en">Available Offcuts Stock</span>
+            <h3 class="font-bold text-slate-900 text-xs sm:text-sm">
+              مخزون الفضلات المتوفرة بالورشة (Offcuts Stock)
             </h3>
           </div>
           <div class="flex items-center gap-1.5">
@@ -527,23 +489,23 @@
         </div>
 
         <div class="p-3 overflow-x-auto">
-          <table class="w-full text-xs text-right font-mono" id="offcutsTable">
+          <table class="w-full text-xs text-right" id="offcutsTable">
             <thead>
-              <tr class="text-slate-600 border-b border-slate-200 font-bold font-cairo">
+              <tr class="text-slate-600 border-b border-slate-200 font-bold">
                 <th class="pb-1.5">القطاع</th>
-                <th class="pb-1.5 text-center">طول الفضلة (مم)</th>
-                <th class="pb-1.5 text-center">الكمية</th>
-                <th class="pb-1.5 text-center">زاوية 1</th>
-                <th class="pb-1.5 text-center">زاوية 2</th>
+                <th class="pb-1.5 text-center font-mono">Length (mm)</th>
+                <th class="pb-1.5 text-center font-mono">Qty</th>
+                <th class="pb-1.5 text-center font-mono">Angle 1</th>
+                <th class="pb-1.5 text-center font-mono">Angle 2</th>
                 <th class="pb-1.5">موقع الفضلة</th>
                 <th class="pb-1.5 text-center"></th>
               </tr>
             </thead>
-            <tbody id="offcutsBody" class="divide-y divide-slate-100">
+            <tbody id="offcutsBody" class="divide-y divide-slate-100 font-mono text-xs">
               <!-- Offcut rows -->
             </tbody>
           </table>
-          <div id="offcutsEmptyMsg" class="py-6 text-center text-slate-400 text-xs font-cairo">
+          <div id="offcutsEmptyMsg" class="py-6 text-center text-slate-400 text-xs">
             لا توجد فضلات مسجلة بالمخزون حالياً.
           </div>
         </div>
@@ -556,16 +518,16 @@
     <div id="tab-sheet" class="tab-content space-y-4">
       
       <!-- Toolbar -->
-      <div class="bg-white rounded-lg border border-slate-300 p-3 flex flex-wrap items-center justify-between gap-2 shadow-2xs no-print">
+      <div class="bg-white rounded border border-slate-300 p-2.5 flex flex-wrap items-center justify-between gap-2 no-print">
         <div class="flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-slate-900 inline-block"></span>
+          <span class="w-2.5 h-2.5 rounded bg-slate-900 inline-block"></span>
           <span class="font-bold text-xs text-slate-800">
             مخطط وأمر تشغيل قص الألمنيوم وتفصيل الزجاج للورشة (CAD Shop & Glass Schedule)
           </span>
         </div>
 
         <div class="flex items-center gap-2">
-          <button onclick="window.print()" class="px-3.5 py-1.5 bg-slate-900 hover:bg-black text-white font-bold text-xs rounded shadow transition flex items-center gap-1">
+          <button onclick="window.print()" class="px-3.5 py-1.5 bg-slate-900 hover:bg-black text-white font-bold text-xs rounded transition flex items-center gap-1">
             <i data-lucide="printer" class="w-3.5 h-3.5"></i>
             <span>طباعة المخطط الهندسي (Print / PDF)</span>
           </button>
@@ -583,33 +545,33 @@
       </div>
 
       <!-- Printable Engineering Sheet Container -->
-      <div id="printableSheetContent" class="bg-white rounded-lg border-2 border-slate-900 p-4 sm:p-6 shadow-sm print:border-slate-900 print:p-0 space-y-5">
+      <div id="printableSheetContent" class="bg-white rounded border-2 border-slate-900 p-4 sm:p-5 print:border-slate-900 print:p-0 space-y-4">
         
         <!-- TECHNICAL TITLE BLOCK -->
-        <div class="border-2 border-slate-900 rounded p-3 bg-slate-50 flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
+        <div class="border-2 border-slate-900 rounded p-2.5 bg-slate-50 flex flex-wrap items-center justify-between gap-3 text-xs">
           <div class="space-y-1">
             <div class="flex items-center gap-2">
-              <span class="px-1.5 py-0.5 bg-slate-900 text-white font-black text-[11px] rounded">DWG-01</span>
-              <h2 class="text-base font-black font-cairo text-slate-900 tracking-tight" id="printDocTitle">
+              <span class="px-1.5 py-0.5 bg-slate-900 text-white font-mono font-bold text-[11px] rounded">DWG-01</span>
+              <h2 class="text-sm sm:text-base font-bold text-slate-900" id="printDocTitle">
                 مخطط وأمر تشغيل قص بروفيلات الألمنيوم وتفصيل الزجاج
               </h2>
             </div>
-            <p class="text-[11px] text-slate-700 font-cairo font-semibold">
-              المشروع: <strong id="metaProjName" class="text-slate-900">مشروع فيلا الياسمين</strong> | 
+            <p class="text-[11px] text-slate-700">
+              المشروع: <strong id="metaProjName" class="text-slate-900">Project-01</strong> | 
               العميل: <strong id="metaClientName" class="text-slate-900">—</strong> | 
-              التاريخ: <strong id="metaDate" class="text-slate-900">—</strong>
+              التاريخ: <strong id="metaDate" class="text-slate-900 font-mono">—</strong>
             </p>
           </div>
-          <div class="text-left text-[10px] text-slate-600 border-l border-slate-300 pl-3">
-            <p>SCALE: 2D SHOP DRAWING (PROPORTIONAL)</p>
-            <p>DEDICATED LOGIC ENGINE</p>
+          <div class="text-left font-mono text-[10px] text-slate-600 border-l border-slate-300 pl-3">
+            <p>SCALE: 2D SHOP DRAWING (1:1 PROPORTIONAL)</p>
+            <p>ENGINEERING CAD OPTIMIZER</p>
             <p id="printTimestamp"></p>
           </div>
         </div>
 
         <!-- DYNAMIC CAD SHEET BODY -->
-        <div id="technicianSheetContainer" class="space-y-5">
-          <p class="text-center py-12 text-slate-400 text-xs font-cairo">
+        <div id="technicianSheetContainer" class="space-y-4">
+          <p class="text-center py-12 text-slate-400 text-xs">
             يرجى تشغيل "حساب وتوليد المخطط الهندسي" لعرض لوحات القص والبيانات.
           </p>
         </div>
@@ -624,15 +586,15 @@
     <div id="tab-projects" class="tab-content hidden space-y-4">
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
         
-        <div class="bg-white rounded-lg border border-slate-300 p-4 shadow-2xs space-y-3">
+        <div class="bg-white rounded border border-slate-300 p-4 space-y-3">
           <div class="flex items-center gap-1.5 border-b border-slate-200 pb-2">
             <i data-lucide="edit-3" class="w-4 h-4 text-slate-700"></i>
-            <h3 class="font-black text-slate-900 text-xs">بيانات المشروع</h3>
+            <h3 class="font-bold text-slate-900 text-xs">بيانات المشروع</h3>
           </div>
 
           <div>
             <label class="block text-[11px] font-bold text-slate-600 mb-0.5">اسم المشروع</label>
-            <input type="text" id="projectInputName" value="مشروع فيلا الياسمين" class="w-full px-2.5 py-1.5 border border-slate-300 rounded text-xs font-bold outline-none">
+            <input type="text" id="projectInputName" value="Project-01" class="w-full px-2.5 py-1.5 border border-slate-300 rounded text-xs font-bold outline-none">
           </div>
 
           <div>
@@ -655,19 +617,19 @@
           </div>
         </div>
 
-        <div class="bg-white rounded-lg border border-slate-300 p-4 shadow-2xs flex flex-col space-y-3">
+        <div class="bg-white rounded border border-slate-300 p-4 flex flex-col space-y-3">
           <div class="flex items-center justify-between border-b border-slate-200 pb-2">
-            <h3 class="font-black text-slate-900 text-xs">المشاريع المحفوظة</h3>
+            <h3 class="font-bold text-slate-900 text-xs">المشاريع المحفوظة</h3>
             <span id="savedProjectsCount" class="text-xs bg-slate-100 px-1.5 py-0.2 rounded font-mono font-bold">0</span>
           </div>
 
           <div class="flex-1 overflow-y-auto max-h-[300px] space-y-1.5" id="savedProjectsList"></div>
         </div>
 
-        <div class="bg-white rounded-lg border border-slate-300 p-4 shadow-2xs space-y-3">
+        <div class="bg-white rounded border border-slate-300 p-4 space-y-3">
           <div class="flex items-center gap-1.5 border-b border-slate-200 pb-2">
             <i data-lucide="share-2" class="w-4 h-4 text-slate-700"></i>
-            <h3 class="font-black text-slate-900 text-xs">الملفات والتصدير</h3>
+            <h3 class="font-bold text-slate-900 text-xs">الملفات والتصدير</h3>
           </div>
 
           <div class="space-y-2">
@@ -690,21 +652,21 @@
   </main>
 
   <!-- Footer -->
-  <footer class="bg-white border-t border-slate-300 py-3 text-center text-xs text-slate-500 font-cairo no-print">
+  <footer class="bg-white border-t border-slate-300 py-2.5 text-center text-xs text-slate-500 no-print">
     <div class="max-w-7xl mx-auto px-4 flex items-center justify-between">
-      <span>محسن ومخطط قص وتفصيل بروفيلات الألمنيوم والزجاج © 2026</span>
-      <span class="font-mono text-[11px] text-slate-400">Cascading Engineering CAD Engine</span>
+      <span>مخطط ومحسن تفصيل بروفيلات الألمنيوم والزجاج © 2026</span>
+      <span class="font-mono text-[11px] text-slate-400">Pure Engineering CAD System</span>
     </div>
   </footer>
 
   <!-- ============================================== -->
-  <!-- JAVASCRIPT LOGIC (CATEGORIZED BY SYSTEM TYPE) -->
+  <!-- JAVASCRIPT LOGIC (ENGLISH NUMBERS ONLY) -->
   <!-- ============================================== -->
   <script>
     let currentProject = {
-      name: 'مشروع فيلا الياسمين',
-      client: 'أحمد عبد الله',
-      notes: 'قطاع سحاب 10سم مع زجاج دبل 24مم',
+      name: 'Project-01',
+      client: 'Client-01',
+      notes: 'Standard fabrication order',
       updatedAt: new Date().toISOString()
     };
 
@@ -714,11 +676,11 @@
       {
         id: 1,
         category: 'sliding',
-        name: 'نظام سحاب 10سم (سرايا / الراجحي)',
-        frameCode: 'FR-100 (حلق 10سم)',
-        sideStileCode: 'SA-SIDE (درفة جنب)',
-        interlockCode: 'SA-INTER (درفة شنكل)',
-        railCode: 'SA-RAIL (درفة كعب)',
+        name: 'نظام سحاب 100mm (Saraya / Standard)',
+        frameCode: 'FR-100 (Frame 100mm)',
+        sideStileCode: 'SA-SIDE (Side Stile)',
+        interlockCode: 'SA-INTER (Interlock)',
+        railCode: 'SA-RAIL (Top/Bot Rail)',
         frameThickness: 45,
         sashWidth: 65,
         heightClearance: 75,
@@ -730,11 +692,11 @@
       {
         id: 2,
         category: 'sliding',
-        name: 'نظام سحاب 12سم جامبو (Super Saraya)',
-        frameCode: 'FR-120 (حلق 12سم)',
-        sideStileCode: 'SA-SIDE-12 (درفة جنب 12)',
-        interlockCode: 'SA-INTER-12 (درفة شنكل 12)',
-        railCode: 'SA-RAIL-12 (درفة كعب 12)',
+        name: 'نظام سحاب 120mm جامبو (Jumbo Sliding)',
+        frameCode: 'FR-120 (Frame 120mm)',
+        sideStileCode: 'SA-SIDE-12 (Side Stile 12)',
+        interlockCode: 'SA-INTER-12 (Interlock 12)',
+        railCode: 'SA-RAIL-12 (Rail 12)',
         frameThickness: 50,
         sashWidth: 75,
         heightClearance: 80,
@@ -748,10 +710,10 @@
       {
         id: 3,
         category: 'hinged-window',
-        name: 'نظام مفصلي شبابيك 50مم (Casement Window)',
-        frameCode: 'FR-50 (حلق مفصلي)',
-        sashCode: 'SA-50 (درفة مفصلي)',
-        beadCode: 'BD-20 (باكتة زجاج)',
+        name: 'نظام مفصلي شبابيك 50mm (Casement Window)',
+        frameCode: 'FR-50 (Casement Frame)',
+        sashCode: 'SA-50 (Casement Sash)',
+        beadCode: 'BD-20 (Glass Bead)',
         frameThickness: 50,
         sashWidth: 68,
         widthDeduction: 86,
@@ -765,11 +727,11 @@
       {
         id: 4,
         category: 'hinged-door',
-        name: 'نظام باب مفصلي 50مم (Hinged Door)',
-        frameCode: 'DFR-50 (حلق باب 3 جهات)',
-        doorStileCode: 'DST-85 (قائم باب عريض)',
-        doorBottomRailCode: 'DBOT-120 (كعب باب سفلي)',
-        beadCode: 'BD-20 (باكتة زجاج)',
+        name: 'نظام باب مفصلي 50mm (Hinged Door)',
+        frameCode: 'DFR-50 (Door Frame 3-Sides)',
+        doorStileCode: 'DST-85 (Door Stile 85mm)',
+        doorBottomRailCode: 'DBOT-120 (Door Bottom Rail)',
+        beadCode: 'BD-20 (Glass Bead)',
         frameThickness: 50,
         doorStileWidth: 85,
         widthDeduction: 100,
@@ -783,9 +745,9 @@
       {
         id: 5,
         category: 'fixed',
-        name: 'نظام ثابت 50مم (Fixed Frame)',
-        frameCode: 'FR-50 (حلق ثابت)',
-        beadCode: 'BD-20 (باكتة زجاج)',
+        name: 'نظام ثابت 50mm (Fixed Frame)',
+        frameCode: 'FR-50 (Fixed Frame)',
+        beadCode: 'BD-20 (Glass Bead)',
         frameThickness: 45,
         glassPocketDepth: 16,
         glassClearance: 4,
@@ -796,33 +758,25 @@
     let profiles = [];
 
     let windowUnits = [
-      { id: 1, code: 'W-01 (شباك صالة)', systemId: 1, type: 'sliding-2', width: 1800, height: 1400, qty: 2 },
-      { id: 2, code: 'W-02 (شباك غرفة)', systemId: 1, type: 'sliding-2', width: 1200, height: 1200, qty: 3 },
-      { id: 3, code: 'D-01 (باب بلكونة)', systemId: 4, type: 'hinged-door', width: 900, height: 2100, qty: 1 },
-      { id: 4, code: 'W-03 (شباك حمام)', systemId: 3, type: 'hinged-window', width: 600, height: 600, qty: 2 },
-      { id: 5, code: 'W-04 (واجهة ثابتة)', systemId: 5, type: 'fixed', width: 1500, height: 1800, qty: 1 }
+      { id: 1, code: 'W-01', systemId: 1, type: 'sliding-2', width: 1800, height: 1400, qty: 2 },
+      { id: 2, code: 'W-02', systemId: 1, type: 'sliding-2', width: 1200, height: 1200, qty: 3 },
+      { id: 3, code: 'D-01', systemId: 4, type: 'hinged-door', width: 900, height: 2100, qty: 1 },
+      { id: 4, code: 'W-03', systemId: 3, type: 'hinged-window', width: 600, height: 600, qty: 2 },
+      { id: 5, code: 'W-04', systemId: 5, type: 'fixed', width: 1500, height: 1800, qty: 1 }
     ];
 
     let parts = [];
     let glassSchedule = [];
 
     let offcuts = [
-      { id: 1, profileId: 1, length: 1850, qty: 1, startAngle: 45, endAngle: 90, location: 'مستودع أ' },
-      { id: 2, profileId: 2, length: 2400, qty: 1, startAngle: 90, endAngle: 90, location: 'مستودع ب' },
+      { id: 1, profileId: 1, length: 1850, qty: 1, startAngle: 45, endAngle: 90, location: 'Rack-A' },
+      { id: 2, profileId: 2, length: 2400, qty: 1, startAngle: 90, endAngle: 90, location: 'Rack-B' },
     ];
 
     let lastOptimizationResult = null;
     let nextWindowId = 6;
     let nextSystemId = 6;
     let nextOffcutId = 3;
-
-    function toggleLanguage() {
-      document.body.classList.toggle('en');
-      const isEn = document.body.classList.contains('en');
-      document.documentElement.lang = isEn ? 'en' : 'ar';
-      document.documentElement.dir = isEn ? 'ltr' : 'rtl';
-      lucide.createIcons();
-    }
 
     function switchTab(tabId) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
@@ -860,19 +814,19 @@
           numSashes = 2;
           sashW = Math.round((W + sys.widthOverlap) / 2);
           sashH = Math.round(H - sys.heightClearance);
-          sashTypeLabel = '2 درفة سحاب (جنب/شنكل/كعب)';
+          sashTypeLabel = '2 Sashes (Side/Inter/Rail)';
           panesPerUnit = 2 * qty;
         } else if (unit.type === 'sliding-3') {
           numSashes = 3;
           sashW = Math.round((W + 2 * sys.widthOverlap) / 3);
           sashH = Math.round(H - sys.heightClearance);
-          sashTypeLabel = '3 درف سحاب';
+          sashTypeLabel = '3 Sashes';
           panesPerUnit = 3 * qty;
         } else if (unit.type === 'sliding-4') {
           numSashes = 4;
           sashW = Math.round((W + 2 * sys.widthOverlap) / 4);
           sashH = Math.round(H - sys.heightClearance);
-          sashTypeLabel = '4 درف سحاب';
+          sashTypeLabel = '4 Sashes';
           panesPerUnit = 4 * qty;
         }
         glassW = Math.round(sashW - (2 * sys.sashWidth) + (2 * sys.glassPocketDepth) - sys.glassClearance);
@@ -884,7 +838,7 @@
         numSashes = 1;
         sashW = Math.max(100, Math.round(W - (sys.widthDeduction || 86)));
         sashH = Math.max(100, Math.round(H - (sys.heightDeduction || 86)));
-        sashTypeLabel = 'درفة مفصلي موحدة';
+        sashTypeLabel = '1 Hinged Sash';
         panesPerUnit = 1 * qty;
         glassW = Math.round(sashW - (2 * (sys.sashWidth || 68)) + (2 * sys.glassPocketDepth) - sys.glassClearance);
         glassH = Math.round(sashH - (2 * (sys.sashWidth || 68)) + (2 * sys.glassPocketDepth) - sys.glassClearance);
@@ -895,10 +849,10 @@
         numSashes = 1;
         sashW = Math.max(100, Math.round(W - (sys.widthDeduction || 100)));
         sashH = Math.max(100, Math.round(H - (sys.heightDeduction || 65)));
-        sashTypeLabel = 'درفة باب (قائم وكعب)';
+        sashTypeLabel = '1 Door Leaf (Stile/Rail)';
         panesPerUnit = 1 * qty;
         glassW = Math.round(sashW - (2 * (sys.doorStileWidth || 85)) + (2 * sys.glassPocketDepth) - sys.glassClearance);
-        glassH = Math.round(sashH - (85 + 120) + (2 * sys.glassPocketDepth) - sys.glassClearance); // Top rail + Bottom rail
+        glassH = Math.round(sashH - (85 + 120) + (2 * sys.glassPocketDepth) - sys.glassClearance);
       }
 
       // 4. FIXED WINDOW LOGIC (NO SASH)
@@ -906,9 +860,8 @@
         numSashes = 0;
         sashW = W;
         sashH = H;
-        sashTypeLabel = 'ثابت (مباشر بالحلق)';
+        sashTypeLabel = 'Fixed (Direct Frame)';
         panesPerUnit = 1 * qty;
-        // Glass directly inside frame rebate
         glassW = Math.round(W - (2 * sys.frameThickness) + (2 * sys.glassPocketDepth) - sys.glassClearance);
         glassH = Math.round(H - (2 * sys.frameThickness) + (2 * sys.glassPocketDepth) - sys.glassClearance);
       }
@@ -938,7 +891,6 @@
       let totalGlassArea = 0;
 
       tbody.innerHTML = windowUnits.map((u, idx) => {
-        // Filter systems matching unit type category
         let matchingCategory = 'sliding';
         if (u.type === 'hinged-window') matchingCategory = 'hinged-window';
         else if (u.type === 'hinged-door') matchingCategory = 'hinged-door';
@@ -955,13 +907,13 @@
 
         return `
           <tr class="hover:bg-slate-50 transition">
-            <td class="py-1.5 px-2 text-center font-bold text-slate-500">${idx + 1}</td>
-            <td class="py-1.5 px-2 font-cairo">
+            <td class="py-1.5 px-2 text-center font-mono font-bold text-slate-500">${idx + 1}</td>
+            <td class="py-1.5 px-2 font-mono">
               <input type="text" value="${u.code}" onchange="updateWindowUnit(${u.id}, 'code', this.value)" 
-                class="w-32 px-2 py-1 border border-slate-300 rounded font-bold text-slate-900 bg-white">
+                class="w-28 px-2 py-1 border border-slate-300 rounded font-bold text-slate-900 bg-white">
             </td>
-            <td class="py-1.5 px-2 font-cairo">
-              <select onchange="changeUnitType(${u.id}, this.value)" class="px-2 py-1 border border-slate-300 rounded bg-white text-slate-800 font-bold">
+            <td class="py-1.5 px-2">
+              <select onchange="changeUnitType(${u.id}, this.value)" class="px-2 py-1 border border-slate-300 rounded bg-white text-slate-900 font-medium">
                 <option value="sliding-2" ${u.type === 'sliding-2' ? 'selected' : ''}>سحاب (2 درفة)</option>
                 <option value="sliding-3" ${u.type === 'sliding-3' ? 'selected' : ''}>سحاب (3 درف)</option>
                 <option value="sliding-4" ${u.type === 'sliding-4' ? 'selected' : ''}>سحاب (4 درف)</option>
@@ -975,24 +927,24 @@
               <input type="number" value="${u.height}" onchange="updateWindowUnit(${u.id}, 'height', +this.value)" class="w-16 px-1 py-1 border rounded text-center">
             </td>
             <td class="py-1.5 px-2 text-center">
-              <input type="number" value="${u.qty}" min="1" max="100" onchange="updateWindowUnit(${u.id}, 'qty', +this.value)" class="w-12 px-1 py-1 border rounded text-center font-bold">
+              <input type="number" value="${u.qty}" min="1" max="100" onchange="updateWindowUnit(${u.id}, 'qty', +this.value)" class="w-12 px-1 py-1 border rounded text-center font-mono font-bold">
             </td>
-            <td class="py-1.5 px-2 font-cairo">
+            <td class="py-1.5 px-2">
               <select onchange="updateWindowUnit(${u.id}, 'systemId', +this.value)" class="w-48 px-2 py-1 border border-slate-300 rounded bg-white font-bold text-slate-800">
                 ${sysOptions}
               </select>
             </td>
             
-            <td class="py-1.5 px-2 text-center font-mono font-bold text-blue-900 bg-blue-50/50 border-x border-blue-100">
-              ${cascade.numSashes > 0 ? `${cascade.sashW} × ${cascade.sashH} مم <span class="block text-[10px] font-normal text-slate-500 font-cairo">(${cascade.sashTypeLabel})</span>` : '<span class="text-slate-400 font-cairo">بدون درف (حلق مباشر)</span>'}
+            <td class="py-1.5 px-2 text-center font-mono font-bold text-slate-900 border-x border-slate-200">
+              ${cascade.numSashes > 0 ? `${cascade.sashW} × ${cascade.sashH} mm <span class="block text-[10px] font-normal text-slate-500 font-sans">(${cascade.sashTypeLabel})</span>` : '<span class="text-slate-400 font-sans">بدون درف (حلق مباشر)</span>'}
             </td>
 
-            <td class="py-1.5 px-2 text-center font-mono font-black text-emerald-800 bg-emerald-50/50 border-x border-emerald-100">
-              ${cascade.glassW} × ${cascade.glassH} مم
-              <span class="block text-[10px] font-normal text-slate-600 font-cairo font-mono">(${cascade.panesPerUnit} لوح • ${cascade.totalGlassArea} م²)</span>
+            <td class="py-1.5 px-2 text-center font-mono font-bold text-slate-900 border-x border-slate-200 bg-slate-50/50">
+              ${cascade.glassW} × ${cascade.glassH} mm
+              <span class="block text-[10px] font-normal text-slate-600 font-mono">(${cascade.panesPerUnit} panes • ${cascade.totalGlassArea} m²)</span>
             </td>
 
-            <td class="py-1.5 px-2 text-center font-cairo">
+            <td class="py-1.5 px-2 text-center">
               <div class="flex items-center justify-center gap-1">
                 <button onclick="duplicateWindowUnit(${u.id})" class="text-slate-400 hover:text-slate-700" title="تكرار">
                   <i data-lucide="copy" class="w-3.5 h-3.5"></i>
@@ -1006,9 +958,9 @@
         `;
       }).join('');
 
-      document.getElementById('totalUnitsCount').textContent = `${windowUnits.reduce((s, u) => s + (u.qty || 1), 0)} وحدة`;
-      document.getElementById('totalGlassPanesCount').textContent = `${totalGlassPanes} لوح`;
-      document.getElementById('totalGlassAreaSquareMeters').textContent = `${totalGlassArea.toFixed(2)} م²`;
+      document.getElementById('totalUnitsCount').textContent = windowUnits.reduce((s, u) => s + (u.qty || 1), 0);
+      document.getElementById('totalGlassPanesCount').textContent = totalGlassPanes;
+      document.getElementById('totalGlassAreaSquareMeters').textContent = totalGlassArea.toFixed(2);
 
       lucide.createIcons();
     }
@@ -1047,7 +999,7 @@
     function duplicateWindowUnit(id) {
       const u = windowUnits.find(x => x.id === id);
       if (u) {
-        windowUnits.push({ ...u, id: nextWindowId++, code: u.code + ' (نسخة)' });
+        windowUnits.push({ ...u, id: nextWindowId++, code: u.code + '-copy' });
         renderWindowsSchedule();
         recalculateAllPartsFromWindows();
       }
@@ -1079,16 +1031,16 @@
         const slidingList = systems.filter(s => s.category === 'sliding');
         slidingBody.innerHTML = slidingList.map(s => `
           <tr class="hover:bg-slate-50">
-            <td class="py-1 px-2 font-bold font-cairo"><input type="text" value="${s.name}" onchange="updateSystem(${s.id}, 'name', this.value)" class="w-40 px-1.5 py-1 border rounded bg-white"></td>
-            <td class="py-1 px-2"><input type="text" value="${s.frameCode}" onchange="updateSystem(${s.id}, 'frameCode', this.value)" class="w-28 px-1 py-0.5 border rounded"></td>
-            <td class="py-1 px-2 bg-blue-50/50"><input type="text" value="${s.sideStileCode}" onchange="updateSystem(${s.id}, 'sideStileCode', this.value)" class="w-28 px-1 py-0.5 border border-blue-300 rounded font-bold text-blue-900 bg-white"></td>
-            <td class="py-1 px-2 bg-amber-50/50"><input type="text" value="${s.interlockCode}" onchange="updateSystem(${s.id}, 'interlockCode', this.value)" class="w-28 px-1 py-0.5 border border-amber-300 rounded font-bold text-amber-900 bg-white"></td>
-            <td class="py-1 px-2 bg-emerald-50/50"><input type="text" value="${s.railCode}" onchange="updateSystem(${s.id}, 'railCode', this.value)" class="w-28 px-1 py-0.5 border border-emerald-300 rounded font-bold text-emerald-900 bg-white"></td>
-            <td class="py-1 px-2 text-center"><input type="number" value="${s.sashWidth}" onchange="updateSystem(${s.id}, 'sashWidth', +this.value)" class="w-12 px-1 py-0.5 border rounded text-center"></td>
-            <td class="py-1 px-2 text-center"><input type="number" value="${s.heightClearance}" onchange="updateSystem(${s.id}, 'heightClearance', +this.value)" class="w-12 px-1 py-0.5 border rounded text-center"></td>
-            <td class="py-1 px-2 text-center"><input type="number" value="${s.widthOverlap}" onchange="updateSystem(${s.id}, 'widthOverlap', +this.value)" class="w-12 px-1 py-0.5 border rounded text-center"></td>
-            <td class="py-1 px-2 text-center"><input type="number" value="${s.glassPocketDepth}" onchange="updateSystem(${s.id}, 'glassPocketDepth', +this.value)" class="w-12 px-1 py-0.5 border rounded text-center"></td>
-            <td class="py-1 px-2 text-center"><button onclick="removeSystem(${s.id})" class="text-slate-400 hover:text-rose-600">✕</button></td>
+            <td class="py-1.5 px-2 font-bold"><input type="text" value="${s.name}" onchange="updateSystem(${s.id}, 'name', this.value)" class="w-44 px-1.5 py-1 border rounded bg-white"></td>
+            <td class="py-1.5 px-2 font-mono"><input type="text" value="${s.frameCode}" onchange="updateSystem(${s.id}, 'frameCode', this.value)" class="w-28 px-1 py-0.5 border rounded"></td>
+            <td class="py-1.5 px-2 font-mono"><input type="text" value="${s.sideStileCode}" onchange="updateSystem(${s.id}, 'sideStileCode', this.value)" class="w-28 px-1 py-0.5 border rounded font-bold"></td>
+            <td class="py-1.5 px-2 font-mono"><input type="text" value="${s.interlockCode}" onchange="updateSystem(${s.id}, 'interlockCode', this.value)" class="w-28 px-1 py-0.5 border rounded font-bold"></td>
+            <td class="py-1.5 px-2 font-mono"><input type="text" value="${s.railCode}" onchange="updateSystem(${s.id}, 'railCode', this.value)" class="w-28 px-1 py-0.5 border rounded font-bold"></td>
+            <td class="py-1.5 px-2 text-center"><input type="number" value="${s.sashWidth}" onchange="updateSystem(${s.id}, 'sashWidth', +this.value)" class="w-12 px-1 py-0.5 border rounded text-center font-mono font-bold"></td>
+            <td class="py-1.5 px-2 text-center"><input type="number" value="${s.heightClearance}" onchange="updateSystem(${s.id}, 'heightClearance', +this.value)" class="w-12 px-1 py-0.5 border rounded text-center font-mono font-bold"></td>
+            <td class="py-1.5 px-2 text-center"><input type="number" value="${s.widthOverlap}" onchange="updateSystem(${s.id}, 'widthOverlap', +this.value)" class="w-12 px-1 py-0.5 border rounded text-center font-mono font-bold"></td>
+            <td class="py-1.5 px-2 text-center"><input type="number" value="${s.glassPocketDepth}" onchange="updateSystem(${s.id}, 'glassPocketDepth', +this.value)" class="w-12 px-1 py-0.5 border rounded text-center font-mono font-bold"></td>
+            <td class="py-1.5 px-2 text-center"><button onclick="removeSystem(${s.id})" class="text-slate-400 hover:text-rose-600">✕</button></td>
           </tr>
         `).join('');
       }
@@ -1099,15 +1051,15 @@
         const hingedList = systems.filter(s => s.category === 'hinged-window');
         hingedBody.innerHTML = hingedList.map(s => `
           <tr class="hover:bg-slate-50">
-            <td class="py-1 px-2 font-bold font-cairo"><input type="text" value="${s.name}" onchange="updateSystem(${s.id}, 'name', this.value)" class="w-44 px-1.5 py-1 border rounded bg-white"></td>
-            <td class="py-1 px-2"><input type="text" value="${s.frameCode}" onchange="updateSystem(${s.id}, 'frameCode', this.value)" class="w-32 px-1 py-0.5 border rounded"></td>
-            <td class="py-1 px-2"><input type="text" value="${s.sashCode}" onchange="updateSystem(${s.id}, 'sashCode', this.value)" class="w-32 px-1 py-0.5 border border-blue-300 rounded font-bold text-blue-900 bg-white"></td>
-            <td class="py-1 px-2"><input type="text" value="${s.beadCode}" onchange="updateSystem(${s.id}, 'beadCode', this.value)" class="w-28 px-1 py-0.5 border border-emerald-300 rounded font-bold text-emerald-900 bg-white"></td>
-            <td class="py-1 px-2 text-center"><input type="number" value="${s.sashWidth}" onchange="updateSystem(${s.id}, 'sashWidth', +this.value)" class="w-14 px-1 py-0.5 border rounded text-center"></td>
-            <td class="py-1 px-2 text-center"><input type="number" value="${s.widthDeduction}" onchange="updateSystem(${s.id}, 'widthDeduction', +this.value)" class="w-14 px-1 py-0.5 border rounded text-center font-bold"></td>
-            <td class="py-1 px-2 text-center"><input type="number" value="${s.heightDeduction}" onchange="updateSystem(${s.id}, 'heightDeduction', +this.value)" class="w-14 px-1 py-0.5 border rounded text-center font-bold"></td>
-            <td class="py-1 px-2 text-center"><input type="number" value="${s.glassPocketDepth}" onchange="updateSystem(${s.id}, 'glassPocketDepth', +this.value)" class="w-14 px-1 py-0.5 border rounded text-center"></td>
-            <td class="py-1 px-2 text-center"><button onclick="removeSystem(${s.id})" class="text-slate-400 hover:text-rose-600">✕</button></td>
+            <td class="py-1.5 px-2 font-bold"><input type="text" value="${s.name}" onchange="updateSystem(${s.id}, 'name', this.value)" class="w-44 px-1.5 py-1 border rounded bg-white"></td>
+            <td class="py-1.5 px-2 font-mono"><input type="text" value="${s.frameCode}" onchange="updateSystem(${s.id}, 'frameCode', this.value)" class="w-32 px-1 py-0.5 border rounded"></td>
+            <td class="py-1.5 px-2 font-mono"><input type="text" value="${s.sashCode}" onchange="updateSystem(${s.id}, 'sashCode', this.value)" class="w-32 px-1 py-0.5 border rounded font-bold"></td>
+            <td class="py-1.5 px-2 font-mono"><input type="text" value="${s.beadCode}" onchange="updateSystem(${s.id}, 'beadCode', this.value)" class="w-28 px-1 py-0.5 border rounded font-bold"></td>
+            <td class="py-1.5 px-2 text-center"><input type="number" value="${s.sashWidth}" onchange="updateSystem(${s.id}, 'sashWidth', +this.value)" class="w-14 px-1 py-0.5 border rounded text-center font-mono font-bold"></td>
+            <td class="py-1.5 px-2 text-center"><input type="number" value="${s.widthDeduction}" onchange="updateSystem(${s.id}, 'widthDeduction', +this.value)" class="w-14 px-1 py-0.5 border rounded text-center font-mono font-bold"></td>
+            <td class="py-1.5 px-2 text-center"><input type="number" value="${s.heightDeduction}" onchange="updateSystem(${s.id}, 'heightDeduction', +this.value)" class="w-14 px-1 py-0.5 border rounded text-center font-mono font-bold"></td>
+            <td class="py-1.5 px-2 text-center"><input type="number" value="${s.glassPocketDepth}" onchange="updateSystem(${s.id}, 'glassPocketDepth', +this.value)" class="w-14 px-1 py-0.5 border rounded text-center font-mono font-bold"></td>
+            <td class="py-1.5 px-2 text-center"><button onclick="removeSystem(${s.id})" class="text-slate-400 hover:text-rose-600">✕</button></td>
           </tr>
         `).join('');
       }
@@ -1118,15 +1070,15 @@
         const doorList = systems.filter(s => s.category === 'hinged-door');
         doorBody.innerHTML = doorList.map(s => `
           <tr class="hover:bg-slate-50">
-            <td class="py-1 px-2 font-bold font-cairo"><input type="text" value="${s.name}" onchange="updateSystem(${s.id}, 'name', this.value)" class="w-44 px-1.5 py-1 border rounded bg-white"></td>
-            <td class="py-1 px-2"><input type="text" value="${s.frameCode}" onchange="updateSystem(${s.id}, 'frameCode', this.value)" class="w-32 px-1 py-0.5 border rounded"></td>
-            <td class="py-1 px-2"><input type="text" value="${s.doorStileCode}" onchange="updateSystem(${s.id}, 'doorStileCode', this.value)" class="w-32 px-1 py-0.5 border border-amber-300 rounded font-bold text-amber-900 bg-white"></td>
-            <td class="py-1 px-2"><input type="text" value="${s.doorBottomRailCode}" onchange="updateSystem(${s.id}, 'doorBottomRailCode', this.value)" class="w-32 px-1 py-0.5 border border-emerald-300 rounded font-bold text-emerald-900 bg-white"></td>
-            <td class="py-1 px-2"><input type="text" value="${s.beadCode}" onchange="updateSystem(${s.id}, 'beadCode', this.value)" class="w-24 px-1 py-0.5 border rounded"></td>
-            <td class="py-1 px-2 text-center"><input type="number" value="${s.doorStileWidth}" onchange="updateSystem(${s.id}, 'doorStileWidth', +this.value)" class="w-14 px-1 py-0.5 border rounded text-center font-bold"></td>
-            <td class="py-1 px-2 text-center"><input type="number" value="${s.widthDeduction}" onchange="updateSystem(${s.id}, 'widthDeduction', +this.value)" class="w-14 px-1 py-0.5 border rounded text-center"></td>
-            <td class="py-1 px-2 text-center"><input type="number" value="${s.heightDeduction}" onchange="updateSystem(${s.id}, 'heightDeduction', +this.value)" class="w-14 px-1 py-0.5 border rounded text-center"></td>
-            <td class="py-1 px-2 text-center"><button onclick="removeSystem(${s.id})" class="text-slate-400 hover:text-rose-600">✕</button></td>
+            <td class="py-1.5 px-2 font-bold"><input type="text" value="${s.name}" onchange="updateSystem(${s.id}, 'name', this.value)" class="w-44 px-1.5 py-1 border rounded bg-white"></td>
+            <td class="py-1.5 px-2 font-mono"><input type="text" value="${s.frameCode}" onchange="updateSystem(${s.id}, 'frameCode', this.value)" class="w-32 px-1 py-0.5 border rounded"></td>
+            <td class="py-1.5 px-2 font-mono"><input type="text" value="${s.doorStileCode}" onchange="updateSystem(${s.id}, 'doorStileCode', this.value)" class="w-32 px-1 py-0.5 border rounded font-bold"></td>
+            <td class="py-1.5 px-2 font-mono"><input type="text" value="${s.doorBottomRailCode}" onchange="updateSystem(${s.id}, 'doorBottomRailCode', this.value)" class="w-32 px-1 py-0.5 border rounded font-bold"></td>
+            <td class="py-1.5 px-2 font-mono"><input type="text" value="${s.beadCode}" onchange="updateSystem(${s.id}, 'beadCode', this.value)" class="w-24 px-1 py-0.5 border rounded"></td>
+            <td class="py-1.5 px-2 text-center"><input type="number" value="${s.doorStileWidth}" onchange="updateSystem(${s.id}, 'doorStileWidth', +this.value)" class="w-14 px-1 py-0.5 border rounded text-center font-mono font-bold"></td>
+            <td class="py-1.5 px-2 text-center"><input type="number" value="${s.widthDeduction}" onchange="updateSystem(${s.id}, 'widthDeduction', +this.value)" class="w-14 px-1 py-0.5 border rounded text-center font-mono font-bold"></td>
+            <td class="py-1.5 px-2 text-center"><input type="number" value="${s.heightDeduction}" onchange="updateSystem(${s.id}, 'heightDeduction', +this.value)" class="w-14 px-1 py-0.5 border rounded text-center font-mono font-bold"></td>
+            <td class="py-1.5 px-2 text-center"><button onclick="removeSystem(${s.id})" class="text-slate-400 hover:text-rose-600">✕</button></td>
           </tr>
         `).join('');
       }
@@ -1137,13 +1089,13 @@
         const fixedList = systems.filter(s => s.category === 'fixed');
         fixedBody.innerHTML = fixedList.map(s => `
           <tr class="hover:bg-slate-50">
-            <td class="py-1 px-2 font-bold font-cairo"><input type="text" value="${s.name}" onchange="updateSystem(${s.id}, 'name', this.value)" class="w-48 px-1.5 py-1 border rounded bg-white"></td>
-            <td class="py-1 px-2"><input type="text" value="${s.frameCode}" onchange="updateSystem(${s.id}, 'frameCode', this.value)" class="w-36 px-1 py-0.5 border rounded"></td>
-            <td class="py-1 px-2"><input type="text" value="${s.beadCode}" onchange="updateSystem(${s.id}, 'beadCode', this.value)" class="w-32 px-1 py-0.5 border border-emerald-300 rounded font-bold text-emerald-900 bg-white"></td>
-            <td class="py-1 px-2 text-center"><input type="number" value="${s.frameThickness}" onchange="updateSystem(${s.id}, 'frameThickness', +this.value)" class="w-16 px-1 py-0.5 border rounded text-center font-bold"></td>
-            <td class="py-1 px-2 text-center"><input type="number" value="${s.glassPocketDepth}" onchange="updateSystem(${s.id}, 'glassPocketDepth', +this.value)" class="w-16 px-1 py-0.5 border rounded text-center"></td>
-            <td class="py-1 px-2 text-center"><input type="number" value="${s.glassClearance}" onchange="updateSystem(${s.id}, 'glassClearance', +this.value)" class="w-16 px-1 py-0.5 border rounded text-center"></td>
-            <td class="py-1 px-2 text-center"><button onclick="removeSystem(${s.id})" class="text-slate-400 hover:text-rose-600">✕</button></td>
+            <td class="py-1.5 px-2 font-bold"><input type="text" value="${s.name}" onchange="updateSystem(${s.id}, 'name', this.value)" class="w-48 px-1.5 py-1 border rounded bg-white"></td>
+            <td class="py-1.5 px-2 font-mono"><input type="text" value="${s.frameCode}" onchange="updateSystem(${s.id}, 'frameCode', this.value)" class="w-36 px-1 py-0.5 border rounded"></td>
+            <td class="py-1.5 px-2 font-mono"><input type="text" value="${s.beadCode}" onchange="updateSystem(${s.id}, 'beadCode', this.value)" class="w-32 px-1 py-0.5 border rounded font-bold"></td>
+            <td class="py-1.5 px-2 text-center"><input type="number" value="${s.frameThickness}" onchange="updateSystem(${s.id}, 'frameThickness', +this.value)" class="w-16 px-1 py-0.5 border rounded text-center font-mono font-bold"></td>
+            <td class="py-1.5 px-2 text-center"><input type="number" value="${s.glassPocketDepth}" onchange="updateSystem(${s.id}, 'glassPocketDepth', +this.value)" class="w-16 px-1 py-0.5 border rounded text-center font-mono font-bold"></td>
+            <td class="py-1.5 px-2 text-center"><input type="number" value="${s.glassClearance}" onchange="updateSystem(${s.id}, 'glassClearance', +this.value)" class="w-16 px-1 py-0.5 border rounded text-center font-mono font-bold"></td>
+            <td class="py-1.5 px-2 text-center"><button onclick="removeSystem(${s.id})" class="text-slate-400 hover:text-rose-600">✕</button></td>
           </tr>
         `).join('');
       }
@@ -1164,7 +1116,7 @@
         systems.push({
           id: nextSystemId++,
           category: 'sliding',
-          name: 'نظام سحاب مخصص #' + idx,
+          name: `Custom Sliding #${idx}`,
           frameCode: 'FR-CUSTOM',
           sideStileCode: 'SA-SIDE-C',
           interlockCode: 'SA-INTER-C',
@@ -1181,7 +1133,7 @@
         systems.push({
           id: nextSystemId++,
           category: 'hinged-window',
-          name: 'نظام مفصلي مخصص #' + idx,
+          name: `Custom Casement #${idx}`,
           frameCode: 'FR-HINGE-C',
           sashCode: 'SA-HINGE-C',
           beadCode: 'BD-20',
@@ -1197,7 +1149,7 @@
         systems.push({
           id: nextSystemId++,
           category: 'hinged-door',
-          name: 'نظام باب مخصص #' + idx,
+          name: `Custom Door #${idx}`,
           frameCode: 'DFR-DOOR-C',
           doorStileCode: 'DST-DOOR-C',
           doorBottomRailCode: 'DBOT-DOOR-C',
@@ -1214,7 +1166,7 @@
         systems.push({
           id: nextSystemId++,
           category: 'fixed',
-          name: 'نظام ثابت مخصص #' + idx,
+          name: `Custom Fixed #${idx}`,
           frameCode: 'FR-FIXED-C',
           beadCode: 'BD-20',
           frameThickness: 45,
@@ -1244,7 +1196,6 @@
       let newGlass = [];
       let partCounter = 1;
 
-      // Extract all unique profiles across all systems
       let syncProfiles = [];
       let pId = 1;
       const addProfile = (code, type, width, scrap) => {
@@ -1289,11 +1240,9 @@
           const interProf = getProf(sys.interlockCode);
           const railProf = getProf(sys.railCode);
 
-          // Frame
           newParts.push({ id: partCounter++, unitCode: code, profileId: frameProf.id, dimType: 'W', label: `${code} - حلق أفقي`, length: W, qty: 2 * qty, startAngle: 45, endAngle: 45 });
           newParts.push({ id: partCounter++, unitCode: code, profileId: frameProf.id, dimType: 'H', label: `${code} - حلق رأسي`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 45 });
 
-          // Sashes
           if (unit.type === 'sliding-2') {
             newParts.push({ id: partCounter++, unitCode: code, profileId: sideProf.id, dimType: 'H', label: `${code} - درفة جنب`, length: cascade.sashH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
             newParts.push({ id: partCounter++, unitCode: code, profileId: interProf.id, dimType: 'H', label: `${code} - درفة شنكل`, length: cascade.sashH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
@@ -1361,7 +1310,7 @@
           unitName: unit.code,
           systemName: sys.name,
           sashType: cascade.sashTypeLabel,
-          sashSize: cascade.numSashes > 0 ? `${cascade.sashW} × ${cascade.sashH} مم` : 'بدون درف (حلق مباشر)',
+          sashSize: cascade.numSashes > 0 ? `${cascade.sashW} × ${cascade.sashH} mm` : 'Fixed Frame (No Sash)',
           glassW: cascade.glassW,
           glassH: cascade.glassH,
           qtyPanes: cascade.panesPerUnit,
@@ -1385,13 +1334,13 @@
       tbody.innerHTML = parts.map(p => {
         const pr = profiles.find(x => x.id === p.profileId);
         return `
-          <tr class="hover:bg-slate-50">
-            <td class="py-1 px-1 font-bold font-cairo text-slate-900">${pr?.code || '—'}</td>
-            <td class="py-1 px-1 font-cairo">${p.label}</td>
-            <td class="py-1 px-1 text-center"><span class="px-1 py-0.2 rounded font-mono font-bold ${p.dimType === 'W' ? 'bg-blue-100 text-blue-800' : 'bg-emerald-100 text-emerald-800'}">${p.dimType}</span></td>
-            <td class="py-1 px-1 text-center font-bold font-mono">${p.length}</td>
-            <td class="py-1 px-1 text-center font-mono">${p.qty}</td>
-            <td class="py-1 px-1 text-center font-mono text-[11px]">${p.startAngle}° / ${p.endAngle}°</td>
+          <tr class="hover:bg-slate-50 font-mono">
+            <td class="py-1 px-1 font-bold text-slate-900 font-sans">${pr?.code || '—'}</td>
+            <td class="py-1 px-1 font-sans">${p.label}</td>
+            <td class="py-1 px-1 text-center font-bold">${p.dimType}</td>
+            <td class="py-1 px-1 text-center font-bold">${p.length} mm</td>
+            <td class="py-1 px-1 text-center font-bold">${p.qty}</td>
+            <td class="py-1 px-1 text-center text-[11px]">${p.startAngle}° / ${p.endAngle}°</td>
             <td class="py-1 px-1 text-center"><button onclick="removePart(${p.id})" class="text-slate-400 hover:text-rose-600">✕</button></td>
           </tr>
         `;
@@ -1405,7 +1354,7 @@
     }
 
     function updateSubtitleAndBadges() {
-      const name = document.getElementById('projectInputName')?.value || currentProject.name || 'مشروع بدون عنوان';
+      const name = document.getElementById('projectInputName')?.value || currentProject.name || 'Project-01';
       const activeBadge = document.getElementById('activeProjectBadge');
       if (activeBadge) activeBadge.textContent = name;
       
@@ -1434,13 +1383,13 @@
       tbody.innerHTML = offcuts.map(o => {
         const profileOptions = profiles.map(pr => `<option value="${pr.id}" ${pr.id === o.profileId ? 'selected' : ''}>${pr.code}</option>`).join('');
         return `
-          <tr class="hover:bg-slate-50">
-            <td class="py-1 px-1"><select onchange="updateOffcut(${o.id}, 'profileId', +this.value)" class="px-1 py-0.5 border border-slate-300 rounded font-cairo text-xs">${profileOptions}</select></td>
-            <td class="py-1 px-1 text-center"><input type="number" value="${o.length}" onchange="updateOffcut(${o.id}, 'length', +this.value)" class="w-20 px-1 py-0.5 border border-slate-300 rounded text-center text-xs font-bold"></td>
-            <td class="py-1 px-1 text-center"><input type="number" value="${o.qty}" onchange="updateOffcut(${o.id}, 'qty', +this.value)" class="w-12 px-1 py-0.5 border border-slate-300 rounded text-center text-xs font-bold"></td>
-            <td class="py-1 px-1 text-center"><select onchange="updateOffcut(${o.id}, 'startAngle', +this.value)" class="px-1 py-0.5 border rounded text-xs"><option value="90" ${o.startAngle === 90 ? 'selected' : ''}>90°</option><option value="45" ${o.startAngle === 45 ? 'selected' : ''}>45°</option></select></td>
-            <td class="py-1 px-1 text-center"><select onchange="updateOffcut(${o.id}, 'endAngle', +this.value)" class="px-1 py-0.5 border rounded text-xs"><option value="90" ${o.endAngle === 90 ? 'selected' : ''}>90°</option><option value="45" ${o.endAngle === 45 ? 'selected' : ''}>45°</option></select></td>
-            <td class="py-1 px-1"><input type="text" value="${o.location || ''}" onchange="updateOffcut(${o.id}, 'location', this.value)" class="w-full px-1 py-0.5 border border-slate-300 rounded font-cairo text-xs"></td>
+          <tr class="hover:bg-slate-50 font-mono">
+            <td class="py-1 px-1 font-sans"><select onchange="updateOffcut(${o.id}, 'profileId', +this.value)" class="px-1 py-0.5 border border-slate-300 rounded text-xs font-sans">${profileOptions}</select></td>
+            <td class="py-1 px-1 text-center"><input type="number" value="${o.length}" onchange="updateOffcut(${o.id}, 'length', +this.value)" class="w-20 px-1 py-0.5 border border-slate-300 rounded text-center text-xs font-bold font-mono"></td>
+            <td class="py-1 px-1 text-center"><input type="number" value="${o.qty}" onchange="updateOffcut(${o.id}, 'qty', +this.value)" class="w-12 px-1 py-0.5 border border-slate-300 rounded text-center text-xs font-bold font-mono"></td>
+            <td class="py-1 px-1 text-center"><select onchange="updateOffcut(${o.id}, 'startAngle', +this.value)" class="px-1 py-0.5 border rounded text-xs font-mono"><option value="90" ${o.startAngle === 90 ? 'selected' : ''}>90°</option><option value="45" ${o.startAngle === 45 ? 'selected' : ''}>45°</option></select></td>
+            <td class="py-1 px-1 text-center"><select onchange="updateOffcut(${o.id}, 'endAngle', +this.value)" class="px-1 py-0.5 border rounded text-xs font-mono"><option value="90" ${o.endAngle === 90 ? 'selected' : ''}>90°</option><option value="45" ${o.endAngle === 45 ? 'selected' : ''}>45°</option></select></td>
+            <td class="py-1 px-1"><input type="text" value="${o.location || ''}" onchange="updateOffcut(${o.id}, 'location', this.value)" class="w-full px-1 py-0.5 border border-slate-300 rounded text-xs font-mono"></td>
             <td class="py-1 px-1 text-center"><button onclick="removeOffcut(${o.id})" class="text-slate-400 hover:text-rose-600">✕</button></td>
           </tr>
         `;
@@ -1454,7 +1403,7 @@
     }
 
     function addOffcut(length = 2000, profileId = null, location = '') {
-      offcuts.push({ id: nextOffcutId++, profileId: profileId || profiles[0]?.id || 1, length, qty: 1, startAngle: 90, endAngle: 90, location: location || 'مستودع أ' });
+      offcuts.push({ id: nextOffcutId++, profileId: profileId || profiles[0]?.id || 1, length, qty: 1, startAngle: 90, endAngle: 90, location: location || 'Rack-A' });
       renderOffcuts();
     }
 
@@ -1508,7 +1457,7 @@
           const profileOffcuts = offcuts.filter(o => o.profileId === profile.id);
           profileOffcuts.forEach(o => {
             for (let i = 0; i < o.qty; i++) {
-              availableOffcuts.push({ id: o.id, length: o.length, startAngle: o.startAngle || 90, endAngle: o.endAngle || 90, isOffcut: true, location: o.location || 'فضلة' });
+              availableOffcuts.push({ id: o.id, length: o.length, startAngle: o.startAngle || 90, endAngle: o.endAngle || 90, isOffcut: true, location: o.location || 'Offcut' });
             }
           });
           availableOffcuts.sort((a, b) => a.length - b.length);
@@ -1527,7 +1476,7 @@
         });
       });
 
-      lastOptimizationResult = { allBars, profileResults, defaultStockLength, kerf, minOffcut, trimCut, timestamp: new Date().toLocaleString() };
+      lastOptimizationResult = { allBars, profileResults, defaultStockLength, kerf, minOffcut, trimCut, timestamp: new Date().toISOString().replace('T', ' ').slice(0, 19) };
 
       renderWorkshopSheet(allBars, kerf, trimCut, minOffcut);
       switchTab('tab-sheet');
@@ -1587,7 +1536,7 @@
           };
 
           if (trimCut > 0) {
-            currentBar.cuts.push({ type: 'trim', length: trimCut, label: 'تنظيف', startAngle: 90, endAngle: 90 });
+            currentBar.cuts.push({ type: 'trim', length: trimCut, label: 'TRIM', startAngle: 90, endAngle: 90 });
             currentBar.usedLength += trimCut;
             currentBar.remainingLength -= trimCut;
             currentBar.deadScrap += trimCut;
@@ -1629,10 +1578,10 @@
 
       function applyPieceCut(bar, piece, fitTest, kerfVal) {
         if (fitTest.kerfNeeded > 0) {
-          bar.cuts.push({ type: 'kerf', length: kerfVal, label: 'سلاح' });
+          bar.cuts.push({ type: 'kerf', length: kerfVal, label: 'KERF' });
         }
         if (fitTest.scrapNeeded > 0) {
-          bar.cuts.push({ type: 'scrap', length: fitTest.scrapNeeded, label: 'سكراب 45°', startAngle: bar.currentEndAngle, endAngle: piece.startAngle });
+          bar.cuts.push({ type: 'scrap', length: fitTest.scrapNeeded, label: 'SCRAP 45°', startAngle: bar.currentEndAngle, endAngle: piece.startAngle });
           bar.deadScrap += fitTest.scrapNeeded;
         }
         bar.cuts.push({
@@ -1672,7 +1621,7 @@
     }
 
     // =========================================================================
-    // 2D CAD VECTOR BAR HTML RENDERER
+    // 2D CAD VECTOR BAR HTML RENDERER (MONOCHROME DRAFTING)
     // =========================================================================
     function generate2DTechnicalBarHTML(bar, kerf, minOffcut) {
       const totalLen = bar.stockLength;
@@ -1683,12 +1632,12 @@
 
         if (cut.type === 'kerf') {
           segmentsHtml += `
-            <div style="width: ${Math.max(0.4, pct)}%;" class="h-full bg-slate-900 flex-shrink-0" title="سلاح: ${cut.length} مم"></div>
+            <div style="width: ${Math.max(0.4, pct)}%;" class="h-full bg-slate-900 flex-shrink-0" title="Kerf: ${cut.length} mm"></div>
           `;
         }
         else if (cut.type === 'trim' || cut.type === 'scrap') {
           segmentsHtml += `
-            <div style="width: ${pct}%; min-width: 16px;" class="h-full cad-scrap-pattern border-r border-slate-700 flex flex-col items-center justify-center text-[9px] font-mono font-bold text-slate-800 flex-shrink-0 px-0.5" title="${cut.label}: ${cut.length} مم">
+            <div style="width: ${pct}%; min-width: 16px;" class="h-full cad-scrap-pattern border-r border-slate-900 flex flex-col items-center justify-center text-[9px] font-mono font-bold text-slate-800 flex-shrink-0 px-0.5" title="${cut.label}: ${cut.length} mm">
               <span class="leading-none">S</span>
               <span class="text-[8px] leading-none">${cut.length}</span>
             </div>
@@ -1701,15 +1650,15 @@
 
           segmentsHtml += `
             <div style="width: ${pct}%; min-width: 48px;" class="h-full bg-white border-r-2 border-slate-900 flex flex-col items-center justify-center text-center px-1 relative flex-shrink-0">
-              ${is45Start ? '<div class="absolute left-0 top-0 bottom-0 w-1 bg-amber-500/30 border-r border-amber-600"></div>' : ''}
-              ${is45End ? '<div class="absolute right-0 top-0 bottom-0 w-1 bg-amber-500/30 border-l border-amber-600"></div>' : ''}
+              ${is45Start ? '<div class="absolute left-0 top-0 bottom-0 w-1 bg-slate-300 border-r border-slate-900"></div>' : ''}
+              ${is45End ? '<div class="absolute right-0 top-0 bottom-0 w-1 bg-slate-300 border-l border-slate-900"></div>' : ''}
 
-              <span class="text-[10px] font-bold text-slate-800 font-cairo leading-tight truncate w-full">
+              <span class="text-[10px] font-bold text-slate-900 leading-tight truncate w-full font-sans">
                 ${cut.label} ${dimBadge}
               </span>
-              <span class="text-xs sm:text-sm font-black text-slate-950 font-mono leading-tight">
-                ${cut.length} <span class="text-[10px] font-normal">مم</span>
-                <span class="text-[9px] font-bold ${is45Start || is45End ? 'text-amber-800' : 'text-slate-600'}">[${cut.startAngle}°/${cut.endAngle}°]</span>
+              <span class="text-xs font-black text-slate-950 font-mono leading-tight">
+                ${cut.length} <span class="text-[9px] font-normal">mm</span>
+                <span class="text-[9px] font-bold text-slate-700 font-mono">[${cut.startAngle}°/${cut.endAngle}°]</span>
               </span>
             </div>
           `;
@@ -1721,37 +1670,38 @@
         const isUseful = bar.remainingLength >= minOffcut;
 
         segmentsHtml += `
-          <div style="width: ${remainPct}%; min-width: 42px;" class="h-full ${isUseful ? 'cad-offcut-pattern text-emerald-950' : 'bg-slate-100 text-slate-600'} border-r border-dashed border-slate-700 flex flex-col items-center justify-center text-center px-1 font-mono font-bold flex-shrink-0">
-            <span class="text-xs font-black leading-none">${bar.remainingLength} <span class="text-[9px] font-normal">مم</span></span>
-            <span class="text-[9px] font-cairo leading-none mt-0.5">${isUseful ? 'فضلة صالحة' : 'هالك'}</span>
+          <div style="width: ${remainPct}%; min-width: 42px;" class="h-full ${isUseful ? 'cad-offcut-pattern text-slate-900' : 'bg-slate-200 text-slate-600'} border-r-2 border-slate-900 flex flex-col items-center justify-center text-center px-1 font-mono font-bold flex-shrink-0">
+            <span class="text-xs font-black leading-none">${bar.remainingLength} <span class="text-[9px] font-normal">mm</span></span>
+            <span class="text-[9px] font-sans leading-none mt-0.5">${isUseful ? 'فضلة صالحة' : 'هالك'}</span>
           </div>
         `;
       }
 
       return `
-        <div class="border-2 border-slate-900 rounded overflow-hidden bg-slate-50 relative flex h-11 w-full shadow-2xs">
+        <div class="border-2 border-slate-900 rounded overflow-hidden bg-slate-50 relative flex h-10 w-full">
           ${segmentsHtml}
         </div>
       `;
     }
 
     // =========================================================================
-    // RENDER WORKSHOP TECHNICIAN SHEET
+    // RENDER WORKSHOP TECHNICIAN SHEET (CLEAN CAD DRAFTING LOOK)
     // =========================================================================
     function renderWorkshopSheet(allBars, kerf, trimCut, minOffcut) {
       const container = document.getElementById('technicianSheetContainer');
       if (!container) return;
 
-      const projName = document.getElementById('projectInputName')?.value || currentProject.name || 'مشروع بدون عنوان';
+      const projName = document.getElementById('projectInputName')?.value || currentProject.name || 'Project-01';
       const clientName = document.getElementById('projectInputClient')?.value || currentProject.client || '—';
+      const dateStr = new Date().toISOString().slice(0, 10);
 
       document.getElementById('metaProjName').textContent = projName;
       document.getElementById('metaClientName').textContent = clientName;
-      document.getElementById('metaDate').textContent = new Date().toLocaleDateString('ar-EG');
-      document.getElementById('printTimestamp').textContent = new Date().toLocaleString();
+      document.getElementById('metaDate').textContent = dateStr;
+      document.getElementById('printTimestamp').textContent = new Date().toISOString().replace('T', ' ').slice(0, 19);
 
       if (allBars.length === 0) {
-        container.innerHTML = `<p class="text-center py-12 text-slate-400 text-xs font-cairo">لا توجد بيانات قص</p>`;
+        container.innerHTML = `<p class="text-center py-12 text-slate-400 text-xs">لا توجد بيانات قص</p>`;
         return;
       }
 
@@ -1765,7 +1715,7 @@
           requisition[b.profileId] = { code: b.profileCode, type: 'other', newBars: 0, offcuts: [] };
         }
         if (b.isOffcut) {
-          requisition[b.profileId].offcuts.push({ length: b.stockLength, location: b.offcutLocation || 'المستودع', barId: b.globalId });
+          requisition[b.profileId].offcuts.push({ length: b.stockLength, location: b.offcutLocation || 'Stock', barId: b.globalId });
         } else {
           requisition[b.profileId].newBars++;
         }
@@ -1778,27 +1728,27 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-3">
           
           <div class="lg:col-span-7 border-2 border-slate-900 rounded p-2.5 bg-white space-y-1.5 tech-card">
-            <div class="flex items-center justify-between border-b border-slate-900 pb-1 font-mono text-xs font-bold">
-              <span class="font-cairo text-slate-900">1. قائمة النوافذ الداخلة في أمر القص والتفصيل</span>
-              <span>COUNT: ${windowUnits.reduce((s, u) => s + (u.qty || 1), 0)} UNITS</span>
+            <div class="flex items-center justify-between border-b border-slate-900 pb-1 text-xs font-bold">
+              <span class="text-slate-900">1. قائمة النوافذ الداخلة في أمر القص والتفصيل</span>
+              <span class="font-mono">COUNT: ${windowUnits.reduce((s, u) => s + (u.qty || 1), 0)} UNITS</span>
             </div>
             
-            <table class="w-full text-xs text-right border border-slate-300 font-mono">
+            <table class="w-full text-xs text-right border border-slate-300">
               <thead>
-                <tr class="bg-slate-100 text-slate-800 border-b border-slate-300 font-bold font-cairo text-[11px]">
-                  <th class="py-1 px-1.5">كود النافذة</th>
-                  <th class="py-1 px-1.5 text-center">مقاس الحلق W×H</th>
-                  <th class="py-1 px-1.5 text-center">العدد</th>
+                <tr class="bg-slate-100 text-slate-900 border-b border-slate-300 font-bold text-[11px]">
+                  <th class="py-1 px-1.5 font-mono">Code</th>
+                  <th class="py-1 px-1.5 text-center font-mono">Frame (W × H)</th>
+                  <th class="py-1 px-1.5 text-center font-mono">Qty</th>
                   <th class="py-1 px-1.5">السيستم / القطاع</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-slate-200 text-[11px]">
+              <tbody class="divide-y divide-slate-200 text-[11px] font-mono">
                 ${windowUnits.map(u => `
                   <tr>
-                    <td class="py-1 px-1.5 font-bold font-cairo">${u.code}</td>
-                    <td class="py-1 px-1.5 text-center font-bold">${u.width} × ${u.height} مم</td>
+                    <td class="py-1 px-1.5 font-bold">${u.code}</td>
+                    <td class="py-1 px-1.5 text-center font-bold">${u.width} × ${u.height} mm</td>
                     <td class="py-1 px-1.5 text-center font-bold">${u.qty}</td>
-                    <td class="py-1 px-1.5 font-cairo text-[10px]">${systems.find(s => s.id === u.systemId)?.name || '—'}</td>
+                    <td class="py-1 px-1.5 font-sans text-[11px]">${systems.find(s => s.id === u.systemId)?.name || '—'}</td>
                   </tr>
                 `).join('')}
               </tbody>
@@ -1806,26 +1756,26 @@
           </div>
 
           <div class="lg:col-span-5 border-2 border-slate-900 rounded p-2.5 bg-white space-y-1.5 tech-card">
-            <div class="flex items-center justify-between border-b border-slate-900 pb-1 font-mono text-xs font-bold">
-              <span class="font-cairo text-slate-900">2. إذن سحب الأعواد من المستودع</span>
-              <span>TOTAL: ${totalNewBarsAll} BARS</span>
+            <div class="flex items-center justify-between border-b border-slate-900 pb-1 text-xs font-bold">
+              <span class="text-slate-900">2. إذن سحب الأعواد من المستودع</span>
+              <span class="font-mono">TOTAL: ${totalNewBarsAll} BARS</span>
             </div>
 
-            <table class="w-full text-xs text-right border border-slate-300 font-mono">
+            <table class="w-full text-xs text-right border border-slate-300">
               <thead>
-                <tr class="bg-slate-100 text-slate-800 border-b border-slate-300 font-bold font-cairo text-[11px]">
+                <tr class="bg-slate-100 text-slate-900 border-b border-slate-300 font-bold text-[11px]">
                   <th class="py-1 px-1.5">القطاع المطلوب</th>
-                  <th class="py-1 px-1.5 text-center">أعواد 6000 مم</th>
+                  <th class="py-1 px-1.5 text-center font-mono">New Bars (6000mm)</th>
                   <th class="py-1 px-1.5">الفضلات المطلوبة</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-slate-200 text-[11px]">
+              <tbody class="divide-y divide-slate-200 text-[11px] font-mono">
                 ${Object.values(requisition).filter(r => r.newBars > 0 || r.offcuts.length > 0).map(r => `
                   <tr>
-                    <td class="py-1 px-1.5 font-bold font-cairo">${r.code}</td>
-                    <td class="py-1 px-1.5 text-center font-bold">${r.newBars} عود</td>
-                    <td class="py-1 px-1.5 text-[10px] text-slate-700 font-cairo">
-                      ${r.offcuts.length > 0 ? r.offcuts.map(o => `${o.length} مم`).join(', ') : '—'}
+                    <td class="py-1 px-1.5 font-bold font-sans">${r.code}</td>
+                    <td class="py-1 px-1.5 text-center font-bold">${r.newBars}</td>
+                    <td class="py-1 px-1.5 text-[10px] text-slate-700">
+                      ${r.offcuts.length > 0 ? r.offcuts.map(o => `${o.length}mm`).join(', ') : '—'}
                     </td>
                   </tr>
                 `).join('')}
@@ -1838,7 +1788,7 @@
         <!-- SECTION 2: 2D CAD CUTTING DIAGRAMS PER BAR -->
         <div class="space-y-3">
           <div class="border-b-2 border-slate-900 pb-1 flex items-center justify-between font-mono text-xs font-bold">
-            <span class="font-cairo text-sm text-slate-900">3. خرائط ومخططات القص التنفيذية على المنشار (2D Bar Cutting Maps)</span>
+            <span class="text-sm text-slate-900 font-sans">3. خرائط ومخططات القص التنفيذية على المنشار (2D Bar Cutting Maps)</span>
             <span class="text-slate-600">KERF: ${kerf}mm | TRIM: ${trimCut}mm</span>
           </div>
       `;
@@ -1853,16 +1803,16 @@
             
             <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-300 pb-1 font-mono text-xs">
               <div class="flex items-center gap-2">
-                <span class="px-2 py-0.5 bg-slate-900 text-white font-black text-xs rounded">
+                <span class="px-2 py-0.5 bg-slate-900 text-white font-mono font-bold text-xs rounded">
                   BAR #${bar.globalId}
                 </span>
-                <strong class="font-cairo text-slate-900 text-sm">${bar.profileCode}</strong>
-                <span class="text-slate-600">(${bar.isOffcut ? '♻ فضلة مستودع: ' + bar.stockLength + ' مم' : 'عود جديد: ' + bar.stockLength + ' مم'})</span>
+                <strong class="text-slate-900 text-xs font-sans">${bar.profileCode}</strong>
+                <span class="text-slate-600">(${bar.isOffcut ? 'Offcut: ' + bar.stockLength + ' mm' : 'New Stock: ' + bar.stockLength + ' mm'})</span>
               </div>
               <div class="text-[11px] text-slate-700">
-                USED: <strong>${bar.usedLength} مم</strong> | 
-                REMAIN: <strong class="${isRemainUseful ? 'text-emerald-800' : 'text-slate-500'}">${bar.remainingLength} مم</strong> 
-                (${isRemainUseful ? 'فضلة صالحة' : 'هالك'})
+                USED: <strong>${bar.usedLength} mm</strong> | 
+                REMAIN: <strong>${bar.remainingLength} mm</strong> 
+                (${isRemainUseful ? 'Offcut' : 'Scrap'})
               </div>
             </div>
 
@@ -1872,25 +1822,25 @@
 
             <table class="w-full text-xs text-right border border-slate-300 font-mono mt-1">
               <thead>
-                <tr class="bg-slate-100 text-slate-800 border-b border-slate-300 font-bold font-cairo text-[10px]">
+                <tr class="bg-slate-100 text-slate-900 border-b border-slate-300 font-bold text-[10px]">
                   <th class="py-0.5 px-1.5 text-center w-8">#</th>
-                  <th class="py-0.5 px-1.5">الوحدة والقطعة</th>
-                  <th class="py-0.5 px-1.5 text-center">النوع</th>
-                  <th class="py-0.5 px-1.5 text-center text-xs font-black">المقاس (الطول)</th>
-                  <th class="py-0.5 px-1.5 text-center">الزاوية 1</th>
-                  <th class="py-0.5 px-1.5 text-center">الزاوية 2</th>
-                  <th class="py-0.5 px-1.5 text-center w-14 font-cairo">تم [✔]</th>
+                  <th class="py-0.5 px-1.5 font-sans">الوحدة والقطعة</th>
+                  <th class="py-0.5 px-1.5 text-center">Type</th>
+                  <th class="py-0.5 px-1.5 text-center text-xs font-black">Length (mm)</th>
+                  <th class="py-0.5 px-1.5 text-center">Angle 1</th>
+                  <th class="py-0.5 px-1.5 text-center">Angle 2</th>
+                  <th class="py-0.5 px-1.5 text-center w-14 font-sans">تم [✔]</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-200 text-[11px]">
                 ${partsInBar.map((p, idx) => `
                   <tr>
                     <td class="py-0.5 px-1.5 text-center font-bold">${idx + 1}</td>
-                    <td class="py-0.5 px-1.5 font-cairo font-bold">${p.label}</td>
-                    <td class="py-0.5 px-1.5 text-center"><span class="px-1 py-0.2 rounded font-bold ${p.dimType === 'W' ? 'bg-blue-100 text-blue-900' : 'bg-emerald-100 text-emerald-900'}">${p.dimType}</span></td>
-                    <td class="py-0.5 px-1.5 text-center font-black text-xs text-slate-900">${p.length} مم</td>
-                    <td class="py-0.5 px-1.5 text-center font-bold ${p.startAngle === 45 ? 'text-amber-800 font-black' : 'text-slate-700'}">${p.startAngle}°</td>
-                    <td class="py-0.5 px-1.5 text-center font-bold ${p.endAngle === 45 ? 'text-amber-800 font-black' : 'text-slate-700'}">${p.endAngle}°</td>
+                    <td class="py-0.5 px-1.5 font-sans font-bold">${p.label}</td>
+                    <td class="py-0.5 px-1.5 text-center font-bold">${p.dimType}</td>
+                    <td class="py-0.5 px-1.5 text-center font-black text-xs text-slate-900">${p.length} mm</td>
+                    <td class="py-0.5 px-1.5 text-center font-bold ${p.startAngle === 45 ? 'text-slate-950 font-black' : 'text-slate-700'}">${p.startAngle}°</td>
+                    <td class="py-0.5 px-1.5 text-center font-bold ${p.endAngle === 45 ? 'text-slate-950 font-black' : 'text-slate-700'}">${p.endAngle}°</td>
                     <td class="py-0.5 px-1.5 text-center">
                       <input type="checkbox" class="w-3.5 h-3.5 text-slate-900 rounded border-slate-400">
                     </td>
@@ -1914,47 +1864,43 @@
         <div class="border-2 border-slate-900 rounded p-3 bg-white space-y-2 tech-card page-break">
           <div class="flex flex-wrap items-center justify-between border-b-2 border-slate-900 pb-1.5 font-mono text-xs">
             <div class="flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-emerald-600 inline-block"></span>
-              <h3 class="font-cairo text-xs sm:text-sm font-black text-slate-900">4. كشف تفصيل ومقاسات ومساحات الزجاج (Glass Cutting Schedule)</h3>
+              <span class="w-2.5 h-2.5 bg-slate-900 inline-block rounded"></span>
+              <h3 class="font-sans text-xs sm:text-sm font-bold text-slate-900">4. كشف تفصيل ومقاسات ومساحات الزجاج (Glass Cutting Schedule)</h3>
             </div>
-            <div class="text-xs text-emerald-900 font-bold bg-emerald-50 px-2.5 py-0.5 rounded border border-emerald-300">
-              إجمالي ألواح الزجاج: <strong>${totalPanesSum} لوح</strong> | المساحة الكلية: <strong>${totalAreaSum} م²</strong>
+            <div class="text-xs text-slate-900 font-bold bg-slate-100 px-2.5 py-0.5 rounded border border-slate-300 font-mono">
+              TOTAL PANES: <strong>${totalPanesSum}</strong> | TOTAL AREA: <strong>${totalAreaSum} m²</strong>
             </div>
           </div>
 
-          <p class="text-[10px] text-slate-600 font-cairo font-medium">
-            🔍 تم حساب مقاسات ألواح الزجاج بعد خصم سماكات الدرف وإضافة عمق الفرزة وخصم خلوصات الأمان والكاوتشوك (حسب كل سيستم):
-          </p>
-
           <table class="w-full text-xs text-right border border-slate-300 font-mono">
             <thead>
-              <tr class="bg-slate-100 text-slate-800 border-b border-slate-300 font-bold font-cairo text-[10px]">
-                <th class="py-1 px-1.5">كود النافذة</th>
-                <th class="py-1 px-1.5">نوع الوحدة</th>
-                <th class="py-1 px-1.5">السيستم</th>
-                <th class="py-1 px-1.5 text-center text-blue-900">مقاس الدرفة (Ws × Hs)</th>
-                <th class="py-1 px-1.5 text-center text-emerald-900 font-black text-xs bg-emerald-50/70 border-x border-emerald-200">مقاس الزجاج الصافي (Wg × Hg)</th>
-                <th class="py-1 px-1.5 text-center">عدد الألواح</th>
-                <th class="py-1 px-1.5 text-center">مساحة اللوح (م²)</th>
-                <th class="py-1 px-1.5 text-center">إجمالي المساحة (م²)</th>
-                <th class="py-1 px-1.5 text-center w-14 font-cairo">تم [✔]</th>
+              <tr class="bg-slate-100 text-slate-900 border-b border-slate-300 font-bold text-[10px]">
+                <th class="py-1 px-1.5">Code</th>
+                <th class="py-1 px-1.5 font-sans">نوع الوحدة</th>
+                <th class="py-1 px-1.5 font-sans">السيستم</th>
+                <th class="py-1 px-1.5 text-center">Sash Size (Ws × Hs)</th>
+                <th class="py-1 px-1.5 text-center font-black text-xs bg-slate-200/60 border-x border-slate-300">Glass Cut (Wg × Hg)</th>
+                <th class="py-1 px-1.5 text-center">Panes</th>
+                <th class="py-1 px-1.5 text-center">Area / Pane (m²)</th>
+                <th class="py-1 px-1.5 text-center">Total Area (m²)</th>
+                <th class="py-1 px-1.5 text-center w-14 font-sans">تم [✔]</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-slate-200 text-[11px]">
               ${glassSchedule.map(g => `
-                <tr class="hover:bg-slate-50 font-medium">
-                  <td class="py-1 px-1.5 font-bold font-cairo text-slate-900">${g.unitCode}</td>
-                  <td class="py-1 px-1.5 font-cairo text-slate-700">${g.sashType}</td>
-                  <td class="py-1 px-1.5 font-cairo text-[10px] text-slate-600">${g.systemName}</td>
-                  <td class="py-1 px-1.5 text-center font-bold text-blue-900">${g.sashSize}</td>
-                  <td class="py-1 px-1.5 text-center font-black text-xs text-emerald-800 bg-emerald-50/50 border-x border-emerald-200">
-                    ${g.glassW} × ${g.glassH} مم
+                <tr class="hover:bg-slate-50">
+                  <td class="py-1 px-1.5 font-bold">${g.unitCode}</td>
+                  <td class="py-1 px-1.5 font-sans text-slate-700">${g.sashType}</td>
+                  <td class="py-1 px-1.5 font-sans text-[10px] text-slate-600">${g.systemName}</td>
+                  <td class="py-1 px-1.5 text-center font-bold">${g.sashSize}</td>
+                  <td class="py-1 px-1.5 text-center font-black text-xs text-slate-950 bg-slate-100/60 border-x border-slate-300">
+                    ${g.glassW} × ${g.glassH} mm
                   </td>
                   <td class="py-1 px-1.5 text-center font-bold">${g.qtyPanes}</td>
-                  <td class="py-1 px-1.5 text-center">${g.singleArea} م²</td>
-                  <td class="py-1 px-1.5 text-center font-bold text-slate-900">${g.totalArea} م²</td>
+                  <td class="py-1 px-1.5 text-center">${g.singleArea} m²</td>
+                  <td class="py-1 px-1.5 text-center font-bold text-slate-900">${g.totalArea} m²</td>
                   <td class="py-1 px-1.5 text-center">
-                    <input type="checkbox" class="w-3.5 h-3.5 text-emerald-600 rounded">
+                    <input type="checkbox" class="w-3.5 h-3.5 text-slate-900 rounded">
                   </td>
                 </tr>
               `).join('')}
@@ -1970,7 +1916,7 @@
     // STORAGE & EXPORTS
     // ===============================================
     function saveCurrentProject(notify = true) {
-      currentProject.name = document.getElementById('projectInputName').value || 'مشروع بدون عنوان';
+      currentProject.name = document.getElementById('projectInputName').value || 'Project-01';
       currentProject.client = document.getElementById('projectInputClient').value || '';
       currentProject.notes = document.getElementById('projectInputNotes').value || '';
       currentProject.updatedAt = new Date().toISOString();
@@ -2015,14 +1961,14 @@
       const keys = Object.keys(allProjects);
       if (countEl) countEl.textContent = keys.length;
       if (keys.length === 0) {
-        listEl.innerHTML = `<p class="text-xs text-slate-400 text-center py-4 font-cairo">لا توجد مشاريع محفوظة</p>`;
+        listEl.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">لا توجد مشاريع محفوظة</p>`;
         return;
       }
 
       listEl.innerHTML = keys.map(k => `
         <div class="p-2 bg-slate-50 border border-slate-200 rounded flex items-center justify-between text-xs">
           <div>
-            <p class="font-bold text-slate-900 font-cairo">${k}</p>
+            <p class="font-bold text-slate-900 font-mono">${k}</p>
             <p class="text-[10px] text-slate-500 font-mono">${allProjects[k].meta.client || '—'}</p>
           </div>
           <div class="flex items-center gap-1">
@@ -2078,7 +2024,7 @@
 
     function createNewProject() {
       if (confirm('إنشاء مشروع جديد ومسح البيانات الحالية؟')) {
-        currentProject = { name: 'مشروع جديد #' + Math.floor(Math.random() * 1000), client: '', notes: '', updatedAt: new Date().toISOString() };
+        currentProject = { name: 'Project-' + Math.floor(Math.random() * 1000), client: '', notes: '', updatedAt: new Date().toISOString() };
         windowUnits = [{ id: 1, code: 'W-01', systemId: 1, type: 'sliding-2', width: 1200, height: 1200, qty: 1 }];
         offcuts = [];
         document.getElementById('projectInputName').value = currentProject.name;
@@ -2114,7 +2060,7 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `${currentProject.name || 'aluminum_cascade_project'}.json`;
+      a.download = `${currentProject.name || 'aluminum_project'}.json`;
       a.click();
       URL.revokeObjectURL(url);
     }
@@ -2169,7 +2115,7 @@
       
       const opt = {
         margin: [6, 6, 6, 6],
-        filename: `مخطط_قص_وزجاج_${currentProject.name || 'aluminum_cad'}.pdf`,
+        filename: `CAD_Sheet_${currentProject.name || 'aluminum_cad'}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: {
           scale: 2,
@@ -2192,23 +2138,23 @@
 
       // Sheet 1: Windows & Glass Schedule
       let glassData = [
-        ['كشف مقاسات ومساحات الزجاج - Glass Cutting Schedule'],
-        ['المشروع:', currentProject.name, 'العميل:', currentProject.client, 'التاريخ:', new Date().toLocaleDateString('ar-EG')],
+        ['Glass Cutting Schedule'],
+        ['Project:', currentProject.name, 'Client:', currentProject.client, 'Date:', new Date().toISOString().slice(0, 10)],
         [],
-        ['كود النافذة', 'نوع الوحدة', 'السيستم', 'تفصيل الدرفة (Ws × Hs)', 'مقاس الزجاج الصافي (Wg × Hg)', 'عدد الألواح', 'مساحة اللوح (م²)', 'إجمالي المساحة (م²)']
+        ['Code', 'Unit Type', 'System', 'Sash Size (Ws × Hs)', 'Glass Cut (Wg × Hg)', 'Panes', 'Area / Pane (m²)', 'Total Area (m²)']
       ];
       glassSchedule.forEach(g => {
-        glassData.push([g.unitCode, g.sashType, g.systemName, g.sashSize, `${g.glassW} × ${g.glassH} مم`, g.qtyPanes, `${g.singleArea} م²`, `${g.totalArea} م²`]);
+        glassData.push([g.unitCode, g.sashType, g.systemName, g.sashSize, `${g.glassW} × ${g.glassH} mm`, g.qtyPanes, `${g.singleArea} m²`, `${g.totalArea} m²`]);
       });
       const wsGlass = XLSX.utils.aoa_to_sheet(glassData);
-      XLSX.utils.book_append_sheet(wb, wsGlass, 'كشف تفصيل الزجاج');
+      XLSX.utils.book_append_sheet(wb, wsGlass, 'Glass Schedule');
 
       // Sheet 2: Aluminum Cutting Bars
       let sheetData = [
-        ['مخطط وأمر تشغيل قص بروفيلات الألمنيوم - Aluminum Shop Drawing'],
-        ['المشروع:', currentProject.name, 'العميل:', currentProject.client, 'التاريخ:', new Date().toLocaleDateString('ar-EG')],
+        ['Aluminum Cutting Plan - Technical CAD'],
+        ['Project:', currentProject.name, 'Client:', currentProject.client, 'Date:', new Date().toISOString().slice(0, 10)],
         [],
-        ['رقم العود', 'نوع العود', 'القطاع المطلوب', 'طول العود', '# القص', 'النافذة / القطعة', 'النوع (W/H)', 'المقاس المطلوب (مم)', 'زاوية 1', 'زاوية 2', 'المستهلك', 'المتبقي']
+        ['Bar #', 'Bar Type', 'Profile', 'Stock Length', 'Cut #', 'Unit / Part Label', 'Type (W/H)', 'Cut Length (mm)', 'Angle 1', 'Angle 2', 'Used', 'Remain']
       ];
 
       lastOptimizationResult.allBars.forEach(bar => {
@@ -2216,7 +2162,7 @@
         partsInBar.forEach((p, idx) => {
           sheetData.push([
             bar.globalId,
-            bar.isOffcut ? 'فضلة مستودع' : 'عود جديد',
+            bar.isOffcut ? 'Offcut' : 'New Stock',
             bar.profileCode,
             bar.stockLength,
             idx + 1,
@@ -2232,9 +2178,9 @@
       });
 
       const ws = XLSX.utils.aoa_to_sheet(sheetData);
-      XLSX.utils.book_append_sheet(wb, ws, 'مخطط قص الألمنيوم');
+      XLSX.utils.book_append_sheet(wb, ws, 'Cutting Plan');
 
-      XLSX.writeFile(wb, `${currentProject.name || 'aluminum_cad_glass'}.xlsx`);
+      XLSX.writeFile(wb, `${currentProject.name || 'aluminum_cad'}.xlsx`);
     }
 
     // ===============================================
