@@ -358,13 +358,87 @@
           </table>
         </div>
 
-        <div class="p-4 bg-slate-50/70 border-t border-slate-200 text-xs text-slate-700 space-y-1.5 font-cairo">
-          <p class="font-bold text-slate-900">📐 كيف تُحسب معادلات التخصيم المتسلسل في السيستم؟</p>
-          <ul class="list-disc list-inside text-[11px] text-slate-600 space-y-0.5 font-mono">
-            <li><strong>مقاس الدرفة (Sash Size):</strong> ارتفاع الدرفة $H_s = H - \text{خلوص الارتفاع}$ | عرض الدرفة السحاب $W_s = (W + \text{تراكب}) / 2$.</li>
-            <li><strong>مقاس الزجاج (Glass Size):</strong> $W_g = W_s - (2 \times \text{عرض الدرفة}) + (2 \times \text{عمق فرزة الزجاج}) - \text{خلوص الزجاج}$.</li>
-            <li>$H_g = H_s - (2 \times \text{عرض الدرفة}) + (2 \times \text{عمق فرزة الزجاج}) - \text{خلوص الزجاج}$.</li>
-          </ul>
+        <div class="p-5 bg-slate-50 border-t border-slate-200 text-xs text-slate-800 space-y-4 font-cairo">
+          <div class="flex items-center gap-2 border-b border-slate-200 pb-2">
+            <span class="w-6 h-6 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-xs">؟</span>
+            <h4 class="font-black text-slate-900 text-sm">
+              دليل الورشة المبسط: كيف تقيس وتضيف أي قطاع (سيستم) جديد خطوة بخطوة؟
+            </h4>
+          </div>
+
+          <p class="text-slate-600 text-xs leading-relaxed">
+            إذا كان لديك قطاع جديد من أي مصنع (سرايا، الراجحي، تكنال، فلكس، قطاع خاص)، خذ شريط القياس (المتر) أو القدمة، وقس القيم الخمس التالية وضعها في الجدول أعلاه:
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            
+            <!-- خطوة 1: سمك الفريم -->
+            <div class="p-3 bg-white rounded-lg border border-slate-200 space-y-1.5 shadow-2xs">
+              <div class="flex items-center gap-2">
+                <span class="w-5 h-5 rounded bg-blue-600 text-white font-bold flex items-center justify-center text-xs">1</span>
+                <strong class="text-slate-900 text-xs">سمك الفريم (الحلق)</strong>
+              </div>
+              <p class="text-[11px] text-slate-600 leading-normal">
+                قس عرض مقطع بروفيل الحلق من الجهة الظاهرة بالمتر (مثلاً: <strong>45 مم</strong> أو <strong>50 مم</strong>).
+              </p>
+            </div>
+
+            <!-- خطوة 2: عرض بروفيل الدرفة -->
+            <div class="p-3 bg-white rounded-lg border border-slate-200 space-y-1.5 shadow-2xs">
+              <div class="flex items-center gap-2">
+                <span class="w-5 h-5 rounded bg-blue-600 text-white font-bold flex items-center justify-center text-xs">2</span>
+                <strong class="text-slate-900 text-xs">عرض بروفيل الدرفة</strong>
+              </div>
+              <p class="text-[11px] text-slate-600 leading-normal">
+                قس عرض مقطع ألمنيوم الدرفة الذي يحيط بالزجاج (مثلاً: <strong>65 مم</strong> أو <strong>75 مم</strong>).
+              </p>
+            </div>
+
+            <!-- خطوة 3: خلوص ارتفاع الدرفة -->
+            <div class="p-3 bg-white rounded-lg border border-slate-200 space-y-1.5 shadow-2xs">
+              <div class="flex items-center gap-2">
+                <span class="w-5 h-5 rounded bg-blue-600 text-white font-bold flex items-center justify-center text-xs">3</span>
+                <strong class="text-slate-900 text-xs">خلوص الفريم-الدرفة (النقص)</strong>
+              </div>
+              <p class="text-[11px] text-slate-600 leading-normal">
+                كم ينقص ارتفاع الدرفة عن ارتفاع الحلق الكلي لتركب في السكة؟ (عادة <strong>75 إلى 80 مم</strong> في السحاب، و <strong>86 مم</strong> في المفصلي).
+              </p>
+            </div>
+
+            <!-- خطوة 4: عمق فرزة الزجاج -->
+            <div class="p-3 bg-white rounded-lg border border-slate-200 space-y-1.5 shadow-2xs">
+              <div class="flex items-center gap-2">
+                <span class="w-5 h-5 rounded bg-emerald-600 text-white font-bold flex items-center justify-center text-xs">4</span>
+                <strong class="text-slate-900 text-xs">عمق فرزة الزجاج</strong>
+              </div>
+              <p class="text-[11px] text-slate-600 leading-normal">
+                كم يدخل طرف لوح الزجاج داخل تجويف الألمنيوم؟ (عادة <strong>15 إلى 18 مم</strong>).
+              </p>
+            </div>
+
+            <!-- خطوة 5: خلوص أمان الزجاج -->
+            <div class="p-3 bg-white rounded-lg border border-slate-200 space-y-1.5 shadow-2xs">
+              <div class="flex items-center gap-2">
+                <span class="w-5 h-5 rounded bg-emerald-600 text-white font-bold flex items-center justify-center text-xs">5</span>
+                <strong class="text-slate-900 text-xs">خلوص أمان الزجاج والكاوتشوك</strong>
+              </div>
+              <p class="text-[11px] text-slate-600 leading-normal">
+                فراغ الأمان والكاوتشوك حتى لا ينكسر الزجاج (عادة <strong>4 إلى 5 مم</strong>).
+              </p>
+            </div>
+
+            <!-- نتيجة تلقائية -->
+            <div class="p-3 bg-slate-900 text-white rounded-lg space-y-1.5 shadow-2xs">
+              <div class="flex items-center gap-2">
+                <span class="w-5 h-5 rounded bg-amber-400 text-slate-950 font-bold flex items-center justify-center text-xs">✔</span>
+                <strong class="text-amber-300 text-xs">النتيجة التلقائية</strong>
+              </div>
+              <p class="text-[11px] text-slate-300 leading-normal">
+                بمجرد كتابة هذه الأرقام الـ 5، يقوم البرنامج بتفصيل أطوال الحلق والدرف ومقاس لوح الزجاج الصافي ومساحته بالمتر المربع فوراً!
+              </p>
+            </div>
+
+          </div>
         </div>
       </div>
 
