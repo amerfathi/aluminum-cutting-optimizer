@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>محسن قص الألمنيوم الاحترافي | Aluminum Cutting Optimizer Pro</title>
+  <title>محسن قص الألمنيوم وتفصيل النوافذ والأبواب | Aluminum Window Cutting Optimizer</title>
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -31,12 +31,6 @@
               700: '#1d4ed8',
               800: '#1e40af',
               900: '#1e3a8a',
-            },
-            accent: {
-              50: '#f0fdf4',
-              500: '#22c55e',
-              600: '#16a34a',
-              700: '#15803d'
             }
           }
         }
@@ -66,11 +60,6 @@
     
     body.en .lang-ar { display: none; }
     body.en .lang-en { display: inline-block; }
-
-    .block-lang-ar { display: block; }
-    .block-lang-en { display: none; }
-    body.en .block-lang-ar { display: none; }
-    body.en .block-lang-en { display: block; }
     
     .card {
       transition: all 0.2s ease;
@@ -95,7 +84,7 @@
     @media print {
       body {
         background: #ffffff !important;
-        font-size: 11pt;
+        font-size: 10pt;
       }
       header, .no-print, #navTabs, .btn-action {
         display: none !important;
@@ -107,9 +96,6 @@
         box-shadow: none !important;
         border: 1px solid #cbd5e1 !important;
         break-inside: avoid;
-      }
-      .print-break {
-        page-break-before: always;
       }
     }
   </style>
@@ -126,33 +112,30 @@
         <div>
           <div class="flex items-center gap-2">
             <h1 class="text-lg font-extrabold text-slate-900 leading-none">
-              <span class="lang-ar">محسن قص الألمنيوم Pro</span>
-              <span class="lang-en">Aluminum Cutting Optimizer Pro</span>
+              <span class="lang-ar">محسن قص وتفصيل الألمنيوم</span>
+              <span class="lang-en">Aluminum Window Cutting Optimizer</span>
             </h1>
-            <span class="px-2 py-0.5 text-[10px] font-bold bg-primary-100 text-primary-800 rounded-full">v2.0</span>
+            <span class="px-2 py-0.5 text-[10px] font-bold bg-primary-100 text-primary-800 rounded-full">v2.5 Smart Miter</span>
           </div>
-          <p class="text-xs text-slate-500 mt-0.5" id="currentProjectSubtitle">
-            <span class="lang-ar">نظام تحسين قص بروفيلات الألمنيوم والـ UPVC مع إدارة الفضلات</span>
-            <span class="lang-en">Advanced Miter Cutting & Offcut Optimizer for Aluminum & UPVC</span>
+          <p class="text-xs text-slate-500 mt-0.5">
+            <span class="lang-ar">إدخال مقاسات النوافذ والأبواب وحساب تفصيل القطع والقص آلياً</span>
+            <span class="lang-en">Enter window dimensions (W x H) & auto-derive cutting cuts</span>
           </p>
         </div>
       </div>
       
       <div class="flex items-center gap-2 sm:gap-3">
-        <!-- Quick Project Switch / Title -->
         <div class="hidden md:flex items-center gap-2 px-3 py-1 bg-slate-100 rounded-lg text-xs text-slate-700 font-medium">
           <i data-lucide="folder" class="w-3.5 h-3.5 text-slate-500"></i>
-          <span id="activeProjectBadge">مشروع بدون عنوان</span>
+          <span id="activeProjectBadge">مشروع فيلا الياسمين</span>
         </div>
 
-        <!-- Language Button -->
         <button onclick="toggleLanguage()" class="px-3 py-1.5 text-xs font-semibold rounded-lg border border-slate-300 hover:bg-slate-100 transition flex items-center gap-1.5">
           <i data-lucide="languages" class="w-3.5 h-3.5"></i>
           <span class="lang-ar">English</span>
           <span class="lang-en">العربية</span>
         </button>
 
-        <!-- Save Project Button -->
         <button onclick="saveCurrentProject(true)" class="px-3 py-1.5 bg-primary-600 hover:bg-primary-700 text-white text-xs font-semibold rounded-lg shadow-sm transition flex items-center gap-1.5">
           <i data-lucide="save" class="w-3.5 h-3.5"></i>
           <span class="lang-ar">حفظ</span>
@@ -163,31 +146,37 @@
 
     <!-- Navigation Tabs -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 flex gap-1 border-t border-slate-100 overflow-x-auto" id="navTabs">
-      <button onclick="switchTab('tab-input')" id="btn-tab-input" class="tab-btn active px-4 py-2 text-xs sm:text-sm font-semibold rounded-t-lg transition flex items-center gap-2">
-        <i data-lucide="layers" class="w-4 h-4"></i>
-        <span class="lang-ar">1. القطاعات والقطع المطلوبة</span>
-        <span class="lang-en">1. Profiles & Parts</span>
+      <button onclick="switchTab('tab-windows')" id="btn-tab-windows" class="tab-btn active px-4 py-2 text-xs sm:text-sm font-semibold rounded-t-lg transition flex items-center gap-2">
+        <i data-lucide="layout-template" class="w-4 h-4"></i>
+        <span class="lang-ar">1. جدول النوافذ والأبواب (المقاسات)</span>
+        <span class="lang-en">1. Windows & Doors Schedule</span>
+      </button>
+      <button onclick="switchTab('tab-parts')" id="btn-tab-parts" class="tab-btn px-4 py-2 text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 rounded-t-lg transition flex items-center gap-2">
+        <i data-lucide="list-checks" class="w-4 h-4"></i>
+        <span class="lang-ar">2. القطع المفصلة والقطاعات</span>
+        <span class="lang-en">2. Derived Parts & Profiles</span>
+        <span id="totalPartsBadge" class="px-1.5 py-0.2 bg-primary-100 text-primary-800 rounded-full text-[10px] font-bold">0</span>
       </button>
       <button onclick="switchTab('tab-offcuts')" id="btn-tab-offcuts" class="tab-btn px-4 py-2 text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 rounded-t-lg transition flex items-center gap-2">
         <i data-lucide="recycle" class="w-4 h-4"></i>
-        <span class="lang-ar">2. مخزون الفضلات والأعواد</span>
-        <span class="lang-en">2. Offcuts & Stock</span>
+        <span class="lang-ar">3. مخزون الفضلات والأعواد</span>
+        <span class="lang-en">3. Offcuts Stock</span>
         <span id="offcutsCountBadge" class="px-1.5 py-0.2 bg-slate-200 text-slate-700 rounded-full text-[10px]">0</span>
       </button>
       <button onclick="switchTab('tab-results')" id="btn-tab-results" class="tab-btn px-4 py-2 text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 rounded-t-lg transition flex items-center gap-2">
         <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
-        <span class="lang-ar">3. مخطط ونتائج القص</span>
-        <span class="lang-en">3. Cutting Layout</span>
+        <span class="lang-ar">4. مخطط ونتائج القص</span>
+        <span class="lang-en">4. Cutting Layout</span>
       </button>
       <button onclick="switchTab('tab-sheet')" id="btn-tab-sheet" class="tab-btn px-4 py-2 text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 rounded-t-lg transition flex items-center gap-2">
         <i data-lucide="file-text" class="w-4 h-4"></i>
-        <span class="lang-ar">4. ورقة القص للورشة</span>
-        <span class="lang-en">4. Workshop Sheet</span>
+        <span class="lang-ar">5. ورقة القص للورشة</span>
+        <span class="lang-en">5. Workshop Sheet</span>
       </button>
       <button onclick="switchTab('tab-projects')" id="btn-tab-projects" class="tab-btn px-4 py-2 text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 rounded-t-lg transition flex items-center gap-2">
         <i data-lucide="folder-open" class="w-4 h-4"></i>
-        <span class="lang-ar">5. إدارة المشاريع والتصدير</span>
-        <span class="lang-en">5. Projects & Export</span>
+        <span class="lang-ar">6. المشاريع والتصدير</span>
+        <span class="lang-en">6. Projects & Export</span>
       </button>
     </div>
   </header>
@@ -202,8 +191,8 @@
         <div class="flex flex-wrap items-center gap-4 sm:gap-6">
           <div>
             <label class="block text-xs font-semibold text-slate-600 mb-1">
-              <span class="lang-ar">طول العود الافتراضي (مم)</span>
-              <span class="lang-en">Default Stock Length (mm)</span>
+              <span class="lang-ar">طول العود الخام (مم)</span>
+              <span class="lang-en">Raw Stock Length (mm)</span>
             </label>
             <input type="number" id="stockLength" value="6000" min="500" max="12000" class="w-28 px-3 py-1.5 border border-slate-300 rounded-lg text-sm font-semibold focus:ring-2 focus:ring-primary-500 outline-none">
           </div>
@@ -235,8 +224,8 @@
           <div class="flex items-center gap-2 pt-5">
             <input type="checkbox" id="useOffcutsFirst" checked class="w-4 h-4 text-primary-600 rounded border-slate-300 focus:ring-primary-500">
             <label for="useOffcutsFirst" class="text-xs font-bold text-slate-700 cursor-pointer">
-              <span class="lang-ar">استهلاك الفضلات المتوفرة أولاً</span>
-              <span class="lang-en">Prioritize Offcuts First</span>
+              <span class="lang-ar">استهلاك الفضلات أولاً</span>
+              <span class="lang-en">Prioritize Offcuts</span>
             </label>
           </div>
         </div>
@@ -253,19 +242,107 @@
     </div>
 
     <!-- ============================================== -->
-    <!-- TAB 1: PROFILES & PARTS -->
+    <!-- TAB 1: WINDOWS & DOORS SCHEDULE (MAIN ENTRY) -->
     <!-- ============================================== -->
-    <div id="tab-input" class="tab-content space-y-6">
+    <div id="tab-windows" class="tab-content space-y-6">
+      
+      <div class="bg-white rounded-xl border border-slate-200 card shadow-sm">
+        <div class="px-4 py-3.5 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3 bg-slate-50 rounded-t-xl">
+          <div class="flex items-center gap-2">
+            <i data-lucide="layout-template" class="w-5 h-5 text-primary-600"></i>
+            <div>
+              <h2 class="font-bold text-slate-800 text-sm">
+                <span class="lang-ar">جدول مقاسات النوافذ والأبواب (Windows & Doors Schedule)</span>
+                <span class="lang-en">Windows & Doors Schedule</span>
+              </h2>
+              <p class="text-xs text-slate-500">
+                <span class="lang-ar">أدخل كود النافذة وعرضها وارتفاعها وحدد قطاع الحلق والدرفة، وسيتكفل البرنامج بتخصيم وتفصيل كافة القطع آلياً</span>
+                <span class="lang-en">Enter window width (W) and height (H), choose frame & sash profile, and the system derives all cutting pieces</span>
+              </p>
+            </div>
+          </div>
+          
+          <div class="flex items-center gap-2">
+            <button onclick="addWindowUnit()" class="px-3 py-1.5 bg-primary-600 hover:bg-primary-700 text-white font-bold text-xs rounded-lg shadow transition flex items-center gap-1.5">
+              <i data-lucide="plus" class="w-4 h-4"></i>
+              <span class="lang-ar">إضافة نافذة / باب جديد</span>
+              <span class="lang-en">Add Window / Door</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="p-4 overflow-x-auto">
+          <table class="w-full text-xs" id="windowsTable">
+            <thead>
+              <tr class="text-slate-500 border-b border-slate-200 text-right">
+                <th class="pb-2 font-bold w-12 text-center">#</th>
+                <th class="pb-2 font-bold"><span class="lang-ar">رمز / اسم الوحدة</span><span class="lang-en">Unit Code/Name</span></th>
+                <th class="pb-2 font-bold"><span class="lang-ar">نوع النظام</span><span class="lang-en">System Type</span></th>
+                <th class="pb-2 font-bold text-center"><span class="lang-ar">العرض W (مم)</span><span class="lang-en">Width W (mm)</span></th>
+                <th class="pb-2 font-bold text-center"><span class="lang-ar">الارتفاع H (مم)</span><span class="lang-en">Height H (mm)</span></th>
+                <th class="pb-2 font-bold text-center"><span class="lang-ar">العدد</span><span class="lang-en">Qty</span></th>
+                <th class="pb-2 font-bold"><span class="lang-ar">قطاع الحلق (Frame)</span><span class="lang-en">Frame Profile</span></th>
+                <th class="pb-2 font-bold"><span class="lang-ar">قطاع الدرفة (Sash)</span><span class="lang-en">Sash Profile</span></th>
+                <th class="pb-2 text-center"></th>
+              </tr>
+            </thead>
+            <tbody id="windowsBody">
+              <!-- Window rows dynamically injected -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="px-4 py-3 bg-slate-50 border-t border-slate-100 flex flex-wrap items-center justify-between text-xs text-slate-600 rounded-b-xl gap-2">
+          <div>
+            <span class="lang-ar">إجمالي الوحدات: </span>
+            <strong id="totalUnitsCount" class="text-primary-700">0 وحدة</strong>
+          </div>
+          <div class="text-emerald-700 font-semibold flex items-center gap-1">
+            <i data-lucide="check-circle" class="w-4 h-4"></i>
+            <span class="lang-ar">يتم توليد أطوال وزوايا الحلق والدرف وتخصيم الزجاج آلياً في التبويب 2</span>
+            <span class="lang-en">Frame, sash pieces and miter angles are auto-derived in Tab 2</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Deduction Formulas Info Banner -->
+      <div class="bg-blue-50/70 border border-blue-200 rounded-xl p-4 text-xs text-blue-900 space-y-2">
+        <div class="flex items-center gap-2 font-bold text-blue-800">
+          <i data-lucide="info" class="w-4 h-4"></i>
+          <span>كيف يقوم البرنامج بحساب وتخصيم القطع تلقائياً؟</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1 text-[11px] text-blue-800">
+          <div class="bg-white/80 p-2.5 rounded-lg border border-blue-100">
+            <strong>🪟 شباك سحاب (2 درفة):</strong>
+            <p class="text-slate-600 mt-1">الحلق: عرض $W$ × 2، ارتفاع $H$ × 2 (45°/45°).<br>الدرفة: عرض $(W / 2) + 25\text{mm}$ × 4، ارتفاع $H - 75\text{mm}$ × 4 (45°/45°).</p>
+          </div>
+          <div class="bg-white/80 p-2.5 rounded-lg border border-blue-100">
+            <strong>🚪 شباك / باب مفصلي:</strong>
+            <p class="text-slate-600 mt-1">الحلق: عرض $W$ × 2، ارتفاع $H$ × 2 (45°/45°).<br>الدرفة: عرض $W - 86\text{mm}$ × 2، ارتفاع $H - 86\text{mm}$ × 2 (45°/45°).</p>
+          </div>
+          <div class="bg-white/80 p-2.5 rounded-lg border border-blue-100">
+            <strong>🖼️ نافذة ثابتة:</strong>
+            <p class="text-slate-600 mt-1">الحلق: عرض $W$ × 2، ارتفاع $H$ × 2 (45°/45°).<br>مع إمكانية تعديل قواعد التخصيم لكل قطاع في أي وقت.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ============================================== -->
+    <!-- TAB 2: DERIVED PARTS & PROFILES -->
+    <!-- ============================================== -->
+    <div id="tab-parts" class="tab-content hidden space-y-6">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
-        <!-- Profiles Section (5 cols) -->
+        <!-- Profiles Setup (5 cols) -->
         <div class="lg:col-span-5 bg-white rounded-xl border border-slate-200 card flex flex-col shadow-sm">
           <div class="px-4 py-3.5 border-b border-slate-100 flex items-center justify-between bg-slate-50 rounded-t-xl">
             <div class="flex items-center gap-2">
               <i data-lucide="box" class="w-4 h-4 text-primary-600"></i>
               <h2 class="font-bold text-slate-800 text-sm">
-                <span class="lang-ar">1. تعريف القطاعات (Profiles)</span>
-                <span class="lang-en">1. Profiles Definition</span>
+                <span class="lang-ar">تعريف القطاعات (Profiles)</span>
+                <span class="lang-en">Profiles Definition</span>
               </h2>
             </div>
             <button onclick="addProfile()" class="px-2.5 py-1 text-xs bg-primary-50 hover:bg-primary-100 text-primary-700 font-bold rounded-lg border border-primary-200 transition flex items-center gap-1">
@@ -281,45 +358,39 @@
                 <tr class="text-slate-500 border-b border-slate-200 text-right">
                   <th class="pb-2 font-bold"><span class="lang-ar">كود القطاع</span><span class="lang-en">Code</span></th>
                   <th class="pb-2 font-bold"><span class="lang-ar">النوع</span><span class="lang-en">Type</span></th>
-                  <th class="pb-2 font-bold"><span class="lang-ar">عرض البروفيل (مم)</span><span class="lang-en">Width</span></th>
+                  <th class="pb-2 font-bold"><span class="lang-ar">عرض البروفيل</span><span class="lang-en">Width</span></th>
                   <th class="pb-2 font-bold"><span class="lang-ar">سكراب 45°</span><span class="lang-en">45° Scrap</span></th>
                   <th class="pb-2 text-center"></th>
                 </tr>
               </thead>
               <tbody id="profilesBody">
-                <!-- Profile rows dynamically injected -->
+                <!-- Profile rows -->
               </tbody>
             </table>
           </div>
-          <div class="px-4 py-2.5 bg-slate-50 border-t border-slate-100 text-[11px] text-slate-500 rounded-b-xl">
-            <span class="lang-ar">💡 سكراب 45°: طول الهالك عند قص زاوية 45° منفصلة (يساوي تقريباً عرض القطاع).</span>
-            <span class="lang-en">💡 45° Scrap: Waste when cutting a standalone 45° angle (approx. equal to profile width).</span>
-          </div>
         </div>
 
-        <!-- Parts Section (7 cols) -->
+        <!-- Auto-Derived Parts (7 cols) -->
         <div class="lg:col-span-7 bg-white rounded-xl border border-slate-200 card flex flex-col shadow-sm">
           <div class="px-4 py-3.5 border-b border-slate-100 flex items-center justify-between bg-slate-50 rounded-t-xl">
             <div class="flex items-center gap-2">
               <i data-lucide="list-checks" class="w-4 h-4 text-emerald-600"></i>
               <h2 class="font-bold text-slate-800 text-sm">
-                <span class="lang-ar">2. قائمة القطع المطلوبة (Required Parts)</span>
-                <span class="lang-en">2. Required Parts List</span>
+                <span class="lang-ar">قائمة القطع المحسوبة تلقائياً للقص</span>
+                <span class="lang-en">Auto-Derived Cutting Parts</span>
               </h2>
             </div>
             
             <div class="flex items-center gap-2">
-              <!-- Quick Window/Door Presets -->
-              <button onclick="openPresetModal()" class="px-2.5 py-1 text-xs bg-amber-50 hover:bg-amber-100 text-amber-800 font-semibold rounded-lg border border-amber-200 transition flex items-center gap-1">
-                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-                <span class="lang-ar">قوالب سريعة (شباك/باب)</span>
-                <span class="lang-en">Quick Presets</span>
+              <button onclick="recalculateAllPartsFromWindows()" class="px-2.5 py-1 text-xs bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold rounded-lg border border-emerald-200 transition flex items-center gap-1">
+                <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                <span class="lang-ar">تحديث الحسابات</span>
+                <span class="lang-en">Refresh Parts</span>
               </button>
-
-              <button onclick="addPart()" class="px-2.5 py-1 text-xs bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold rounded-lg border border-emerald-200 transition flex items-center gap-1">
+              <button onclick="addManualPart()" class="px-2.5 py-1 text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-lg transition flex items-center gap-1">
                 <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-                <span class="lang-ar">إضافة قطعة</span>
-                <span class="lang-en">Add Part</span>
+                <span class="lang-ar">إضافة قطعة يدوية</span>
+                <span class="lang-en">Add Manual</span>
               </button>
             </div>
           </div>
@@ -329,11 +400,11 @@
               <thead>
                 <tr class="text-slate-500 border-b border-slate-200 text-right">
                   <th class="pb-2 font-bold"><span class="lang-ar">القطاع</span><span class="lang-en">Profile</span></th>
-                  <th class="pb-2 font-bold"><span class="lang-ar">الوصف / التسمية</span><span class="lang-en">Label</span></th>
-                  <th class="pb-2 font-bold"><span class="lang-ar">الطول (مم)</span><span class="lang-en">Length (mm)</span></th>
+                  <th class="pb-2 font-bold"><span class="lang-ar">الوحدة / التسمية</span><span class="lang-en">Unit / Label</span></th>
+                  <th class="pb-2 font-bold"><span class="lang-ar">الطول (مم)</span><span class="lang-en">Length</span></th>
                   <th class="pb-2 font-bold"><span class="lang-ar">العدد</span><span class="lang-en">Qty</span></th>
-                  <th class="pb-2 font-bold text-center"><span class="lang-ar">زاوية البداية</span><span class="lang-en">Start ∠</span></th>
-                  <th class="pb-2 font-bold text-center"><span class="lang-ar">زاوية النهاية</span><span class="lang-en">End ∠</span></th>
+                  <th class="pb-2 font-bold text-center"><span class="lang-ar">زاوية 1</span><span class="lang-en">Start ∠</span></th>
+                  <th class="pb-2 font-bold text-center"><span class="lang-ar">زاوية 2</span><span class="lang-en">End ∠</span></th>
                   <th class="pb-2 text-center"></th>
                 </tr>
               </thead>
@@ -345,13 +416,11 @@
 
           <div class="px-4 py-2.5 bg-slate-50 border-t border-slate-100 flex items-center justify-between text-xs text-slate-600 rounded-b-xl">
             <div>
-              <span class="lang-ar">إجمالي القطع المطلوبة: </span>
-              <span class="lang-en">Total Required Pieces: </span>
+              <span class="lang-ar">إجمالي القطع: </span>
               <strong id="totalPartsCount" class="text-primary-700">0</strong>
             </div>
             <div>
-              <span class="lang-ar">مجموع الأطوال الصافية: </span>
-              <span class="lang-en">Total Net Length: </span>
+              <span class="lang-ar">إجمالي الأطوال: </span>
               <strong id="totalPartsLength" class="text-emerald-700">0 مم</strong>
             </div>
           </div>
@@ -361,7 +430,7 @@
     </div>
 
     <!-- ============================================== -->
-    <!-- TAB 2: OFFCUTS INVENTORY & STOCK -->
+    <!-- TAB 3: OFFCUTS STOCK -->
     <!-- ============================================== -->
     <div id="tab-offcuts" class="tab-content hidden space-y-6">
       <div class="bg-white rounded-xl border border-slate-200 card shadow-sm">
@@ -402,24 +471,24 @@
                 <th class="pb-2 font-bold"><span class="lang-ar">الكمية المتوفرة</span><span class="lang-en">Qty</span></th>
                 <th class="pb-2 font-bold text-center"><span class="lang-ar">زاوية البداية</span><span class="lang-en">Start ∠</span></th>
                 <th class="pb-2 font-bold text-center"><span class="lang-ar">زاوية النهاية</span><span class="lang-en">End ∠</span></th>
-                <th class="pb-2 font-bold"><span class="lang-ar">ملاحظات / موقع الفضلة</span><span class="lang-en">Location / Notes</span></th>
+                <th class="pb-2 font-bold"><span class="lang-ar">موقع الفضلة / ملاحظات</span><span class="lang-en">Location / Notes</span></th>
                 <th class="pb-2 text-center"></th>
               </tr>
             </thead>
             <tbody id="offcutsBody">
-              <!-- Offcut rows dynamically injected -->
+              <!-- Offcut rows -->
             </tbody>
           </table>
           <div id="offcutsEmptyMsg" class="py-8 text-center text-slate-400 text-xs">
             <span class="lang-ar">لا توجد فضلات مسجلة حالياً بالمخزون. يمكنك إضافة الفضلات المتوفرة لديك أو استخدام الأعواد الجديدة فقط.</span>
-            <span class="lang-en">No offcuts in inventory. Add your available remnants to reduce raw stock consumption.</span>
+            <span class="lang-en">No offcuts in inventory.</span>
           </div>
         </div>
       </div>
     </div>
 
     <!-- ============================================== -->
-    <!-- TAB 3: RESULTS & VISUALIZATION -->
+    <!-- TAB 4: RESULTS & VISUALIZATION -->
     <!-- ============================================== -->
     <div id="tab-results" class="tab-content hidden space-y-6">
       
@@ -450,16 +519,16 @@
             <i data-lucide="trash-2" class="w-4 h-4 text-rose-600"></i>
           </div>
           <p class="text-2xl font-extrabold text-rose-600" id="metricDeadScrap">0</p>
-          <p class="text-[10px] text-slate-400"><span class="lang-ar">مم (سكراب غير مفيد)</span><span class="lang-en">mm (unusable)</span></p>
+          <p class="text-[10px] text-slate-400"><span class="lang-ar">مم (غير مفيد)</span><span class="lang-en">mm (unusable)</span></p>
         </div>
 
         <div class="bg-white rounded-xl border border-slate-200 p-3.5 card shadow-sm">
           <div class="flex items-center justify-between text-slate-500 mb-1">
-            <span class="text-xs font-semibold"><span class="lang-ar">نسبة الهدر الميت</span><span class="lang-en">Waste %</span></span>
+            <span class="text-xs font-semibold"><span class="lang-ar">نسبة الهدر</span><span class="lang-en">Waste %</span></span>
             <i data-lucide="pie-chart" class="w-4 h-4 text-amber-600"></i>
           </div>
           <p class="text-2xl font-extrabold text-amber-600" id="metricWastePct">0%</p>
-          <p class="text-[10px] text-slate-400"><span class="lang-ar">نسبة الفاقد الكلي</span><span class="lang-en">Total loss ratio</span></p>
+          <p class="text-[10px] text-slate-400"><span class="lang-ar">نسبة الفاقد الكلي</span><span class="lang-en">Loss ratio</span></p>
         </div>
 
         <div class="bg-white rounded-xl border border-slate-200 p-3.5 card shadow-sm">
@@ -468,7 +537,7 @@
             <i data-lucide="plus-circle" class="w-4 h-4 text-teal-600"></i>
           </div>
           <p class="text-2xl font-extrabold text-teal-700" id="metricNewOffcutsCount">0</p>
-          <p class="text-[10px] text-slate-400"><span class="lang-ar">صالحة لمشاريع قادمة</span><span class="lang-en">Useful for next jobs</span></p>
+          <p class="text-[10px] text-slate-400"><span class="lang-ar">للمشاريع القادمة</span><span class="lang-en">For next jobs</span></p>
         </div>
 
         <div class="bg-white rounded-xl border border-slate-200 p-3.5 card shadow-sm">
@@ -477,7 +546,7 @@
             <i data-lucide="award" class="w-4 h-4 text-indigo-600"></i>
           </div>
           <p class="text-2xl font-extrabold text-indigo-700" id="metricEfficiency">0%</p>
-          <p class="text-[10px] text-slate-400"><span class="lang-ar">معدل الاستفادة الكلية</span><span class="lang-en">Yield utilization</span></p>
+          <p class="text-[10px] text-slate-400"><span class="lang-ar">معدل الاستفادة</span><span class="lang-en">Yield utilization</span></p>
         </div>
 
       </div>
@@ -507,7 +576,7 @@
             <button onclick="addResultOffcutsToInventory()" id="btnSaveOffcuts" class="hidden px-3 py-1.5 bg-teal-50 hover:bg-teal-100 text-teal-800 font-bold text-xs rounded-lg border border-teal-200 transition flex items-center gap-1">
               <i data-lucide="download" class="w-3.5 h-3.5"></i>
               <span class="lang-ar">حفظ الفضلات الناتجة بالمخزون</span>
-              <span class="lang-en">Save New Offcuts to Inventory</span>
+              <span class="lang-en">Save New Offcuts</span>
             </button>
           </div>
         </div>
@@ -516,8 +585,8 @@
           <div class="text-center py-16 text-slate-400">
             <i data-lucide="scissors" class="w-12 h-12 mx-auto mb-3 opacity-40"></i>
             <p class="text-sm font-medium">
-              <span class="lang-ar">قم بإدخال القطاعات والقطع واضغط على زر "حساب وتحسين القص الذكي"</span>
-              <span class="lang-en">Add profiles and parts, then click "Calculate & Optimize Cuts"</span>
+              <span class="lang-ar">اضغط على زر "حساب وتحسين القص الذكي" لعرض المخطط البياني وتوزيع الأعواد</span>
+              <span class="lang-en">Click "Calculate & Optimize Cuts" to generate visualization</span>
             </p>
           </div>
         </div>
@@ -526,7 +595,7 @@
     </div>
 
     <!-- ============================================== -->
-    <!-- TAB 4: WORKSHOP CUTTING SHEET (PRINT/PDF) -->
+    <!-- TAB 5: WORKSHOP CUTTING SHEET (PRINT/PDF) -->
     <!-- ============================================== -->
     <div id="tab-sheet" class="tab-content hidden space-y-6">
       
@@ -540,8 +609,8 @@
               <span class="lang-en">Technician Workshop Cutting Sheet</span>
             </h3>
             <p class="text-xs text-slate-500">
-              <span class="lang-ar">ورقة عمل واضحة ومرتبة بالترتيب المتسلسل للقص والزوايا</span>
-              <span class="lang-en">Sequenced cutting orders with angle instructions for workshop floor</span>
+              <span class="lang-ar">ورقة عمل مجهزة للطباعة مع أسماء النوافذ والترتيب المتسلسل للقص والزوايا</span>
+              <span class="lang-en">Sequenced cutting orders labeled with window units</span>
             </p>
           </div>
         </div>
@@ -580,7 +649,7 @@
               </h2>
             </div>
             <p class="text-xs text-slate-600" id="printProjectMeta">
-              <span class="lang-ar">المشروع: </span><strong id="metaProjName">مشروع بدون عنوان</strong> | 
+              <span class="lang-ar">المشروع: </span><strong id="metaProjName">مشروع فيلا الياسمين</strong> | 
               <span class="lang-ar">العميل: </span><strong id="metaClientName">—</strong> | 
               <span class="lang-ar">التاريخ: </span><strong id="metaDate">—</strong>
             </p>
@@ -604,7 +673,7 @@
     </div>
 
     <!-- ============================================== -->
-    <!-- TAB 5: PROJECTS MANAGEMENT & EXPORT -->
+    <!-- TAB 6: PROJECTS MANAGEMENT & EXPORT -->
     <!-- ============================================== -->
     <div id="tab-projects" class="tab-content hidden space-y-6">
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -734,89 +803,16 @@
 
   </main>
 
-  <!-- Quick Presets Modal (Window / Door builder) -->
-  <div id="presetModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4">
-      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-        <div class="flex items-center gap-2">
-          <i data-lucide="sparkles" class="w-5 h-5 text-amber-600"></i>
-          <h3 class="font-bold text-slate-900 text-base">
-            <span class="lang-ar">إضافة سريعة لشباك أو باب (Preset Builder)</span>
-            <span class="lang-en">Quick Window/Door Preset Builder</span>
-          </h3>
-        </div>
-        <button onclick="closePresetModal()" class="text-slate-400 hover:text-slate-600">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-      </div>
-
-      <div class="grid grid-cols-2 gap-3 text-xs">
-        <div>
-          <label class="block font-semibold text-slate-700 mb-1">
-            <span class="lang-ar">نوع النموذج</span>
-            <span class="lang-en">Unit Type</span>
-          </label>
-          <select id="presetType" class="w-full px-3 py-2 border border-slate-300 rounded-lg font-semibold">
-            <option value="sliding-2">شباك سحاب 2 درفة (2-Sash Sliding)</option>
-            <option value="hinged-window">شباك مفصلي 1 درفة (Hinged Window)</option>
-            <option value="hinged-door">باب مفصلي ألمنيوم (Hinged Door)</option>
-            <option value="fixed-frame">حلق ثابت فقط (Fixed Frame)</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="block font-semibold text-slate-700 mb-1">
-            <span class="lang-ar">عدد الوحدات المطلوب</span>
-            <span class="lang-en">Quantity of Units</span>
-          </label>
-          <input type="number" id="presetQty" value="1" min="1" class="w-full px-3 py-2 border border-slate-300 rounded-lg font-semibold">
-        </div>
-
-        <div>
-          <label class="block font-semibold text-slate-700 mb-1">
-            <span class="lang-ar">العرض الكلي (W mm)</span>
-            <span class="lang-en">Total Width (mm)</span>
-          </label>
-          <input type="number" id="presetWidth" value="1200" min="200" max="6000" class="w-full px-3 py-2 border border-slate-300 rounded-lg font-semibold">
-        </div>
-
-        <div>
-          <label class="block font-semibold text-slate-700 mb-1">
-            <span class="lang-ar">الارتفاع الكلي (H mm)</span>
-            <span class="lang-en">Total Height (mm)</span>
-          </label>
-          <input type="number" id="presetHeight" value="1400" min="200" max="6000" class="w-full px-3 py-2 border border-slate-300 rounded-lg font-semibold">
-        </div>
-      </div>
-
-      <div class="bg-amber-50 rounded-lg p-3 text-[11px] text-amber-800">
-        <span class="lang-ar">💡 سيقوم البرنامج تلقائياً بإنشاء قطع الحلق والدرف وحساب زوايا 45° و 90° المناسبة وإضافتها لجدول القطع.</span>
-        <span class="lang-en">💡 Will automatically calculate frame and sash pieces with corresponding 45° and 90° miter angles.</span>
-      </div>
-
-      <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
-        <button onclick="closePresetModal()" class="px-4 py-2 border border-slate-300 text-slate-700 font-semibold rounded-lg text-xs hover:bg-slate-50 transition">
-          <span class="lang-ar">إلغاء</span>
-          <span class="lang-en">Cancel</span>
-        </button>
-        <button onclick="applyPreset()" class="px-5 py-2 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-lg text-xs shadow transition">
-          <span class="lang-ar">توليد وإضافة القطع</span>
-          <span class="lang-en">Generate & Add</span>
-        </button>
-      </div>
-    </div>
-  </div>
-
   <!-- Footer -->
   <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500 no-print">
     <div class="max-w-7xl mx-auto px-4 flex flex-wrap items-center justify-between gap-2">
       <p>
-        <span class="lang-ar">محسن قص الألمنيوم والـ UPVC © 2026 — مصمم لورش ومصانع تصنيع الألمنيوم</span>
-        <span class="lang-en">Aluminum & UPVC Cutting Optimizer Pro © 2026</span>
+        <span class="lang-ar">محسن قص وتفصيل بروفيلات الألمنيوم © 2026 — حساب أوتوماتيكي لمقاسات النوافذ والأبواب</span>
+        <span class="lang-en">Aluminum Window Cutting Optimizer Pro © 2026</span>
       </p>
       <p class="text-[11px] text-slate-400">
-        <span class="lang-ar">يدعم خوارزميات Miter-Angle Matching وتقليل الفضلات</span>
-        <span class="lang-en">Supports Miter-Angle Matching & Offcut Inventory Reduction</span>
+        <span class="lang-ar">يدعم خوارزميات Miter Matching وتفصيل الحلق والدرف وتخصيم الزجاج</span>
+        <span class="lang-en">Supports Miter Matching & Automatic Window Deductions</span>
       </p>
     </div>
   </footer>
@@ -836,17 +832,22 @@
     };
 
     let profiles = [
-      { id: 1, code: 'FR-50', type: 'frame', width: 50, scrap45: 35 },
-      { id: 2, code: 'SA-45', type: 'sash', width: 45, scrap45: 30 },
-      { id: 3, code: 'TB-40', type: 'other', width: 40, scrap45: 25 },
+      { id: 1, code: 'FR-50 (حلق)', type: 'frame', width: 50, scrap45: 35 },
+      { id: 2, code: 'SA-45 (درفة)', type: 'sash', width: 45, scrap45: 30 },
+      { id: 3, code: 'TB-40 (تيوب/قاطع)', type: 'other', width: 40, scrap45: 25 },
+      { id: 4, code: 'BD-20 (باكتة)', type: 'bead', width: 20, scrap45: 15 },
     ];
 
-    let parts = [
-      { id: 1, profileId: 1, label: 'حلق علوي/سفلي', length: 1200, qty: 2, startAngle: 45, endAngle: 45 },
-      { id: 2, profileId: 1, label: 'حلق جانبي', length: 1400, qty: 2, startAngle: 45, endAngle: 45 },
-      { id: 3, profileId: 2, label: 'درفة عرضية', length: 580, qty: 4, startAngle: 45, endAngle: 45 },
-      { id: 4, profileId: 2, label: 'درفة طولية', length: 1320, qty: 4, startAngle: 45, endAngle: 45 },
+    // Primary Data: Windows & Doors Units entered by user
+    let windowUnits = [
+      { id: 1, code: 'W-01 (شباك صالة)', type: 'sliding-2', width: 1800, height: 1400, qty: 2, frameProfileId: 1, sashProfileId: 2 },
+      { id: 2, code: 'W-02 (شباك غرفة)', type: 'sliding-2', width: 1200, height: 1200, qty: 3, frameProfileId: 1, sashProfileId: 2 },
+      { id: 3, code: 'D-01 (باب بلكونة)', type: 'hinged-door', width: 900, height: 2100, qty: 1, frameProfileId: 1, sashProfileId: 2 },
+      { id: 4, code: 'W-03 (شباك حمام قلاب)', type: 'hinged-window', width: 600, height: 600, qty: 2, frameProfileId: 1, sashProfileId: 2 }
     ];
+
+    // Auto-Derived Parts (Computed from Windows Schedule)
+    let parts = [];
 
     let offcuts = [
       { id: 1, profileId: 1, length: 1850, qty: 1, startAngle: 45, endAngle: 90, location: 'مستودع أ - رف 2' },
@@ -854,8 +855,9 @@
     ];
 
     let lastOptimizationResult = null;
-    let nextProfileId = 4;
-    let nextPartId = 5;
+    let nextWindowId = 5;
+    let nextProfileId = 5;
+    let nextPartId = 100;
     let nextOffcutId = 3;
 
     // ===============================================
@@ -892,6 +894,10 @@
       const activeBadge = document.getElementById('activeProjectBadge');
       if (activeBadge) activeBadge.textContent = name;
       
+      const totalUnits = windowUnits.reduce((sum, u) => sum + (u.qty || 1), 0);
+      const totalUnitsEl = document.getElementById('totalUnitsCount');
+      if (totalUnitsEl) totalUnitsEl.textContent = `${totalUnits} وحدة`;
+
       const offcutCount = offcuts.reduce((sum, o) => sum + (o.qty || 1), 0);
       const badge = document.getElementById('offcutsCountBadge');
       if (badge) badge.textContent = offcutCount;
@@ -903,6 +909,216 @@
       if (countEl) countEl.textContent = totalParts;
       const lenEl = document.getElementById('totalPartsLength');
       if (lenEl) lenEl.textContent = totalLen.toLocaleString() + ' مم';
+      const badgeEl = document.getElementById('totalPartsBadge');
+      if (badgeEl) badgeEl.textContent = totalParts;
+    }
+
+    // ===============================================
+    // 1. WINDOWS & DOORS SCHEDULE MANAGEMENT
+    // ===============================================
+    function renderWindowsSchedule() {
+      const tbody = document.getElementById('windowsBody');
+      if (!tbody) return;
+
+      tbody.innerHTML = windowUnits.map((u, idx) => {
+        const frameOptions = profiles.map(pr => 
+          `<option value="${pr.id}" ${pr.id === u.frameProfileId ? 'selected' : ''}>${pr.code}</option>`
+        ).join('');
+
+        const sashOptions = profiles.map(pr => 
+          `<option value="${pr.id}" ${pr.id === u.sashProfileId ? 'selected' : ''}>${pr.code}</option>`
+        ).join('');
+
+        return `
+          <tr class="border-b border-slate-100 hover:bg-slate-50 transition">
+            <td class="py-2.5 font-bold text-center text-slate-500">${idx + 1}</td>
+            <td class="py-2">
+              <input type="text" value="${u.code}" onchange="updateWindowUnit(${u.id}, 'code', this.value)" 
+                class="w-36 px-2.5 py-1.5 border border-slate-300 rounded-lg font-bold text-slate-900 bg-white">
+            </td>
+            <td class="py-2">
+              <select onchange="updateWindowUnit(${u.id}, 'type', this.value)" class="px-2 py-1.5 border border-slate-300 rounded-lg bg-white font-semibold text-slate-700">
+                <option value="sliding-2" ${u.type === 'sliding-2' ? 'selected' : ''}>شباك سحاب (2 درفة)</option>
+                <option value="sliding-3" ${u.type === 'sliding-3' ? 'selected' : ''}>شباك سحاب (3 درف)</option>
+                <option value="sliding-4" ${u.type === 'sliding-4' ? 'selected' : ''}>شباك سحاب (4 درف)</option>
+                <option value="hinged-window" ${u.type === 'hinged-window' ? 'selected' : ''}>شباك مفصلي / قلاب (1 درفة)</option>
+                <option value="hinged-door" ${u.type === 'hinged-door' ? 'selected' : ''}>باب مفصلي ألمنيوم</option>
+                <option value="fixed" ${u.type === 'fixed' ? 'selected' : ''}>نافذة ثابتة (Fixed Frame)</option>
+              </select>
+            </td>
+            <td class="py-2 text-center">
+              <input type="number" value="${u.width}" min="100" max="6000" onchange="updateWindowUnit(${u.id}, 'width', +this.value)" 
+                class="w-24 px-2 py-1.5 border border-slate-300 rounded-lg bg-white font-black text-emerald-800 text-center text-sm">
+            </td>
+            <td class="py-2 text-center">
+              <input type="number" value="${u.height}" min="100" max="6000" onchange="updateWindowUnit(${u.id}, 'height', +this.value)" 
+                class="w-24 px-2 py-1.5 border border-slate-300 rounded-lg bg-white font-black text-emerald-800 text-center text-sm">
+            </td>
+            <td class="py-2 text-center">
+              <input type="number" value="${u.qty}" min="1" max="100" onchange="updateWindowUnit(${u.id}, 'qty', +this.value)" 
+                class="w-16 px-2 py-1.5 border border-slate-300 rounded-lg bg-white font-bold text-center text-sm">
+            </td>
+            <td class="py-2">
+              <select onchange="updateWindowUnit(${u.id}, 'frameProfileId', +this.value)" class="w-32 px-2 py-1.5 border border-slate-300 rounded-lg bg-white font-bold text-primary-800">
+                ${frameOptions}
+              </select>
+            </td>
+            <td class="py-2">
+              <select onchange="updateWindowUnit(${u.id}, 'sashProfileId', +this.value)" class="w-32 px-2 py-1.5 border border-slate-300 rounded-lg bg-white font-bold text-amber-800">
+                ${sashOptions}
+              </select>
+            </td>
+            <td class="py-2 text-center">
+              <div class="flex items-center justify-center gap-1">
+                <button onclick="duplicateWindowUnit(${u.id})" class="p-1 text-slate-400 hover:text-primary-600 rounded transition" title="تكرار الوحدة">
+                  <i data-lucide="copy" class="w-4 h-4"></i>
+                </button>
+                <button onclick="removeWindowUnit(${u.id})" class="p-1 text-slate-400 hover:text-rose-600 rounded transition" title="حذف">
+                  <i data-lucide="trash-2" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    function addWindowUnit() {
+      const idx = windowUnits.length + 1;
+      windowUnits.push({
+        id: nextWindowId++,
+        code: `W-${idx < 10 ? '0' + idx : idx} (شباك جديد)`,
+        type: 'sliding-2',
+        width: 1400,
+        height: 1400,
+        qty: 1,
+        frameProfileId: profiles.find(p => p.type === 'frame')?.id || profiles[0]?.id || 1,
+        sashProfileId: profiles.find(p => p.type === 'sash')?.id || profiles[1]?.id || profiles[0]?.id || 1
+      });
+      renderWindowsSchedule();
+      recalculateAllPartsFromWindows();
+    }
+
+    function duplicateWindowUnit(id) {
+      const u = windowUnits.find(x => x.id === id);
+      if (u) {
+        windowUnits.push({
+          ...u,
+          id: nextWindowId++,
+          code: u.code + ' (نسخة)'
+        });
+        renderWindowsSchedule();
+        recalculateAllPartsFromWindows();
+      }
+    }
+
+    function removeWindowUnit(id) {
+      if (windowUnits.length <= 1) {
+        alert('يجب الإبقاء على نافذة واحدة على الأقل.');
+        return;
+      }
+      windowUnits = windowUnits.filter(u => u.id !== id);
+      renderWindowsSchedule();
+      recalculateAllPartsFromWindows();
+    }
+
+    function updateWindowUnit(id, field, value) {
+      const u = windowUnits.find(x => x.id === id);
+      if (u) {
+        u[field] = value;
+        recalculateAllPartsFromWindows();
+      }
+    }
+
+    // ===============================================
+    // 2. AUTOMATIC PARTS DERIVATION (FORMULAS)
+    // ===============================================
+    function recalculateAllPartsFromWindows() {
+      let newParts = [];
+      let partCounter = 1;
+
+      windowUnits.forEach(unit => {
+        const W = unit.width;
+        const H = unit.height;
+        const qty = unit.qty || 1;
+        const frameId = unit.frameProfileId;
+        const sashId = unit.sashProfileId;
+        const code = unit.code || `وحدة #${unit.id}`;
+
+        if (unit.type === 'sliding-2') {
+          // Frame: 2 Horizontal (W), 2 Vertical (H) - 45°/45°
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameId, label: `${code} - حلق أفقي`, length: W, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameId, label: `${code} - حلق رأسي`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+
+          // Sashes: 4 Width pieces (W/2 + 25mm), 4 Height pieces (H - 75mm) - 45°/45°
+          const sashW = Math.round((W / 2) + 25);
+          const sashH = Math.round(H - 75);
+          newParts.push({ id: partCounter++, unitCode: code, profileId: sashId, label: `${code} - درفة سحاب عرضي`, length: sashW, qty: 4 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: sashId, label: `${code} - درفة سحاب رأسي`, length: sashH, qty: 4 * qty, startAngle: 45, endAngle: 45 });
+        }
+        else if (unit.type === 'sliding-3') {
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameId, label: `${code} - حلق أفقي 3 سكة`, length: W, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameId, label: `${code} - حلق رأسي 3 سكة`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+
+          const sashW = Math.round((W + 50) / 3);
+          const sashH = Math.round(H - 75);
+          newParts.push({ id: partCounter++, unitCode: code, profileId: sashId, label: `${code} - درفة عرضية (3 درف)`, length: sashW, qty: 6 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: sashId, label: `${code} - درفة رأسية (3 درف)`, length: sashH, qty: 6 * qty, startAngle: 45, endAngle: 45 });
+        }
+        else if (unit.type === 'sliding-4') {
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameId, label: `${code} - حلق أفقي 4 درف`, length: W, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameId, label: `${code} - حلق رأسي 4 درف`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+
+          const sashW = Math.round((W + 50) / 4);
+          const sashH = Math.round(H - 75);
+          newParts.push({ id: partCounter++, unitCode: code, profileId: sashId, label: `${code} - درفة عرضية (4 درف)`, length: sashW, qty: 8 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: sashId, label: `${code} - درفة رأسية (4 درف)`, length: sashH, qty: 8 * qty, startAngle: 45, endAngle: 45 });
+        }
+        else if (unit.type === 'hinged-window') {
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameId, label: `${code} - حلق مفصلي أفقي`, length: W, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameId, label: `${code} - حلق مفصلي رأسي`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+
+          const sashW = Math.max(100, W - 86);
+          const sashH = Math.max(100, H - 86);
+          newParts.push({ id: partCounter++, unitCode: code, profileId: sashId, label: `${code} - درفة مفصلي عرضي`, length: sashW, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: sashId, label: `${code} - درفة مفصلي رأسي`, length: sashH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+        }
+        else if (unit.type === 'hinged-door') {
+          // Door Frame: 1 Top (W), 2 Sides (H)
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameId, label: `${code} - حلق باب علوي`, length: W, qty: 1 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameId, label: `${code} - حلق باب جانبي`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 90 });
+
+          const sashW = Math.max(100, W - 100);
+          const sashH = Math.max(100, H - 65);
+          newParts.push({ id: partCounter++, unitCode: code, profileId: sashId, label: `${code} - درفة باب عرضي`, length: sashW, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: sashId, label: `${code} - درفة باب رأسي`, length: sashH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+        }
+        else { // Fixed
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameId, label: `${code} - حلق ثابت أفقي`, length: W, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameId, label: `${code} - حلق ثابت رأسي`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+        }
+      });
+
+      parts = newParts;
+      renderParts();
+      updateSubtitleAndBadges();
+    }
+
+    function addManualPart() {
+      parts.push({
+        id: parts.length + 100,
+        unitCode: 'يدوي',
+        profileId: profiles[0]?.id || 1,
+        label: 'قطعة إضافية مخصصة',
+        length: 1000,
+        qty: 1,
+        startAngle: 45,
+        endAngle: 45
+      });
+      renderParts();
+      updateSubtitleAndBadges();
     }
 
     // ===============================================
@@ -916,14 +1132,13 @@
         <tr class="border-b border-slate-100 hover:bg-slate-50 transition">
           <td class="py-2 pr-1">
             <input type="text" value="${p.code}" onchange="updateProfile(${p.id}, 'code', this.value)" 
-              class="w-24 px-2 py-1 border border-slate-300 rounded font-bold text-primary-800 bg-white">
+              class="w-28 px-2 py-1 border border-slate-300 rounded font-bold text-primary-800 bg-white">
           </td>
           <td class="py-2">
             <select onchange="updateProfile(${p.id}, 'type', this.value)" class="px-2 py-1 border border-slate-300 rounded bg-white font-medium">
               <option value="frame" ${p.type === 'frame' ? 'selected' : ''}>حلق / Frame</option>
               <option value="sash" ${p.type === 'sash' ? 'selected' : ''}>درفة / Sash</option>
-              <option value="bead" ${p.type === 'bead' ? 'selected' : ''}>باكتة / Glazing Bead</option>
-              <option value="mullion" ${p.type === 'mullion' ? 'selected' : ''}>قاطع / Mullion</option>
+              <option value="bead" ${p.type === 'bead' ? 'selected' : ''}>باكتة / Bead</option>
               <option value="other" ${p.type === 'other' ? 'selected' : ''}>أخرى / Other</option>
             </select>
           </td>
@@ -950,9 +1165,9 @@
       const p = profiles.find(x => x.id === id);
       if (p) {
         p[field] = value;
+        renderWindowsSchedule();
         renderParts();
         renderOffcuts();
-        updateSubtitleAndBadges();
       }
     }
 
@@ -965,9 +1180,9 @@
         scrap45: 35
       });
       renderProfiles();
+      renderWindowsSchedule();
       renderParts();
       renderOffcuts();
-      updateSubtitleAndBadges();
     }
 
     function removeProfile(id) {
@@ -977,63 +1192,42 @@
       }
       profiles = profiles.filter(p => p.id !== id);
       renderProfiles();
+      renderWindowsSchedule();
       renderParts();
       renderOffcuts();
-      updateSubtitleAndBadges();
     }
 
     // ===============================================
-    // Parts Management
+    // Parts Table Renderer
     // ===============================================
     function renderParts() {
       const tbody = document.getElementById('partsBody');
       if (!tbody) return;
 
-      tbody.innerHTML = parts.map((p, index) => {
-        const profileOptions = profiles.map(pr => 
-          `<option value="${pr.id}" ${pr.id === p.profileId ? 'selected' : ''}>${pr.code}</option>`
-        ).join('');
+      tbody.innerHTML = parts.map(p => {
+        const pr = profiles.find(x => x.id === p.profileId);
+        const profileCode = pr ? pr.code : '—';
 
         return `
           <tr class="border-b border-slate-100 hover:bg-slate-50 transition">
-            <td class="py-2 pr-1">
-              <select onchange="updatePart(${p.id}, 'profileId', +this.value)" class="w-24 px-2 py-1 border border-slate-300 rounded bg-white font-bold text-primary-800">
-                ${profileOptions}
-              </select>
-            </td>
-            <td class="py-2">
-              <input type="text" value="${p.label || ''}" placeholder="وصف القطعة" onchange="updatePart(${p.id}, 'label', this.value)" 
-                class="w-28 px-2 py-1 border border-slate-300 rounded bg-white text-xs">
-            </td>
-            <td class="py-2">
-              <input type="number" value="${p.length}" min="10" max="6500" onchange="updatePart(${p.id}, 'length', +this.value)" 
-                class="w-20 px-2 py-1 border border-slate-300 rounded bg-white font-bold text-emerald-800 text-center">
-            </td>
-            <td class="py-2">
-              <input type="number" value="${p.qty}" min="1" max="500" onchange="updatePart(${p.id}, 'qty', +this.value)" 
-                class="w-14 px-2 py-1 border border-slate-300 rounded bg-white font-bold text-center">
+            <td class="py-2 font-bold text-primary-800">${profileCode}</td>
+            <td class="py-2 font-semibold text-slate-900">${p.label || '—'}</td>
+            <td class="py-2 font-black text-emerald-800 text-sm">${p.length} <span class="text-[10px] font-normal text-slate-500">مم</span></td>
+            <td class="py-2 font-bold text-center">${p.qty}</td>
+            <td class="py-2 text-center">
+              <span class="px-2 py-0.5 rounded font-bold ${p.startAngle === 45 ? 'bg-amber-100 text-amber-900' : 'bg-slate-100 text-slate-800'}">
+                ${p.startAngle}°
+              </span>
             </td>
             <td class="py-2 text-center">
-              <select onchange="updatePart(${p.id}, 'startAngle', +this.value)" class="px-1.5 py-1 border border-slate-300 rounded bg-white font-bold text-center ${p.startAngle === 45 ? 'text-amber-700 bg-amber-50' : 'text-slate-700'}">
-                <option value="90" ${p.startAngle === 90 ? 'selected' : ''}>90° (عدل)</option>
-                <option value="45" ${p.startAngle === 45 ? 'selected' : ''}>45° (شطف)</option>
-              </select>
+              <span class="px-2 py-0.5 rounded font-bold ${p.endAngle === 45 ? 'bg-amber-100 text-amber-900' : 'bg-slate-100 text-slate-800'}">
+                ${p.endAngle}°
+              </span>
             </td>
             <td class="py-2 text-center">
-              <select onchange="updatePart(${p.id}, 'endAngle', +this.value)" class="px-1.5 py-1 border border-slate-300 rounded bg-white font-bold text-center ${p.endAngle === 45 ? 'text-amber-700 bg-amber-50' : 'text-slate-700'}">
-                <option value="90" ${p.endAngle === 90 ? 'selected' : ''}>90° (عدل)</option>
-                <option value="45" ${p.endAngle === 45 ? 'selected' : ''}>45° (شطف)</option>
-              </select>
-            </td>
-            <td class="py-2 text-center">
-              <div class="flex items-center justify-center gap-1">
-                <button onclick="duplicatePart(${p.id})" class="p-1 text-slate-400 hover:text-primary-600 rounded transition" title="تكرار">
-                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                </button>
-                <button onclick="removePart(${p.id})" class="p-1 text-slate-400 hover:text-rose-600 rounded transition" title="حذف">
-                  <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                </button>
-              </div>
+              <button onclick="removePart(${p.id})" class="p-1 text-slate-400 hover:text-rose-600 rounded transition" title="حذف">
+                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+              </button>
             </td>
           </tr>
         `;
@@ -1043,100 +1237,9 @@
       lucide.createIcons();
     }
 
-    function updatePart(id, field, value) {
-      const p = parts.find(x => x.id === id);
-      if (p) {
-        p[field] = value;
-        updateSubtitleAndBadges();
-      }
-    }
-
-    function addPart() {
-      parts.push({
-        id: nextPartId++,
-        profileId: profiles[0]?.id || 1,
-        label: 'قطعة #' + parts.length,
-        length: 1000,
-        qty: 1,
-        startAngle: 45,
-        endAngle: 45
-      });
-      renderParts();
-    }
-
-    function duplicatePart(id) {
-      const p = parts.find(x => x.id === id);
-      if (p) {
-        parts.push({
-          ...p,
-          id: nextPartId++,
-          label: (p.label || '') + ' (نسخة)'
-        });
-        renderParts();
-      }
-    }
-
     function removePart(id) {
       parts = parts.filter(p => p.id !== id);
       renderParts();
-    }
-
-    // ===============================================
-    // Presets (Quick Windows & Doors Builder)
-    // ===============================================
-    function openPresetModal() {
-      document.getElementById('presetModal').classList.remove('hidden');
-      lucide.createIcons();
-    }
-
-    function closePresetModal() {
-      document.getElementById('presetModal').classList.add('hidden');
-    }
-
-    function applyPreset() {
-      const type = document.getElementById('presetType').value;
-      const qty = +document.getElementById('presetQty').value || 1;
-      const W = +document.getElementById('presetWidth').value || 1200;
-      const H = +document.getElementById('presetHeight').value || 1400;
-
-      const frameProfile = profiles.find(p => p.type === 'frame') || profiles[0];
-      const sashProfile = profiles.find(p => p.type === 'sash') || profiles[1] || profiles[0];
-
-      if (type === 'sliding-2') {
-        // Frame: 2 Horizontal (W), 2 Vertical (H) - 45°/45°
-        parts.push({ id: nextPartId++, profileId: frameProfile.id, label: `حلق شباك علوي/سفلي (${W}x${H})`, length: W, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-        parts.push({ id: nextPartId++, profileId: frameProfile.id, label: `حلق شباك جانبي (${W}x${H})`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-
-        // 2 Sashes: Width approx (W / 2 + 25), Height approx (H - 75)
-        const sashW = Math.round((W / 2) + 25);
-        const sashH = Math.round(H - 75);
-        parts.push({ id: nextPartId++, profileId: sashProfile.id, label: `درفة سحاب عرضي`, length: sashW, qty: 4 * qty, startAngle: 45, endAngle: 45 });
-        parts.push({ id: nextPartId++, profileId: sashProfile.id, label: `درفة سحاب طولي`, length: sashH, qty: 4 * qty, startAngle: 45, endAngle: 45 });
-      } else if (type === 'hinged-window') {
-        parts.push({ id: nextPartId++, profileId: frameProfile.id, label: `حلق شباك أفقي`, length: W, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-        parts.push({ id: nextPartId++, profileId: frameProfile.id, label: `حلق شباك رأسي`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-
-        const sashW = Math.max(100, W - 90);
-        const sashH = Math.max(100, H - 90);
-        parts.push({ id: nextPartId++, profileId: sashProfile.id, label: `درفة مفصلي عرضي`, length: sashW, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-        parts.push({ id: nextPartId++, profileId: sashProfile.id, label: `درفة مفصلي طولي`, length: sashH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-      } else if (type === 'hinged-door') {
-        // Door frame: 1 Top (W), 2 Sides (H) - 45°/45° on top
-        parts.push({ id: nextPartId++, profileId: frameProfile.id, label: `حلق باب علوي`, length: W, qty: 1 * qty, startAngle: 45, endAngle: 45 });
-        parts.push({ id: nextPartId++, profileId: frameProfile.id, label: `حلق باب جانبي`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 90 });
-
-        const sashW = Math.max(100, W - 110);
-        const sashH = Math.max(100, H - 65);
-        parts.push({ id: nextPartId++, profileId: sashProfile.id, label: `درفة باب عرضي`, length: sashW, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-        parts.push({ id: nextPartId++, profileId: sashProfile.id, label: `درفة باب طولي`, length: sashH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-      } else {
-        parts.push({ id: nextPartId++, profileId: frameProfile.id, label: `حلق ثابت أفقي`, length: W, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-        parts.push({ id: nextPartId++, profileId: frameProfile.id, label: `حلق ثابت رأسي`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-      }
-
-      closePresetModal();
-      renderParts();
-      alert('تمت إضافة قطع النموذج بنجاح!');
     }
 
     // ===============================================
@@ -1164,7 +1267,7 @@
         return `
           <tr class="border-b border-slate-100 hover:bg-slate-50 transition">
             <td class="py-2 pr-1">
-              <select onchange="updateOffcut(${o.id}, 'profileId', +this.value)" class="w-24 px-2 py-1 border border-slate-300 rounded bg-white font-bold text-primary-800">
+              <select onchange="updateOffcut(${o.id}, 'profileId', +this.value)" class="w-32 px-2 py-1 border border-slate-300 rounded bg-white font-bold text-primary-800">
                 ${profileOptions}
               </select>
             </td>
@@ -1249,23 +1352,26 @@
       const prioritizeOffcuts = document.getElementById('useOffcutsFirst').checked;
 
       if (parts.length === 0) {
-        alert('يرجى إضافة قطعة واحدة على الأقل في قائمة القطع.');
+        recalculateAllPartsFromWindows();
+      }
+
+      if (parts.length === 0) {
+        alert('يرجى إدخال نافذة واحدة على الأقل في جدول النوافذ.');
         return;
       }
 
-      // Group parts by profile
       let profileResults = [];
 
       profiles.forEach(profile => {
         const profileParts = parts.filter(p => p.profileId === profile.id);
         if (profileParts.length === 0) return;
 
-        // Flatten pieces list
         let pieces = [];
         profileParts.forEach(p => {
           for (let i = 0; i < p.qty; i++) {
             pieces.push({
               partId: p.id,
+              unitCode: p.unitCode || '',
               profileId: profile.id,
               profileCode: profile.code,
               label: p.label || profile.code,
@@ -1278,7 +1384,6 @@
           }
         });
 
-        // Gather available offcuts for this profile
         let availableOffcuts = [];
         if (prioritizeOffcuts) {
           const profileOffcuts = offcuts.filter(o => o.profileId === profile.id);
@@ -1294,11 +1399,9 @@
               });
             }
           });
-          // Sort offcuts ascending so we use smallest viable offcut first
           availableOffcuts.sort((a, b) => a.length - b.length);
         }
 
-        // Optimize cuts for this profile using Multi-Strategy Heuristic
         const result = solveProfileCutting({
           profile,
           pieces,
@@ -1312,7 +1415,6 @@
         profileResults.push(result);
       });
 
-      // Flatten all bars across profiles
       let allBars = [];
       let globalBarCounter = 1;
 
@@ -1333,29 +1435,19 @@
         timestamp: new Date().toLocaleString()
       };
 
-      // Update Metrics & Render UI
       renderMetrics(allBars, defaultStockLength, minOffcut);
       renderVisualization(allBars, kerf, minOffcut);
       renderWorkshopSheet(allBars, kerf, minOffcut);
 
-      // Switch to Results Tab
       switchTab('tab-results');
     }
 
-    /**
-     * Solves cutting stock for a single profile using:
-     * 1. Angle-Matching heuristics (eliminates scrap on 45° cuts if preceding cut matched).
-     * 2. Offcut greedy fitting.
-     * 3. Multiple permutation passes (best of 100 trials).
-     */
     function solveProfileCutting({ profile, pieces, availableOffcuts, defaultStockLength, kerf, trimCut, minOffcut }) {
-      
       function simulatePacking(pieceList, offcutPool) {
         let bars = [];
         let remainingPieces = [...pieceList];
         let remainingOffcuts = [...offcutPool];
 
-        // 1. Try filling offcuts first
         for (let off of remainingOffcuts) {
           if (remainingPieces.length === 0) break;
           
@@ -1373,7 +1465,6 @@
             deadScrap: 0
           };
 
-          // Try packing pieces into this offcut
           let placedAny = false;
           for (let i = 0; i < remainingPieces.length; i++) {
             const piece = remainingPieces[i];
@@ -1393,7 +1484,6 @@
           }
         }
 
-        // 2. Pack remaining pieces into standard new stock bars
         while (remainingPieces.length > 0) {
           let currentBar = {
             id: bars.length + 1,
@@ -1404,11 +1494,10 @@
             cuts: [],
             usedLength: 0,
             remainingLength: defaultStockLength,
-            currentEndAngle: 90, // Standard raw bar starts at 90°
+            currentEndAngle: 90,
             deadScrap: 0
           };
 
-          // Apply initial trim cut on new bar if set
           if (trimCut > 0) {
             currentBar.cuts.push({
               type: 'trim',
@@ -1436,8 +1525,7 @@
           }
 
           if (addedInThisBar === 0) {
-            // Safety break if piece exceeds stock length
-            console.error('Piece is too long for stock bar:', remainingPieces[0]);
+            console.error('Piece too long for stock:', remainingPieces[0]);
             break;
           }
 
@@ -1451,18 +1539,13 @@
         return { bars, totalUsedStock, totalDeadScrap };
       }
 
-      // Helper: calculates required scrap and kerf for fitting a piece
       function calculatePieceFit(bar, piece, kerfVal, initTrim, scrap45) {
         let scrapNeeded = 0;
         let requiresKerf = bar.cuts.length > 0;
         let kerfNeeded = requiresKerf ? kerfVal : 0;
 
-        // Angle matching logic:
-        // If bar's current tip is 45° and piece starts with 45° -> ZERO scrap needed! (Shared miter cut)
-        // If bar tip is 90° and piece starts with 45° -> needs scrap45 trim.
-        // If bar tip is 45° and piece starts with 90° -> needs scrap45 trim to square the bar.
         if (bar.currentEndAngle === 45 && piece.startAngle === 45) {
-          scrapNeeded = 0; // Perfect complementary cut!
+          scrapNeeded = 0; // Perfect complementary miter cut!
         } else if (bar.currentEndAngle !== piece.startAngle) {
           scrapNeeded = scrap45;
         }
@@ -1501,6 +1584,7 @@
           partId: piece.partId,
           length: piece.length,
           label: piece.label,
+          unitCode: piece.unitCode,
           startAngle: piece.startAngle,
           endAngle: piece.endAngle
         });
@@ -1510,12 +1594,9 @@
         bar.currentEndAngle = piece.endAngle;
       }
 
-      // Multi-strategy search:
-      // 1. Sort descending by length
       let piecesDesc = [...pieces].sort((a, b) => b.length - a.length);
       let bestSolution = simulatePacking(piecesDesc, availableOffcuts);
 
-      // 2. Sort prioritizing 45° pieces first, then descending length
       let piecesMiterFirst = [...pieces].sort((a, b) => {
         const aMiter = (a.startAngle === 45 || a.endAngle === 45) ? 1 : 0;
         const bMiter = (b.startAngle === 45 || b.endAngle === 45) ? 1 : 0;
@@ -1528,7 +1609,6 @@
         bestSolution = solMiterFirst;
       }
 
-      // 3. Permutation / Simulated trials (50 random variations for optimal angle alignment)
       for (let trial = 0; trial < 40; trial++) {
         let randomized = [...piecesDesc];
         for (let i = randomized.length - 1; i > 0; i--) {
@@ -1604,7 +1684,6 @@
         html += `
           <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/70 hover:bg-white transition shadow-sm">
             
-            <!-- Bar Header -->
             <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
               <div class="flex items-center gap-2">
                 <span class="px-2.5 py-0.5 rounded-md text-xs font-black ${isOffcutBar ? 'bg-emerald-100 text-emerald-800' : 'bg-primary-100 text-primary-800'}">
@@ -1621,7 +1700,6 @@
               </div>
             </div>
 
-            <!-- Graphical Bar Representation -->
             <div class="relative h-14 bg-slate-200 rounded-lg overflow-hidden border border-slate-300 flex shadow-inner">
         `;
 
@@ -1652,7 +1730,6 @@
           }
         });
 
-        // Remaining bar space
         if (bar.remainingLength > 0) {
           const remainPct = ((bar.remainingLength / bar.stockLength) * 100).toFixed(2);
           const isUseful = bar.remainingLength >= minOffcut;
@@ -1729,11 +1806,11 @@
               <thead>
                 <tr class="bg-slate-100 text-slate-700 border-b border-slate-200">
                   <th class="px-3 py-2 font-bold w-12 text-center"># القص</th>
-                  <th class="px-3 py-2 font-bold">تسمية / وصف القطعة</th>
+                  <th class="px-3 py-2 font-bold">اسم الوحدة والقطعة</th>
                   <th class="px-3 py-2 font-bold text-emerald-800 text-base">الطول المطلوب</th>
                   <th class="px-3 py-2 font-bold text-center">زاوية البداية</th>
                   <th class="px-3 py-2 font-bold text-center">زاوية النهاية</th>
-                  <th class="px-3 py-2 font-bold">تعليمات وتوجيه القص</th>
+                  <th class="px-3 py-2 font-bold">إرشادات الفني</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-200">
@@ -1760,7 +1837,7 @@
               </td>
               <td class="px-3 py-2.5 text-slate-600">
                 ${idx === 0 && bar.cuts[0]?.type === 'trim' ? '<span class="text-rose-600 font-semibold">قصة تنظيف أولية ثم </span>' : ''}
-                قص بزاوية ${p.startAngle}° من الطرف و ${p.endAngle}° من النهاية
+                قص بزاوية ${p.startAngle}° و ${p.endAngle}°
               </td>
             </tr>
           `;
@@ -1789,9 +1866,6 @@
       container.innerHTML = html;
     }
 
-    // ===============================================
-    // Save New Offcuts back to Inventory
-    // ===============================================
     function addResultOffcutsToInventory() {
       if (!lastOptimizationResult) return;
 
@@ -1824,6 +1898,7 @@
 
       const projectData = {
         meta: currentProject,
+        windowUnits,
         profiles,
         parts,
         offcuts,
@@ -1835,7 +1910,6 @@
         }
       };
 
-      // Save to localStorage
       try {
         localStorage.setItem('aluminum_opt_current', JSON.stringify(projectData));
         
@@ -1875,13 +1949,13 @@
       listEl.innerHTML = keys.map(k => {
         const p = allProjects[k];
         const dateStr = p.meta.updatedAt ? new Date(p.meta.updatedAt).toLocaleDateString('ar-EG') : '—';
-        const partsCount = (p.parts || []).reduce((s, x) => s + (x.qty || 1), 0);
+        const unitsCount = (p.windowUnits || []).reduce((s, x) => s + (x.qty || 1), 0);
 
         return `
           <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex items-center justify-between hover:bg-slate-100 transition">
             <div>
               <p class="font-bold text-xs text-slate-900">${p.meta.name}</p>
-              <p class="text-[11px] text-slate-500">${p.meta.client || 'بدون عميل'} • ${partsCount} قطع • ${dateStr}</p>
+              <p class="text-[11px] text-slate-500">${p.meta.client || 'بدون عميل'} • ${unitsCount} نوافذ • ${dateStr}</p>
             </div>
             <div class="flex items-center gap-1">
               <button onclick="loadSavedProject('${encodeURIComponent(k)}')" class="px-2.5 py-1 bg-primary-600 hover:bg-primary-700 text-white font-bold text-xs rounded transition">
@@ -1905,6 +1979,7 @@
       if (!p) return;
 
       currentProject = p.meta || { name: key };
+      windowUnits = p.windowUnits || [];
       profiles = p.profiles || [];
       parts = p.parts || [];
       offcuts = p.offcuts || [];
@@ -1921,10 +1996,11 @@
       document.getElementById('projectInputNotes').value = currentProject.notes || '';
 
       renderProfiles();
-      renderParts();
+      renderWindowsSchedule();
+      recalculateAllPartsFromWindows();
       renderOffcuts();
       updateSubtitleAndBadges();
-      switchTab('tab-input');
+      switchTab('tab-windows');
       alert(`تم فتح المشروع: ${currentProject.name}`);
     }
 
@@ -1946,17 +2022,20 @@
           notes: '',
           updatedAt: new Date().toISOString()
         };
-        parts = [];
+        windowUnits = [
+          { id: 1, code: 'W-01 (شباك 1)', type: 'sliding-2', width: 1200, height: 1200, qty: 1, frameProfileId: 1, sashProfileId: 2 }
+        ];
         offcuts = [];
         document.getElementById('projectInputName').value = currentProject.name;
         document.getElementById('projectInputClient').value = '';
         document.getElementById('projectInputNotes').value = '';
 
         renderProfiles();
-        renderParts();
+        renderWindowsSchedule();
+        recalculateAllPartsFromWindows();
         renderOffcuts();
         updateSubtitleAndBadges();
-        switchTab('tab-input');
+        switchTab('tab-windows');
       }
     }
 
@@ -1967,6 +2046,7 @@
       saveCurrentProject(false);
       const projectData = {
         meta: currentProject,
+        windowUnits,
         profiles,
         parts,
         offcuts,
@@ -1995,8 +2075,9 @@
       reader.onload = function(e) {
         try {
           const p = JSON.parse(e.target.result);
-          if (p.profiles && p.parts) {
+          if (p.windowUnits || p.parts) {
             currentProject = p.meta || { name: file.name.replace('.json', '') };
+            windowUnits = p.windowUnits || [];
             profiles = p.profiles || [];
             parts = p.parts || [];
             offcuts = p.offcuts || [];
@@ -2013,11 +2094,12 @@
             document.getElementById('projectInputNotes').value = currentProject.notes || '';
 
             renderProfiles();
-            renderParts();
+            renderWindowsSchedule();
+            recalculateAllPartsFromWindows();
             renderOffcuts();
             updateSubtitleAndBadges();
             saveCurrentProject(false);
-            switchTab('tab-input');
+            switchTab('tab-windows');
             alert('تم استيراد المشروع بنجاح!');
           } else {
             alert('الملف غير صالح أو لا يحتوي على بنية مشروع قص صحيحة.');
@@ -2057,7 +2139,22 @@
 
       const wb = XLSX.utils.book_new();
 
-      // Sheet 1: Cutting Sheet Detailed
+      // Sheet 1: Windows Schedule
+      let winData = [
+        ['جدول مقاسات النوافذ والأبواب'],
+        ['المشروع:', currentProject.name, 'العميل:', currentProject.client, 'التاريخ:', new Date().toLocaleDateString('ar-EG')],
+        [],
+        ['رمز الوحدة', 'نوع النظام', 'العرض W (مم)', 'الارتفاع H (مم)', 'العدد', 'قطاع الحلق', 'قطاع الدرفة']
+      ];
+      windowUnits.forEach(u => {
+        const frame = profiles.find(p => p.id === u.frameProfileId)?.code || '—';
+        const sash = profiles.find(p => p.id === u.sashProfileId)?.code || '—';
+        winData.push([u.code, u.type, u.width, u.height, u.qty, frame, sash]);
+      });
+      const wsWin = XLSX.utils.aoa_to_sheet(winData);
+      XLSX.utils.book_append_sheet(wb, wsWin, 'جدول النوافذ والأبواب');
+
+      // Sheet 2: Cutting Sheet Detailed
       let sheetData = [
         ['أمر قص وتشغيل بروفيلات الألمنيوم - Aluminum Cutting Order'],
         ['المشروع:', currentProject.name, 'العميل:', currentProject.client, 'التاريخ:', new Date().toLocaleDateString('ar-EG')],
@@ -2087,24 +2184,6 @@
       const ws1 = XLSX.utils.aoa_to_sheet(sheetData);
       XLSX.utils.book_append_sheet(wb, ws1, 'ورقة القص للورشة');
 
-      // Sheet 2: Bill of Parts
-      let partsData = [
-        ['كود القطاع', 'التسمية', 'الطول (مم)', 'العدد', 'زاوية البداية', 'زاوية النهاية']
-      ];
-      parts.forEach(p => {
-        const pr = profiles.find(x => x.id === p.profileId);
-        partsData.push([
-          pr?.code || '—',
-          p.label,
-          p.length,
-          p.qty,
-          p.startAngle + '°',
-          p.endAngle + '°'
-        ]);
-      });
-      const ws2 = XLSX.utils.aoa_to_sheet(partsData);
-      XLSX.utils.book_append_sheet(wb, ws2, 'قائمة القطع المطلوبة');
-
       XLSX.writeFile(wb, `${currentProject.name || 'aluminum_cutting'}.xlsx`);
     }
 
@@ -2114,7 +2193,7 @@
         return;
       }
 
-      let csv = '\uFEFF'; // UTF-8 BOM for Excel Arabic support
+      let csv = '\uFEFF';
       csv += 'BarID,BarType,Profile,StockLength,CutNo,PartLabel,Length_mm,StartAngle,EndAngle,BarUsed_mm,BarRemaining_mm\n';
 
       lastOptimizationResult.allBars.forEach(bar => {
@@ -2137,13 +2216,12 @@
     // Initialization
     // ===============================================
     window.addEventListener('DOMContentLoaded', () => {
-      // Load saved state if exists
       try {
         const saved = localStorage.getItem('aluminum_opt_current');
         if (saved) {
           const p = JSON.parse(saved);
+          if (p.windowUnits) windowUnits = p.windowUnits;
           if (p.profiles) profiles = p.profiles;
-          if (p.parts) parts = p.parts;
           if (p.offcuts) offcuts = p.offcuts;
           if (p.meta) currentProject = p.meta;
           if (p.settings) {
@@ -2160,7 +2238,8 @@
       document.getElementById('projectInputNotes').value = currentProject.notes || '';
 
       renderProfiles();
-      renderParts();
+      renderWindowsSchedule();
+      recalculateAllPartsFromWindows();
       renderOffcuts();
       renderSavedProjectsList();
       updateSubtitleAndBadges();
