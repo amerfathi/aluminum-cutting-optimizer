@@ -127,11 +127,11 @@
               <span class="lang-ar">محسن وقاص الألمنيوم والزجاج المتسلسل</span>
               <span class="lang-en">Aluminum & Glass Cascading Optimizer</span>
             </h1>
-            <span class="px-1.5 py-0.2 text-[10px] font-mono font-bold bg-slate-200 text-slate-800 rounded border border-slate-300">v5.0 Workshop Pro</span>
+            <span class="px-1.5 py-0.2 text-[10px] font-mono font-bold bg-slate-200 text-slate-800 rounded border border-slate-300">v5.5 Architecture Pro</span>
           </div>
           <p class="text-[11px] text-slate-500 font-medium">
-            <span class="lang-ar">تفصيل قطاعات درف السحاب (درفة جنب • درفة شنكل • درفة كعب) وحصر الزجاج الصافي (كميات فقط)</span>
-            <span class="lang-en">3-Profile Sliding Sashes (Side Stile, Interlock, Rail) & Net Glass Schedule</span>
+            <span class="lang-ar">فصل كامل لمنطق كل قطاع: سحاب (جنب/شنكل/كعب) • مفصلي • أبواب • ثابت (بدون درف)</span>
+            <span class="lang-en">Dedicated Engineering Logic per System (Sliding, Hinged, Doors, Fixed)</span>
           </p>
         </div>
       </div>
@@ -165,8 +165,8 @@
       </button>
       <button onclick="switchTab('tab-systems')" id="btn-tab-systems" class="tab-btn px-3.5 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 rounded-t transition flex items-center gap-1.5">
         <i data-lucide="sliders" class="w-3.5 h-3.5"></i>
-        <span class="lang-ar">2. تعريف قطاعات السيستم والخلوصات</span>
-        <span class="lang-en">2. Systems & Profiles Setup</span>
+        <span class="lang-ar">2. تعريف قطاعات السيستم (مفصولة بالنوع)</span>
+        <span class="lang-en">2. Systems by Category</span>
       </button>
       <button onclick="switchTab('tab-parts')" id="btn-tab-parts" class="tab-btn px-3.5 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 rounded-t transition flex items-center gap-1.5">
         <i data-lucide="list-checks" class="w-3.5 h-3.5"></i>
@@ -280,7 +280,7 @@
                 <span class="lang-en">Windows & Glass Schedule</span>
               </h2>
               <p class="text-[11px] text-slate-500 font-medium">
-                <span class="lang-ar">أدخل مقاس الحلق الخارجي (W × H)، ويقوم النظام بحساب مقاسات الدرفة (جنب، شنكل، كعب) ومقاس الزجاج الصافي تلقائياً</span>
+                <span class="lang-ar">اختر نوع الوحدة (سحاب / مفصلي / باب / ثابت) وسيقوم النظام بتطبيق المنطق الهندسي الخاص به تلقائياً</span>
               </p>
             </div>
           </div>
@@ -298,11 +298,11 @@
               <tr class="bg-slate-100 text-slate-800 border-b border-slate-300 font-bold font-mono text-[11px]">
                 <th class="py-1.5 px-2 text-center w-8">#</th>
                 <th class="py-1.5 px-2 font-cairo"><span class="lang-ar">كود النافذة</span><span class="lang-en">Code</span></th>
-                <th class="py-1.5 px-2 font-cairo"><span class="lang-ar">نوع النظام</span><span class="lang-en">Type</span></th>
+                <th class="py-1.5 px-2 font-cairo"><span class="lang-ar">نوع الوحدة</span><span class="lang-en">Type</span></th>
                 <th class="py-1.5 px-2 text-center"><span class="lang-ar">مقاس الحلق W×H</span><span class="lang-en">Frame WxH</span></th>
                 <th class="py-1.5 px-2 text-center"><span class="lang-ar">العدد</span><span class="lang-en">Qty</span></th>
-                <th class="py-1.5 px-2 font-cairo"><span class="lang-ar">نظام القطاع (السيستم)</span><span class="lang-en">Profile System</span></th>
-                <th class="py-1.5 px-2 text-center font-cairo bg-blue-50/70 text-blue-900 border-x border-blue-200"><span class="lang-ar">مقاس الدرفة الصافي (Ws × Hs)</span></th>
+                <th class="py-1.5 px-2 font-cairo"><span class="lang-ar">نظام القطاع المطابق</span><span class="lang-en">Matching System</span></th>
+                <th class="py-1.5 px-2 text-center font-cairo bg-blue-50/70 text-blue-900 border-x border-blue-200"><span class="lang-ar">تفصيل الدرفة الصافي (Ws × Hs)</span></th>
                 <th class="py-1.5 px-2 text-center font-cairo bg-emerald-50/70 text-emerald-900 border-x border-emerald-200"><span class="lang-ar">مقاس الزجاج الصافي (Wg × Hg)</span></th>
                 <th class="py-1.5 px-2 text-center w-14"></th>
               </tr>
@@ -328,93 +328,141 @@
     </div>
 
     <!-- ============================================== -->
-    <!-- TAB 2: SYSTEM DEDUCTION RULES & WORKSHOP GUIDE -->
+    <!-- TAB 2: SYSTEM DEDUCTION RULES BY CATEGORY -->
     <!-- ============================================== -->
-    <div id="tab-systems" class="tab-content hidden space-y-4">
+    <div id="tab-systems" class="tab-content hidden space-y-6">
       
-      <div class="bg-white rounded-lg border border-slate-300 shadow-2xs">
-        <div class="px-4 py-2.5 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+      <!-- System Category Tabs / Nav inside Systems -->
+      <div class="bg-white rounded-lg border border-slate-300 p-4 shadow-2xs space-y-4">
+        
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-3">
           <div>
-            <h3 class="font-black text-slate-900 text-xs sm:text-sm">
-              <span class="lang-ar">تعريف قطاعات السيستم (حلق • درفة جنب • درفة شنكل • درفة كعب)</span>
-              <span class="lang-en">Systems & Profile Extrusions Setup</span>
+            <h3 class="font-black text-slate-900 text-sm">
+              أنظمة القطاعات المخصصة (مفصولة هندسياً حسب نوع النظام)
             </h3>
-            <p class="text-[11px] text-slate-500 font-medium">
-              <span class="lang-ar">تحديد أكواد البروفيلات وسماكة الحلق وعرض الدرفة وخلوصات الفرزة والزجاج</span>
+            <p class="text-xs text-slate-500 font-medium">
+              لكل نوع نظام منطق ومقاطع تختلف تماماً عن غيره:
             </p>
           </div>
-          
-          <button onclick="addNewSystem()" class="px-2.5 py-1 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded transition flex items-center gap-1">
-            <i data-lucide="plus" class="w-3 h-3"></i>
-            <span class="lang-ar">إضافة سيستم مخصص</span>
-            <span class="lang-en">Add Custom System</span>
-          </button>
-        </div>
-
-        <div class="p-4 overflow-x-auto">
-          <table class="w-full text-xs text-right border-collapse font-mono" id="systemsTable">
-            <thead>
-              <tr class="bg-slate-100 text-slate-800 border-b border-slate-300 font-bold font-cairo text-[11px]">
-                <th class="py-1.5 px-2">اسم السيستم</th>
-                <th class="py-1.5 px-2">كود الحلق</th>
-                <th class="py-1.5 px-2 text-blue-900 bg-blue-50/50">كود درفة جنب</th>
-                <th class="py-1.5 px-2 text-amber-900 bg-amber-50/50">كود درفة شنكل</th>
-                <th class="py-1.5 px-2 text-emerald-900 bg-emerald-50/50">كود درفة كعب</th>
-                <th class="py-1.5 px-2 text-center">عرض الدرفة (مم)</th>
-                <th class="py-1.5 px-2 text-center">خلوص الارتفاع (مم)</th>
-                <th class="py-1.5 px-2 text-center">فرزة الزجاج (مم)</th>
-                <th class="py-1.5 px-2 text-center w-10"></th>
-              </tr>
-            </thead>
-            <tbody id="systemsBody" class="divide-y divide-slate-200">
-              <!-- Dynamically populated -->
-            </tbody>
-          </table>
-        </div>
-
-        <!-- SIMPLIFIED WORKSHOP GUIDE -->
-        <div class="p-5 bg-slate-50 border-t border-slate-200 text-xs text-slate-800 space-y-4 font-cairo">
-          <div class="flex items-center gap-2 border-b border-slate-200 pb-2">
-            <span class="w-6 h-6 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-xs">؟</span>
-            <h4 class="font-black text-slate-900 text-sm">
-              دليل الورشة: تشريح قطاعات درفة السحاب وكيفية قياسها وإضافتها للبرنامج
-            </h4>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-            
-            <div class="p-3 bg-white rounded-lg border border-blue-200 space-y-1 shadow-2xs">
-              <div class="flex items-center gap-1.5 font-bold text-blue-900">
-                <span class="w-2 h-2 rounded-full bg-blue-600"></span>
-                <span>1. درفة جنب (قائم الجنب):</span>
-              </div>
-              <p class="text-[11px] text-slate-600 leading-relaxed">
-                القائم الرأسي الذي يقفل على فريم الحلق يميناً ويساراً ويحتوي على مجرى القفل ومجرى اللباد.
-              </p>
-            </div>
-
-            <div class="p-3 bg-white rounded-lg border border-amber-200 space-y-1 shadow-2xs">
-              <div class="flex items-center gap-1.5 font-bold text-amber-900">
-                <span class="w-2 h-2 rounded-full bg-amber-600"></span>
-                <span>2. درفة شنكل (قائم التراكب):</span>
-              </div>
-              <p class="text-[11px] text-slate-600 leading-relaxed">
-                القائم الرأسي الأوسط بخطاف التراكب الذي يتداخل مع الدرفة المقابلة لمنع دخول الغبار والمطر.
-              </p>
-            </div>
-
-            <div class="p-3 bg-white rounded-lg border border-emerald-200 space-y-1 shadow-2xs">
-              <div class="flex items-center gap-1.5 font-bold text-emerald-900">
-                <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
-                <span>3. درفة كعب (العوارض الأفقية):</span>
-              </div>
-              <p class="text-[11px] text-slate-600 leading-relaxed">
-                العوارض الأفقية العلوية والسفلية (السفلي تركب به عجلات السحب/الكفرات، والعلوي موجه بالسكة).
-              </p>
-            </div>
-
+          <div class="flex items-center gap-1">
+            <button onclick="addNewSystem('sliding')" class="px-2.5 py-1 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded transition flex items-center gap-1">
+              + إضافة سيستم سحاب
+            </button>
+            <button onclick="addNewSystem('hinged-window')" class="px-2.5 py-1 bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs rounded transition flex items-center gap-1">
+              + سيستم مفصلي
+            </button>
+            <button onclick="addNewSystem('hinged-door')" class="px-2.5 py-1 bg-amber-700 hover:bg-amber-800 text-white font-bold text-xs rounded transition flex items-center gap-1">
+              + سيستم أبواب
+            </button>
+            <button onclick="addNewSystem('fixed')" class="px-2.5 py-1 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs rounded transition flex items-center gap-1">
+              + سيستم ثابت
+            </button>
           </div>
         </div>
+
+        <!-- CATEGORY 1: SLIDING SYSTEMS -->
+        <div class="space-y-2">
+          <div class="flex items-center gap-2 text-xs font-bold text-slate-900 bg-slate-100 px-3 py-1.5 rounded border border-slate-300">
+            <span class="w-2.5 h-2.5 rounded-full bg-slate-900 inline-block"></span>
+            <span>1. أنظمة السحاب (Sliding) ⬅ تتكون الدرفة من: [درفة جنب + درفة شنكل + درفة كعب]</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs text-right border-collapse font-mono" id="slidingSystemsTable">
+              <thead>
+                <tr class="bg-slate-50 text-slate-800 border-b border-slate-300 font-bold font-cairo text-[11px]">
+                  <th class="py-1 px-2">اسم السيستم</th>
+                  <th class="py-1 px-2">كود الحلق</th>
+                  <th class="py-1 px-2 text-blue-900 bg-blue-50">كود درفة جنب</th>
+                  <th class="py-1 px-2 text-amber-900 bg-amber-50">كود درفة شنكل</th>
+                  <th class="py-1 px-2 text-emerald-900 bg-emerald-50">كود درفة كعب</th>
+                  <th class="py-1 px-2 text-center">عرض الدرفة (مم)</th>
+                  <th class="py-1 px-2 text-center">خلوص الارتفاع (مم)</th>
+                  <th class="py-1 px-2 text-center">تراكب العرض (مم)</th>
+                  <th class="py-1 px-2 text-center">فرزة الزجاج (مم)</th>
+                  <th class="py-1 px-2 text-center w-8"></th>
+                </tr>
+              </thead>
+              <tbody id="slidingSystemsBody" class="divide-y divide-slate-200"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- CATEGORY 2: HINGED WINDOWS -->
+        <div class="space-y-2 pt-2 border-t border-slate-200">
+          <div class="flex items-center gap-2 text-xs font-bold text-blue-900 bg-blue-50 px-3 py-1.5 rounded border border-blue-200">
+            <span class="w-2.5 h-2.5 rounded-full bg-blue-600 inline-block"></span>
+            <span>2. أنظمة الشبابيك المفصلية والقلاب (Casement Windows) ⬅ تتكون من: [حلق مفصلي + درفة مفصلي موحدة + باكتة زجاج]</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs text-right border-collapse font-mono" id="hingedSystemsTable">
+              <thead>
+                <tr class="bg-slate-50 text-slate-800 border-b border-slate-300 font-bold font-cairo text-[11px]">
+                  <th class="py-1 px-2">اسم السيستم</th>
+                  <th class="py-1 px-2">كود الحلق المفصلي</th>
+                  <th class="py-1 px-2 text-blue-900">كود درفة المفصلي</th>
+                  <th class="py-1 px-2 text-emerald-900">كود باكتة الزجاج</th>
+                  <th class="py-1 px-2 text-center">عرض بروفيل الدرفة (مم)</th>
+                  <th class="py-1 px-2 text-center">خصم عرض الدرفة (مم)</th>
+                  <th class="py-1 px-2 text-center">خصم ارتفاع الدرفة (مم)</th>
+                  <th class="py-1 px-2 text-center">فرزة الزجاج (مم)</th>
+                  <th class="py-1 px-2 text-center w-8"></th>
+                </tr>
+              </thead>
+              <tbody id="hingedSystemsBody" class="divide-y divide-slate-200"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- CATEGORY 3: HINGED DOORS -->
+        <div class="space-y-2 pt-2 border-t border-slate-200">
+          <div class="flex items-center gap-2 text-xs font-bold text-amber-900 bg-amber-50 px-3 py-1.5 rounded border border-amber-200">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-600 inline-block"></span>
+            <span>3. أنظمة الأبواب المفصلية (Doors) ⬅ تتكون من: [حلق باب 3 جهات + قائم باب + رأس وكعب باب سفلي + باكتة]</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs text-right border-collapse font-mono" id="doorSystemsTable">
+              <thead>
+                <tr class="bg-slate-50 text-slate-800 border-b border-slate-300 font-bold font-cairo text-[11px]">
+                  <th class="py-1 px-2">اسم السيستم</th>
+                  <th class="py-1 px-2">حلق الباب (3 جهات)</th>
+                  <th class="py-1 px-2 text-amber-900">قائم الباب (Stile)</th>
+                  <th class="py-1 px-2 text-emerald-900">كعب الباب السفلي</th>
+                  <th class="py-1 px-2">باكتة الزجاج</th>
+                  <th class="py-1 px-2 text-center">عرض قائم الباب (مم)</th>
+                  <th class="py-1 px-2 text-center">خصم العرض (مم)</th>
+                  <th class="py-1 px-2 text-center">خصم الارتفاع (مم)</th>
+                  <th class="py-1 px-2 text-center w-8"></th>
+                </tr>
+              </thead>
+              <tbody id="doorSystemsBody" class="divide-y divide-slate-200"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- CATEGORY 4: FIXED SYSTEMS -->
+        <div class="space-y-2 pt-2 border-t border-slate-200">
+          <div class="flex items-center gap-2 text-xs font-bold text-emerald-900 bg-emerald-50 px-3 py-1.5 rounded border border-emerald-200">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-600 inline-block"></span>
+            <span>4. الأنظمة الثابتة (Fixed Windows) ⬅ تتكون فقط من: [حلق ثابت + باكتة زجاج] (بدون أي درف نهائياً)</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs text-right border-collapse font-mono" id="fixedSystemsTable">
+              <thead>
+                <tr class="bg-slate-50 text-slate-800 border-b border-slate-300 font-bold font-cairo text-[11px]">
+                  <th class="py-1 px-2">اسم السيستم الثابت</th>
+                  <th class="py-1 px-2">كود الحلق الثابت</th>
+                  <th class="py-1 px-2 text-emerald-900">كود باكتة الزجاج</th>
+                  <th class="py-1 px-2 text-center">سماكة الفريم (مم)</th>
+                  <th class="py-1 px-2 text-center">عمق فرزة الزجاج بالفريم (مم)</th>
+                  <th class="py-1 px-2 text-center">خلوص الزجاج والكاوتشوك (مم)</th>
+                  <th class="py-1 px-2 text-center w-8"></th>
+                </tr>
+              </thead>
+              <tbody id="fixedSystemsBody" class="divide-y divide-slate-200"></tbody>
+            </table>
+          </div>
+        </div>
+
       </div>
 
     </div>
@@ -554,7 +602,7 @@
           </div>
           <div class="text-left text-[10px] text-slate-600 border-l border-slate-300 pl-3">
             <p>SCALE: 2D SHOP DRAWING (PROPORTIONAL)</p>
-            <p>CASCADING ALUMINUM & GLASS ENGINE</p>
+            <p>DEDICATED LOGIC ENGINE</p>
             <p id="printTimestamp"></p>
           </div>
         </div>
@@ -650,7 +698,7 @@
   </footer>
 
   <!-- ============================================== -->
-  <!-- JAVASCRIPT LOGIC -->
+  <!-- JAVASCRIPT LOGIC (CATEGORIZED BY SYSTEM TYPE) -->
   <!-- ============================================== -->
   <script>
     let currentProject = {
@@ -660,12 +708,13 @@
       updatedAt: new Date().toISOString()
     };
 
-    // System Definition with Distinct Sash Profiles (جنب • شنكل • كعب)
+    // 4 Independent Categories of Systems
     let systems = [
+      // 1. Sliding Systems (سحاب: جنب • شنكل • كعب)
       {
         id: 1,
+        category: 'sliding',
         name: 'نظام سحاب 10سم (سرايا / الراجحي)',
-        type: 'sliding',
         frameCode: 'FR-100 (حلق 10سم)',
         sideStileCode: 'SA-SIDE (درفة جنب)',
         interlockCode: 'SA-INTER (درفة شنكل)',
@@ -680,8 +729,8 @@
       },
       {
         id: 2,
+        category: 'sliding',
         name: 'نظام سحاب 12سم جامبو (Super Saraya)',
-        type: 'sliding',
         frameCode: 'FR-120 (حلق 12سم)',
         sideStileCode: 'SA-SIDE-12 (درفة جنب 12)',
         interlockCode: 'SA-INTER-12 (درفة شنكل 12)',
@@ -694,34 +743,50 @@
         glassClearance: 5,
         scrap45: 40
       },
+
+      // 2. Hinged Windows (مفصلي شبابيك: حلق + درفة مفصلي + باكتة)
       {
         id: 3,
-        name: 'نظام مفصلي 50مم (Casement / Door)',
-        type: 'hinged',
+        category: 'hinged-window',
+        name: 'نظام مفصلي شبابيك 50مم (Casement Window)',
         frameCode: 'FR-50 (حلق مفصلي)',
-        sideStileCode: 'SA-50 (درفة مفصلي)',
-        interlockCode: 'SA-50 (درفة مفصلي)',
-        railCode: 'SA-50 (درفة مفصلي)',
+        sashCode: 'SA-50 (درفة مفصلي)',
+        beadCode: 'BD-20 (باكتة زجاج)',
         frameThickness: 50,
         sashWidth: 68,
-        heightClearance: 86,
-        widthOverlap: 86,
+        widthDeduction: 86,
+        heightDeduction: 86,
         glassPocketDepth: 15,
         glassClearance: 4,
         scrap45: 35
       },
+
+      // 3. Hinged Doors (أبواب مفصلية: حلق 3 جهات + قائم باب + كعب باب سفلي + باكتة)
       {
         id: 4,
+        category: 'hinged-door',
+        name: 'نظام باب مفصلي 50مم (Hinged Door)',
+        frameCode: 'DFR-50 (حلق باب 3 جهات)',
+        doorStileCode: 'DST-85 (قائم باب عريض)',
+        doorBottomRailCode: 'DBOT-120 (كعب باب سفلي)',
+        beadCode: 'BD-20 (باكتة زجاج)',
+        frameThickness: 50,
+        doorStileWidth: 85,
+        widthDeduction: 100,
+        heightDeduction: 65,
+        glassPocketDepth: 16,
+        glassClearance: 4,
+        scrap45: 35
+      },
+
+      // 4. Fixed Systems (ثابت: حلق ثابت + باكتة زجاج - بدون درف نهائياً)
+      {
+        id: 5,
+        category: 'fixed',
         name: 'نظام ثابت 50مم (Fixed Frame)',
-        type: 'fixed',
         frameCode: 'FR-50 (حلق ثابت)',
-        sideStileCode: 'BD-20 (باكتة زجاج)',
-        interlockCode: 'BD-20 (باكتة زجاج)',
-        railCode: 'BD-20 (باكتة زجاج)',
+        beadCode: 'BD-20 (باكتة زجاج)',
         frameThickness: 45,
-        sashWidth: 0,
-        heightClearance: 0,
-        widthOverlap: 0,
         glassPocketDepth: 16,
         glassClearance: 4,
         scrap45: 35
@@ -733,8 +798,9 @@
     let windowUnits = [
       { id: 1, code: 'W-01 (شباك صالة)', systemId: 1, type: 'sliding-2', width: 1800, height: 1400, qty: 2 },
       { id: 2, code: 'W-02 (شباك غرفة)', systemId: 1, type: 'sliding-2', width: 1200, height: 1200, qty: 3 },
-      { id: 3, code: 'D-01 (باب بلكونة)', systemId: 3, type: 'hinged-door', width: 900, height: 2100, qty: 1 },
-      { id: 4, code: 'W-03 (شباك حمام)', systemId: 3, type: 'hinged-window', width: 600, height: 600, qty: 2 }
+      { id: 3, code: 'D-01 (باب بلكونة)', systemId: 4, type: 'hinged-door', width: 900, height: 2100, qty: 1 },
+      { id: 4, code: 'W-03 (شباك حمام)', systemId: 3, type: 'hinged-window', width: 600, height: 600, qty: 2 },
+      { id: 5, code: 'W-04 (واجهة ثابتة)', systemId: 5, type: 'fixed', width: 1500, height: 1800, qty: 1 }
     ];
 
     let parts = [];
@@ -746,8 +812,8 @@
     ];
 
     let lastOptimizationResult = null;
-    let nextWindowId = 5;
-    let nextSystemId = 5;
+    let nextWindowId = 6;
+    let nextSystemId = 6;
     let nextOffcutId = 3;
 
     function toggleLanguage() {
@@ -776,6 +842,9 @@
       lucide.createIcons();
     }
 
+    // =========================================================================
+    // DEDICATED CASCADING COMPUTATION (PER SYSTEM TYPE)
+    // =========================================================================
     function computeCascadeForUnit(unit) {
       const sys = systems.find(s => s.id === unit.systemId) || systems[0];
       const W = unit.width;
@@ -785,54 +854,63 @@
       let sashW = 0, sashH = 0, numSashes = 0, sashTypeLabel = '';
       let glassW = 0, glassH = 0, panesPerUnit = 0;
 
-      if (unit.type === 'sliding-2') {
-        numSashes = 2;
-        sashW = Math.round((W + sys.widthOverlap) / 2);
-        sashH = Math.round(H - sys.heightClearance);
-        sashTypeLabel = '2 درفة سحاب';
-        panesPerUnit = 2 * qty;
+      // 1. SLIDING LOGIC
+      if (unit.type.startsWith('sliding')) {
+        if (unit.type === 'sliding-2') {
+          numSashes = 2;
+          sashW = Math.round((W + sys.widthOverlap) / 2);
+          sashH = Math.round(H - sys.heightClearance);
+          sashTypeLabel = '2 درفة سحاب (جنب/شنكل/كعب)';
+          panesPerUnit = 2 * qty;
+        } else if (unit.type === 'sliding-3') {
+          numSashes = 3;
+          sashW = Math.round((W + 2 * sys.widthOverlap) / 3);
+          sashH = Math.round(H - sys.heightClearance);
+          sashTypeLabel = '3 درف سحاب';
+          panesPerUnit = 3 * qty;
+        } else if (unit.type === 'sliding-4') {
+          numSashes = 4;
+          sashW = Math.round((W + 2 * sys.widthOverlap) / 4);
+          sashH = Math.round(H - sys.heightClearance);
+          sashTypeLabel = '4 درف سحاب';
+          panesPerUnit = 4 * qty;
+        }
+        glassW = Math.round(sashW - (2 * sys.sashWidth) + (2 * sys.glassPocketDepth) - sys.glassClearance);
+        glassH = Math.round(sashH - (2 * sys.sashWidth) + (2 * sys.glassPocketDepth) - sys.glassClearance);
       }
-      else if (unit.type === 'sliding-3') {
-        numSashes = 3;
-        sashW = Math.round((W + 2 * sys.widthOverlap) / 3);
-        sashH = Math.round(H - sys.heightClearance);
-        sashTypeLabel = '3 درف سحاب';
-        panesPerUnit = 3 * qty;
-      }
-      else if (unit.type === 'sliding-4') {
-        numSashes = 4;
-        sashW = Math.round((W + 2 * sys.widthOverlap) / 4);
-        sashH = Math.round(H - sys.heightClearance);
-        sashTypeLabel = '4 درف سحاب';
-        panesPerUnit = 4 * qty;
-      }
+
+      // 2. HINGED WINDOW LOGIC
       else if (unit.type === 'hinged-window') {
         numSashes = 1;
-        sashW = Math.max(100, Math.round(W - sys.widthOverlap));
-        sashH = Math.max(100, Math.round(H - sys.heightClearance));
-        sashTypeLabel = '1 درفة مفصلي';
+        sashW = Math.max(100, Math.round(W - (sys.widthDeduction || 86)));
+        sashH = Math.max(100, Math.round(H - (sys.heightDeduction || 86)));
+        sashTypeLabel = 'درفة مفصلي موحدة';
         panesPerUnit = 1 * qty;
+        glassW = Math.round(sashW - (2 * (sys.sashWidth || 68)) + (2 * sys.glassPocketDepth) - sys.glassClearance);
+        glassH = Math.round(sashH - (2 * (sys.sashWidth || 68)) + (2 * sys.glassPocketDepth) - sys.glassClearance);
       }
+
+      // 3. HINGED DOOR LOGIC
       else if (unit.type === 'hinged-door') {
         numSashes = 1;
-        sashW = Math.max(100, Math.round(W - 100));
-        sashH = Math.max(100, Math.round(H - 65));
-        sashTypeLabel = 'درفة باب مفصلي';
+        sashW = Math.max(100, Math.round(W - (sys.widthDeduction || 100)));
+        sashH = Math.max(100, Math.round(H - (sys.heightDeduction || 65)));
+        sashTypeLabel = 'درفة باب (قائم وكعب)';
         panesPerUnit = 1 * qty;
+        glassW = Math.round(sashW - (2 * (sys.doorStileWidth || 85)) + (2 * sys.glassPocketDepth) - sys.glassClearance);
+        glassH = Math.round(sashH - (85 + 120) + (2 * sys.glassPocketDepth) - sys.glassClearance); // Top rail + Bottom rail
       }
-      else { // Fixed
+
+      // 4. FIXED WINDOW LOGIC (NO SASH)
+      else {
         numSashes = 0;
         sashW = W;
         sashH = H;
-        sashTypeLabel = 'ثابت (حلق مباشر)';
+        sashTypeLabel = 'ثابت (مباشر بالحلق)';
         panesPerUnit = 1 * qty;
+        // Glass directly inside frame rebate
         glassW = Math.round(W - (2 * sys.frameThickness) + (2 * sys.glassPocketDepth) - sys.glassClearance);
         glassH = Math.round(H - (2 * sys.frameThickness) + (2 * sys.glassPocketDepth) - sys.glassClearance);
-      }
-
-      if (numSashes > 0) {
-        glassW = Math.round(sashW - (2 * sys.sashWidth) + (2 * sys.glassPocketDepth) - sys.glassClearance);
-        glassH = Math.round(sashH - (2 * sys.sashWidth) + (2 * sys.glassPocketDepth) - sys.glassClearance);
       }
 
       const singleGlassArea = ((glassW / 1000) * (glassH / 1000));
@@ -860,7 +938,14 @@
       let totalGlassArea = 0;
 
       tbody.innerHTML = windowUnits.map((u, idx) => {
-        const sysOptions = systems.map(s => 
+        // Filter systems matching unit type category
+        let matchingCategory = 'sliding';
+        if (u.type === 'hinged-window') matchingCategory = 'hinged-window';
+        else if (u.type === 'hinged-door') matchingCategory = 'hinged-door';
+        else if (u.type === 'fixed') matchingCategory = 'fixed';
+
+        const filteredSystems = systems.filter(s => s.category === matchingCategory);
+        const sysOptions = filteredSystems.map(s => 
           `<option value="${s.id}" ${s.id === u.systemId ? 'selected' : ''}>${s.name}</option>`
         ).join('');
 
@@ -876,13 +961,13 @@
                 class="w-32 px-2 py-1 border border-slate-300 rounded font-bold text-slate-900 bg-white">
             </td>
             <td class="py-1.5 px-2 font-cairo">
-              <select onchange="updateWindowUnit(${u.id}, 'type', this.value)" class="px-2 py-1 border border-slate-300 rounded bg-white text-slate-800 font-medium">
+              <select onchange="changeUnitType(${u.id}, this.value)" class="px-2 py-1 border border-slate-300 rounded bg-white text-slate-800 font-bold">
                 <option value="sliding-2" ${u.type === 'sliding-2' ? 'selected' : ''}>سحاب (2 درفة)</option>
                 <option value="sliding-3" ${u.type === 'sliding-3' ? 'selected' : ''}>سحاب (3 درف)</option>
                 <option value="sliding-4" ${u.type === 'sliding-4' ? 'selected' : ''}>سحاب (4 درف)</option>
                 <option value="hinged-window" ${u.type === 'hinged-window' ? 'selected' : ''}>شباك مفصلي</option>
                 <option value="hinged-door" ${u.type === 'hinged-door' ? 'selected' : ''}>باب مفصلي</option>
-                <option value="fixed" ${u.type === 'fixed' ? 'selected' : ''}>ثابت (Fixed)</option>
+                <option value="fixed" ${u.type === 'fixed' ? 'selected' : ''}>ثابت (بدون درف)</option>
               </select>
             </td>
             <td class="py-1.5 px-2 text-center font-bold font-mono">
@@ -893,13 +978,13 @@
               <input type="number" value="${u.qty}" min="1" max="100" onchange="updateWindowUnit(${u.id}, 'qty', +this.value)" class="w-12 px-1 py-1 border rounded text-center font-bold">
             </td>
             <td class="py-1.5 px-2 font-cairo">
-              <select onchange="updateWindowUnit(${u.id}, 'systemId', +this.value)" class="w-44 px-2 py-1 border border-slate-300 rounded bg-white font-bold text-slate-800">
+              <select onchange="updateWindowUnit(${u.id}, 'systemId', +this.value)" class="w-48 px-2 py-1 border border-slate-300 rounded bg-white font-bold text-slate-800">
                 ${sysOptions}
               </select>
             </td>
             
             <td class="py-1.5 px-2 text-center font-mono font-bold text-blue-900 bg-blue-50/50 border-x border-blue-100">
-              ${cascade.numSashes > 0 ? `${cascade.sashW} × ${cascade.sashH} مم <span class="block text-[10px] font-normal text-slate-500 font-cairo">(${cascade.numSashes} درف)</span>` : '—'}
+              ${cascade.numSashes > 0 ? `${cascade.sashW} × ${cascade.sashH} مم <span class="block text-[10px] font-normal text-slate-500 font-cairo">(${cascade.sashTypeLabel})</span>` : '<span class="text-slate-400 font-cairo">بدون درف (حلق مباشر)</span>'}
             </td>
 
             <td class="py-1.5 px-2 text-center font-mono font-black text-emerald-800 bg-emerald-50/50 border-x border-emerald-100">
@@ -928,12 +1013,28 @@
       lucide.createIcons();
     }
 
+    function changeUnitType(id, newType) {
+      const u = windowUnits.find(x => x.id === id);
+      if (u) {
+        u.type = newType;
+        let cat = 'sliding';
+        if (newType === 'hinged-window') cat = 'hinged-window';
+        else if (newType === 'hinged-door') cat = 'hinged-door';
+        else if (newType === 'fixed') cat = 'fixed';
+
+        const defaultSys = systems.find(s => s.category === cat) || systems[0];
+        u.systemId = defaultSys.id;
+        renderWindowsSchedule();
+        recalculateAllPartsFromWindows();
+      }
+    }
+
     function addWindowUnit() {
       const idx = windowUnits.length + 1;
       windowUnits.push({
         id: nextWindowId++,
         code: `W-${idx < 10 ? '0' + idx : idx}`,
-        systemId: systems[0]?.id || 1,
+        systemId: 1,
         type: 'sliding-2',
         width: 1400,
         height: 1400,
@@ -968,41 +1069,84 @@
       }
     }
 
+    // ===============================================
+    // RENDER SYSTEMS BY INDEPENDENT CATEGORIES
+    // ===============================================
     function renderSystemsTable() {
-      const tbody = document.getElementById('systemsBody');
-      if (!tbody) return;
+      // 1. Sliding Systems
+      const slidingBody = document.getElementById('slidingSystemsBody');
+      if (slidingBody) {
+        const slidingList = systems.filter(s => s.category === 'sliding');
+        slidingBody.innerHTML = slidingList.map(s => `
+          <tr class="hover:bg-slate-50">
+            <td class="py-1 px-2 font-bold font-cairo"><input type="text" value="${s.name}" onchange="updateSystem(${s.id}, 'name', this.value)" class="w-40 px-1.5 py-1 border rounded bg-white"></td>
+            <td class="py-1 px-2"><input type="text" value="${s.frameCode}" onchange="updateSystem(${s.id}, 'frameCode', this.value)" class="w-28 px-1 py-0.5 border rounded"></td>
+            <td class="py-1 px-2 bg-blue-50/50"><input type="text" value="${s.sideStileCode}" onchange="updateSystem(${s.id}, 'sideStileCode', this.value)" class="w-28 px-1 py-0.5 border border-blue-300 rounded font-bold text-blue-900 bg-white"></td>
+            <td class="py-1 px-2 bg-amber-50/50"><input type="text" value="${s.interlockCode}" onchange="updateSystem(${s.id}, 'interlockCode', this.value)" class="w-28 px-1 py-0.5 border border-amber-300 rounded font-bold text-amber-900 bg-white"></td>
+            <td class="py-1 px-2 bg-emerald-50/50"><input type="text" value="${s.railCode}" onchange="updateSystem(${s.id}, 'railCode', this.value)" class="w-28 px-1 py-0.5 border border-emerald-300 rounded font-bold text-emerald-900 bg-white"></td>
+            <td class="py-1 px-2 text-center"><input type="number" value="${s.sashWidth}" onchange="updateSystem(${s.id}, 'sashWidth', +this.value)" class="w-12 px-1 py-0.5 border rounded text-center"></td>
+            <td class="py-1 px-2 text-center"><input type="number" value="${s.heightClearance}" onchange="updateSystem(${s.id}, 'heightClearance', +this.value)" class="w-12 px-1 py-0.5 border rounded text-center"></td>
+            <td class="py-1 px-2 text-center"><input type="number" value="${s.widthOverlap}" onchange="updateSystem(${s.id}, 'widthOverlap', +this.value)" class="w-12 px-1 py-0.5 border rounded text-center"></td>
+            <td class="py-1 px-2 text-center"><input type="number" value="${s.glassPocketDepth}" onchange="updateSystem(${s.id}, 'glassPocketDepth', +this.value)" class="w-12 px-1 py-0.5 border rounded text-center"></td>
+            <td class="py-1 px-2 text-center"><button onclick="removeSystem(${s.id})" class="text-slate-400 hover:text-rose-600">✕</button></td>
+          </tr>
+        `).join('');
+      }
 
-      tbody.innerHTML = systems.map(s => `
-        <tr class="hover:bg-slate-50">
-          <td class="py-1 px-2 font-bold font-cairo">
-            <input type="text" value="${s.name}" onchange="updateSystem(${s.id}, 'name', this.value)" class="w-44 px-1.5 py-1 border border-slate-300 rounded font-bold text-slate-900 bg-white">
-          </td>
-          <td class="py-1 px-2 font-cairo">
-            <input type="text" value="${s.frameCode}" onchange="updateSystem(${s.id}, 'frameCode', this.value)" class="w-28 px-1.5 py-1 border border-slate-300 rounded text-slate-800">
-          </td>
-          <td class="py-1 px-2 font-cairo bg-blue-50/30">
-            <input type="text" value="${s.sideStileCode}" onchange="updateSystem(${s.id}, 'sideStileCode', this.value)" class="w-28 px-1.5 py-1 border border-blue-300 rounded text-blue-900 font-bold bg-white">
-          </td>
-          <td class="py-1 px-2 font-cairo bg-amber-50/30">
-            <input type="text" value="${s.interlockCode}" onchange="updateSystem(${s.id}, 'interlockCode', this.value)" class="w-28 px-1.5 py-1 border border-amber-300 rounded text-amber-900 font-bold bg-white">
-          </td>
-          <td class="py-1 px-2 font-cairo bg-emerald-50/30">
-            <input type="text" value="${s.railCode}" onchange="updateSystem(${s.id}, 'railCode', this.value)" class="w-28 px-1.5 py-1 border border-emerald-300 rounded text-emerald-900 font-bold bg-white">
-          </td>
-          <td class="py-1 px-2 text-center">
-            <input type="number" value="${s.sashWidth}" onchange="updateSystem(${s.id}, 'sashWidth', +this.value)" class="w-12 px-1 py-1 border rounded text-center font-bold">
-          </td>
-          <td class="py-1 px-2 text-center">
-            <input type="number" value="${s.heightClearance}" onchange="updateSystem(${s.id}, 'heightClearance', +this.value)" class="w-12 px-1 py-1 border rounded text-center font-bold">
-          </td>
-          <td class="py-1 px-2 text-center">
-            <input type="number" value="${s.glassPocketDepth}" onchange="updateSystem(${s.id}, 'glassPocketDepth', +this.value)" class="w-12 px-1 py-1 border rounded text-center font-bold">
-          </td>
-          <td class="py-1 px-2 text-center">
-            <button onclick="removeSystem(${s.id})" class="text-slate-400 hover:text-rose-600">✕</button>
-          </td>
-        </tr>
-      `).join('');
+      // 2. Hinged Windows
+      const hingedBody = document.getElementById('hingedSystemsBody');
+      if (hingedBody) {
+        const hingedList = systems.filter(s => s.category === 'hinged-window');
+        hingedBody.innerHTML = hingedList.map(s => `
+          <tr class="hover:bg-slate-50">
+            <td class="py-1 px-2 font-bold font-cairo"><input type="text" value="${s.name}" onchange="updateSystem(${s.id}, 'name', this.value)" class="w-44 px-1.5 py-1 border rounded bg-white"></td>
+            <td class="py-1 px-2"><input type="text" value="${s.frameCode}" onchange="updateSystem(${s.id}, 'frameCode', this.value)" class="w-32 px-1 py-0.5 border rounded"></td>
+            <td class="py-1 px-2"><input type="text" value="${s.sashCode}" onchange="updateSystem(${s.id}, 'sashCode', this.value)" class="w-32 px-1 py-0.5 border border-blue-300 rounded font-bold text-blue-900 bg-white"></td>
+            <td class="py-1 px-2"><input type="text" value="${s.beadCode}" onchange="updateSystem(${s.id}, 'beadCode', this.value)" class="w-28 px-1 py-0.5 border border-emerald-300 rounded font-bold text-emerald-900 bg-white"></td>
+            <td class="py-1 px-2 text-center"><input type="number" value="${s.sashWidth}" onchange="updateSystem(${s.id}, 'sashWidth', +this.value)" class="w-14 px-1 py-0.5 border rounded text-center"></td>
+            <td class="py-1 px-2 text-center"><input type="number" value="${s.widthDeduction}" onchange="updateSystem(${s.id}, 'widthDeduction', +this.value)" class="w-14 px-1 py-0.5 border rounded text-center font-bold"></td>
+            <td class="py-1 px-2 text-center"><input type="number" value="${s.heightDeduction}" onchange="updateSystem(${s.id}, 'heightDeduction', +this.value)" class="w-14 px-1 py-0.5 border rounded text-center font-bold"></td>
+            <td class="py-1 px-2 text-center"><input type="number" value="${s.glassPocketDepth}" onchange="updateSystem(${s.id}, 'glassPocketDepth', +this.value)" class="w-14 px-1 py-0.5 border rounded text-center"></td>
+            <td class="py-1 px-2 text-center"><button onclick="removeSystem(${s.id})" class="text-slate-400 hover:text-rose-600">✕</button></td>
+          </tr>
+        `).join('');
+      }
+
+      // 3. Hinged Doors
+      const doorBody = document.getElementById('doorSystemsBody');
+      if (doorBody) {
+        const doorList = systems.filter(s => s.category === 'hinged-door');
+        doorBody.innerHTML = doorList.map(s => `
+          <tr class="hover:bg-slate-50">
+            <td class="py-1 px-2 font-bold font-cairo"><input type="text" value="${s.name}" onchange="updateSystem(${s.id}, 'name', this.value)" class="w-44 px-1.5 py-1 border rounded bg-white"></td>
+            <td class="py-1 px-2"><input type="text" value="${s.frameCode}" onchange="updateSystem(${s.id}, 'frameCode', this.value)" class="w-32 px-1 py-0.5 border rounded"></td>
+            <td class="py-1 px-2"><input type="text" value="${s.doorStileCode}" onchange="updateSystem(${s.id}, 'doorStileCode', this.value)" class="w-32 px-1 py-0.5 border border-amber-300 rounded font-bold text-amber-900 bg-white"></td>
+            <td class="py-1 px-2"><input type="text" value="${s.doorBottomRailCode}" onchange="updateSystem(${s.id}, 'doorBottomRailCode', this.value)" class="w-32 px-1 py-0.5 border border-emerald-300 rounded font-bold text-emerald-900 bg-white"></td>
+            <td class="py-1 px-2"><input type="text" value="${s.beadCode}" onchange="updateSystem(${s.id}, 'beadCode', this.value)" class="w-24 px-1 py-0.5 border rounded"></td>
+            <td class="py-1 px-2 text-center"><input type="number" value="${s.doorStileWidth}" onchange="updateSystem(${s.id}, 'doorStileWidth', +this.value)" class="w-14 px-1 py-0.5 border rounded text-center font-bold"></td>
+            <td class="py-1 px-2 text-center"><input type="number" value="${s.widthDeduction}" onchange="updateSystem(${s.id}, 'widthDeduction', +this.value)" class="w-14 px-1 py-0.5 border rounded text-center"></td>
+            <td class="py-1 px-2 text-center"><input type="number" value="${s.heightDeduction}" onchange="updateSystem(${s.id}, 'heightDeduction', +this.value)" class="w-14 px-1 py-0.5 border rounded text-center"></td>
+            <td class="py-1 px-2 text-center"><button onclick="removeSystem(${s.id})" class="text-slate-400 hover:text-rose-600">✕</button></td>
+          </tr>
+        `).join('');
+      }
+
+      // 4. Fixed Systems
+      const fixedBody = document.getElementById('fixedSystemsBody');
+      if (fixedBody) {
+        const fixedList = systems.filter(s => s.category === 'fixed');
+        fixedBody.innerHTML = fixedList.map(s => `
+          <tr class="hover:bg-slate-50">
+            <td class="py-1 px-2 font-bold font-cairo"><input type="text" value="${s.name}" onchange="updateSystem(${s.id}, 'name', this.value)" class="w-48 px-1.5 py-1 border rounded bg-white"></td>
+            <td class="py-1 px-2"><input type="text" value="${s.frameCode}" onchange="updateSystem(${s.id}, 'frameCode', this.value)" class="w-36 px-1 py-0.5 border rounded"></td>
+            <td class="py-1 px-2"><input type="text" value="${s.beadCode}" onchange="updateSystem(${s.id}, 'beadCode', this.value)" class="w-32 px-1 py-0.5 border border-emerald-300 rounded font-bold text-emerald-900 bg-white"></td>
+            <td class="py-1 px-2 text-center"><input type="number" value="${s.frameThickness}" onchange="updateSystem(${s.id}, 'frameThickness', +this.value)" class="w-16 px-1 py-0.5 border rounded text-center font-bold"></td>
+            <td class="py-1 px-2 text-center"><input type="number" value="${s.glassPocketDepth}" onchange="updateSystem(${s.id}, 'glassPocketDepth', +this.value)" class="w-16 px-1 py-0.5 border rounded text-center"></td>
+            <td class="py-1 px-2 text-center"><input type="number" value="${s.glassClearance}" onchange="updateSystem(${s.id}, 'glassClearance', +this.value)" class="w-16 px-1 py-0.5 border rounded text-center"></td>
+            <td class="py-1 px-2 text-center"><button onclick="removeSystem(${s.id})" class="text-slate-400 hover:text-rose-600">✕</button></td>
+          </tr>
+        `).join('');
+      }
     }
 
     function updateSystem(id, field, value) {
@@ -1014,23 +1158,72 @@
       }
     }
 
-    function addNewSystem() {
-      systems.push({
-        id: nextSystemId++,
-        name: 'نظام سحاب مخصص #' + systems.length,
-        type: 'sliding',
-        frameCode: 'FR-CUSTOM',
-        sideStileCode: 'SA-SIDE-C',
-        interlockCode: 'SA-INTER-C',
-        railCode: 'SA-RAIL-C',
-        frameThickness: 45,
-        sashWidth: 65,
-        heightClearance: 75,
-        widthOverlap: 25,
-        glassPocketDepth: 15,
-        glassClearance: 4,
-        scrap45: 35
-      });
+    function addNewSystem(category) {
+      const idx = systems.length + 1;
+      if (category === 'sliding') {
+        systems.push({
+          id: nextSystemId++,
+          category: 'sliding',
+          name: 'نظام سحاب مخصص #' + idx,
+          frameCode: 'FR-CUSTOM',
+          sideStileCode: 'SA-SIDE-C',
+          interlockCode: 'SA-INTER-C',
+          railCode: 'SA-RAIL-C',
+          frameThickness: 45,
+          sashWidth: 65,
+          heightClearance: 75,
+          widthOverlap: 25,
+          glassPocketDepth: 15,
+          glassClearance: 4,
+          scrap45: 35
+        });
+      } else if (category === 'hinged-window') {
+        systems.push({
+          id: nextSystemId++,
+          category: 'hinged-window',
+          name: 'نظام مفصلي مخصص #' + idx,
+          frameCode: 'FR-HINGE-C',
+          sashCode: 'SA-HINGE-C',
+          beadCode: 'BD-20',
+          frameThickness: 50,
+          sashWidth: 68,
+          widthDeduction: 86,
+          heightDeduction: 86,
+          glassPocketDepth: 15,
+          glassClearance: 4,
+          scrap45: 35
+        });
+      } else if (category === 'hinged-door') {
+        systems.push({
+          id: nextSystemId++,
+          category: 'hinged-door',
+          name: 'نظام باب مخصص #' + idx,
+          frameCode: 'DFR-DOOR-C',
+          doorStileCode: 'DST-DOOR-C',
+          doorBottomRailCode: 'DBOT-DOOR-C',
+          beadCode: 'BD-20',
+          frameThickness: 50,
+          doorStileWidth: 85,
+          widthDeduction: 100,
+          heightDeduction: 65,
+          glassPocketDepth: 16,
+          glassClearance: 4,
+          scrap45: 35
+        });
+      } else {
+        systems.push({
+          id: nextSystemId++,
+          category: 'fixed',
+          name: 'نظام ثابت مخصص #' + idx,
+          frameCode: 'FR-FIXED-C',
+          beadCode: 'BD-20',
+          frameThickness: 45,
+          glassPocketDepth: 16,
+          glassClearance: 4,
+          scrap45: 35
+        });
+      }
+
       renderSystemsTable();
       renderWindowsSchedule();
     }
@@ -1044,27 +1237,38 @@
     }
 
     // =========================================================================
-    // RECALCULATE PARTS WITH 3-PROFILE SASH ANATOMY (جنب • شنكل • كعب)
+    // RECALCULATE PARTS WITH STRICT PER-SYSTEM ARCHITECTURE
     // =========================================================================
     function recalculateAllPartsFromWindows() {
       let newParts = [];
       let newGlass = [];
       let partCounter = 1;
 
-      // Sync profile list with distinct profiles
+      // Extract all unique profiles across all systems
       let syncProfiles = [];
       let pId = 1;
-      systems.forEach(s => {
-        const addProfileIfUnique = (code, type, width) => {
-          if (code && !syncProfiles.find(p => p.code === code)) {
-            syncProfiles.push({ id: pId++, code, type, width: width || 45, scrap45: s.scrap45 });
-          }
-        };
+      const addProfile = (code, type, width, scrap) => {
+        if (code && !syncProfiles.find(p => p.code === code)) {
+          syncProfiles.push({ id: pId++, code, type, width: width || 45, scrap45: scrap || 35 });
+        }
+      };
 
-        addProfileIfUnique(s.frameCode, 'frame', s.frameThickness);
-        addProfileIfUnique(s.sideStileCode, 'sash', s.sashWidth);
-        addProfileIfUnique(s.interlockCode, 'sash', s.sashWidth);
-        addProfileIfUnique(s.railCode, 'sash', s.sashWidth);
+      systems.forEach(s => {
+        addProfile(s.frameCode, 'frame', s.frameThickness, s.scrap45);
+        if (s.category === 'sliding') {
+          addProfile(s.sideStileCode, 'sash', s.sashWidth, s.scrap45);
+          addProfile(s.interlockCode, 'sash', s.sashWidth, s.scrap45);
+          addProfile(s.railCode, 'sash', s.sashWidth, s.scrap45);
+        } else if (s.category === 'hinged-window') {
+          addProfile(s.sashCode, 'sash', s.sashWidth, s.scrap45);
+          addProfile(s.beadCode, 'bead', 20, 15);
+        } else if (s.category === 'hinged-door') {
+          addProfile(s.doorStileCode, 'sash', s.doorStileWidth, s.scrap45);
+          addProfile(s.doorBottomRailCode, 'sash', 120, s.scrap45);
+          addProfile(s.beadCode, 'bead', 20, 15);
+        } else if (s.category === 'fixed') {
+          addProfile(s.beadCode, 'bead', 20, 15);
+        }
       });
       profiles = syncProfiles;
 
@@ -1076,54 +1280,88 @@
         const qty = unit.qty || 1;
         const code = unit.code || `W-${unit.id}`;
 
-        const frameProfile = profiles.find(p => p.code === sys.frameCode) || profiles[0];
-        const sideStileProfile = profiles.find(p => p.code === sys.sideStileCode) || profiles[0];
-        const interlockProfile = profiles.find(p => p.code === sys.interlockCode) || profiles[0];
-        const railProfile = profiles.find(p => p.code === sys.railCode) || profiles[0];
+        const getProf = (cd) => profiles.find(p => p.code === cd) || profiles[0];
 
-        // 1. Frame Cuts
-        if (unit.type === 'hinged-door') {
-          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProfile.id, dimType: 'W', label: `${code} - حلق باب علوي`, length: W, qty: 1 * qty, startAngle: 45, endAngle: 45 });
-          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProfile.id, dimType: 'H', label: `${code} - حلق باب جانبي`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 90 });
-        } else {
-          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProfile.id, dimType: 'W', label: `${code} - حلق أفقي`, length: W, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProfile.id, dimType: 'H', label: `${code} - حلق رأسي`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-        }
+        // 1. SLIDING UNITS
+        if (unit.type.startsWith('sliding')) {
+          const frameProf = getProf(sys.frameCode);
+          const sideProf = getProf(sys.sideStileCode);
+          const interProf = getProf(sys.interlockCode);
+          const railProf = getProf(sys.railCode);
 
-        // 2. Sash Cuts (3-Profile Breakdown)
-        if (unit.type === 'sliding-2') {
-          // درفة جنب: 2 قطعة (أقصى اليمين واليسار)
-          newParts.push({ id: partCounter++, unitCode: code, profileId: sideStileProfile.id, dimType: 'H', label: `${code} - درفة جنب`, length: cascade.sashH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-          // درفة شنكل: 2 قطعة (التراكب بالمنتصف)
-          newParts.push({ id: partCounter++, unitCode: code, profileId: interlockProfile.id, dimType: 'H', label: `${code} - درفة شنكل`, length: cascade.sashH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-          // درفة كعب: 4 قطع (2 علوي + 2 سفلي)
-          newParts.push({ id: partCounter++, unitCode: code, profileId: railProfile.id, dimType: 'W', label: `${code} - درفة كعب`, length: cascade.sashW, qty: 4 * qty, startAngle: 45, endAngle: 45 });
-        }
-        else if (unit.type === 'sliding-3') {
-          // 3 درف: 2 جنب + 4 شنكل + 6 كعب
-          newParts.push({ id: partCounter++, unitCode: code, profileId: sideStileProfile.id, dimType: 'H', label: `${code} - درفة جنب`, length: cascade.sashH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-          newParts.push({ id: partCounter++, unitCode: code, profileId: interlockProfile.id, dimType: 'H', label: `${code} - درفة شنكل`, length: cascade.sashH, qty: 4 * qty, startAngle: 45, endAngle: 45 });
-          newParts.push({ id: partCounter++, unitCode: code, profileId: railProfile.id, dimType: 'W', label: `${code} - درفة كعب`, length: cascade.sashW, qty: 6 * qty, startAngle: 45, endAngle: 45 });
-        }
-        else if (unit.type === 'sliding-4') {
-          // 4 درف: 2 جنب + 4 شنكل + 8 كعب
-          newParts.push({ id: partCounter++, unitCode: code, profileId: sideStileProfile.id, dimType: 'H', label: `${code} - درفة جنب`, length: cascade.sashH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-          newParts.push({ id: partCounter++, unitCode: code, profileId: interlockProfile.id, dimType: 'H', label: `${code} - درفة شنكل`, length: cascade.sashH, qty: 4 * qty, startAngle: 45, endAngle: 45 });
-          newParts.push({ id: partCounter++, unitCode: code, profileId: railProfile.id, dimType: 'W', label: `${code} - درفة كعب`, length: cascade.sashW, qty: 8 * qty, startAngle: 45, endAngle: 45 });
-        }
-        else if (cascade.numSashes > 0) {
-          // Hinged
-          newParts.push({ id: partCounter++, unitCode: code, profileId: sideStileProfile.id, dimType: 'W', label: `${code} - درفة عرضي`, length: cascade.sashW, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-          newParts.push({ id: partCounter++, unitCode: code, profileId: sideStileProfile.id, dimType: 'H', label: `${code} - درفة رأسي`, length: cascade.sashH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+          // Frame
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProf.id, dimType: 'W', label: `${code} - حلق أفقي`, length: W, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProf.id, dimType: 'H', label: `${code} - حلق رأسي`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+
+          // Sashes
+          if (unit.type === 'sliding-2') {
+            newParts.push({ id: partCounter++, unitCode: code, profileId: sideProf.id, dimType: 'H', label: `${code} - درفة جنب`, length: cascade.sashH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+            newParts.push({ id: partCounter++, unitCode: code, profileId: interProf.id, dimType: 'H', label: `${code} - درفة شنكل`, length: cascade.sashH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+            newParts.push({ id: partCounter++, unitCode: code, profileId: railProf.id, dimType: 'W', label: `${code} - درفة كعب`, length: cascade.sashW, qty: 4 * qty, startAngle: 45, endAngle: 45 });
+          } else if (unit.type === 'sliding-3') {
+            newParts.push({ id: partCounter++, unitCode: code, profileId: sideProf.id, dimType: 'H', label: `${code} - درفة جنب`, length: cascade.sashH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+            newParts.push({ id: partCounter++, unitCode: code, profileId: interProf.id, dimType: 'H', label: `${code} - درفة شنكل`, length: cascade.sashH, qty: 4 * qty, startAngle: 45, endAngle: 45 });
+            newParts.push({ id: partCounter++, unitCode: code, profileId: railProf.id, dimType: 'W', label: `${code} - درفة كعب`, length: cascade.sashW, qty: 6 * qty, startAngle: 45, endAngle: 45 });
+          } else if (unit.type === 'sliding-4') {
+            newParts.push({ id: partCounter++, unitCode: code, profileId: sideProf.id, dimType: 'H', label: `${code} - درفة جنب`, length: cascade.sashH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+            newParts.push({ id: partCounter++, unitCode: code, profileId: interProf.id, dimType: 'H', label: `${code} - درفة شنكل`, length: cascade.sashH, qty: 4 * qty, startAngle: 45, endAngle: 45 });
+            newParts.push({ id: partCounter++, unitCode: code, profileId: railProf.id, dimType: 'W', label: `${code} - درفة كعب`, length: cascade.sashW, qty: 8 * qty, startAngle: 45, endAngle: 45 });
+          }
         }
 
-        // 3. Glass Schedule Entry
+        // 2. HINGED WINDOWS
+        else if (unit.type === 'hinged-window') {
+          const frameProf = getProf(sys.frameCode);
+          const sashProf = getProf(sys.sashCode);
+          const beadProf = getProf(sys.beadCode);
+
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProf.id, dimType: 'W', label: `${code} - حلق مفصلي أفقي`, length: W, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProf.id, dimType: 'H', label: `${code} - حلق مفصلي رأسي`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+
+          newParts.push({ id: partCounter++, unitCode: code, profileId: sashProf.id, dimType: 'W', label: `${code} - درفة مفصلي عرضي`, length: cascade.sashW, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: sashProf.id, dimType: 'H', label: `${code} - درفة مفصلي رأسي`, length: cascade.sashH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+
+          newParts.push({ id: partCounter++, unitCode: code, profileId: beadProf.id, dimType: 'W', label: `${code} - باكتة زجاج عرضي`, length: cascade.glassW, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: beadProf.id, dimType: 'H', label: `${code} - باكتة زجاج رأسي`, length: cascade.glassH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+        }
+
+        // 3. HINGED DOORS
+        else if (unit.type === 'hinged-door') {
+          const frameProf = getProf(sys.frameCode);
+          const stileProf = getProf(sys.doorStileCode);
+          const botRailProf = getProf(sys.doorBottomRailCode);
+          const beadProf = getProf(sys.beadCode);
+
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProf.id, dimType: 'W', label: `${code} - حلق باب علوي`, length: W, qty: 1 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProf.id, dimType: 'H', label: `${code} - حلق باب جانبي`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 90 });
+
+          newParts.push({ id: partCounter++, unitCode: code, profileId: stileProf.id, dimType: 'H', label: `${code} - قائم باب جانبي`, length: cascade.sashH, qty: 2 * qty, startAngle: 90, endAngle: 90 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: stileProf.id, dimType: 'W', label: `${code} - رأس باب علوي`, length: cascade.sashW, qty: 1 * qty, startAngle: 90, endAngle: 90 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: botRailProf.id, dimType: 'W', label: `${code} - كعب باب سفلي`, length: cascade.sashW, qty: 1 * qty, startAngle: 90, endAngle: 90 });
+
+          newParts.push({ id: partCounter++, unitCode: code, profileId: beadProf.id, dimType: 'W', label: `${code} - باكتة زجاج باب`, length: cascade.glassW, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: beadProf.id, dimType: 'H', label: `${code} - باكتة زجاج باب`, length: cascade.glassH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+        }
+
+        // 4. FIXED WINDOWS (NO SASH - ONLY FRAME + BEAD)
+        else {
+          const frameProf = getProf(sys.frameCode);
+          const beadProf = getProf(sys.beadCode);
+
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProf.id, dimType: 'W', label: `${code} - حلق ثابت أفقي`, length: W, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProf.id, dimType: 'H', label: `${code} - حلق ثابت رأسي`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+
+          newParts.push({ id: partCounter++, unitCode: code, profileId: beadProf.id, dimType: 'W', label: `${code} - باكتة زجاج ثابت أفقي`, length: cascade.glassW, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: beadProf.id, dimType: 'H', label: `${code} - باكتة زجاج ثابت رأسي`, length: cascade.glassH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+        }
+
+        // Glass Schedule
         newGlass.push({
           unitCode: code,
           unitName: unit.code,
           systemName: sys.name,
           sashType: cascade.sashTypeLabel,
-          sashSize: `${cascade.sashW} × ${cascade.sashH} مم`,
+          sashSize: cascade.numSashes > 0 ? `${cascade.sashW} × ${cascade.sashH} مم` : 'بدون درف (حلق مباشر)',
           glassW: cascade.glassW,
           glassH: cascade.glassH,
           qtyPanes: cascade.panesPerUnit,
@@ -1576,7 +1814,7 @@
             <table class="w-full text-xs text-right border border-slate-300 font-mono">
               <thead>
                 <tr class="bg-slate-100 text-slate-800 border-b border-slate-300 font-bold font-cairo text-[11px]">
-                  <th class="py-1 px-1.5">القطاع</th>
+                  <th class="py-1 px-1.5">القطاع المطلوب</th>
                   <th class="py-1 px-1.5 text-center">أعواد 6000 مم</th>
                   <th class="py-1 px-1.5">الفضلات المطلوبة</th>
                 </tr>
@@ -1685,7 +1923,7 @@
           </div>
 
           <p class="text-[10px] text-slate-600 font-cairo font-medium">
-            🔍 تم حساب مقاسات ألواح الزجاج بعد خصم سماكات الدرف وإضافة عمق الفرزة وخصم خلوصات الأمان والكاوتشوك:
+            🔍 تم حساب مقاسات ألواح الزجاج بعد خصم سماكات الدرف وإضافة عمق الفرزة وخصم خلوصات الأمان والكاوتشوك (حسب كل سيستم):
           </p>
 
           <table class="w-full text-xs text-right border border-slate-300 font-mono">
@@ -1957,7 +2195,7 @@
         ['كشف مقاسات ومساحات الزجاج - Glass Cutting Schedule'],
         ['المشروع:', currentProject.name, 'العميل:', currentProject.client, 'التاريخ:', new Date().toLocaleDateString('ar-EG')],
         [],
-        ['كود النافذة', 'نوع الوحدة', 'السيستم', 'مقاس الدرفة (Ws × Hs)', 'مقاس الزجاج الصافي (Wg × Hg)', 'عدد الألواح', 'مساحة اللوح (م²)', 'إجمالي المساحة (م²)']
+        ['كود النافذة', 'نوع الوحدة', 'السيستم', 'تفصيل الدرفة (Ws × Hs)', 'مقاس الزجاج الصافي (Wg × Hg)', 'عدد الألواح', 'مساحة اللوح (م²)', 'إجمالي المساحة (م²)']
       ];
       glassSchedule.forEach(g => {
         glassData.push([g.unitCode, g.sashType, g.systemName, g.sashSize, `${g.glassW} × ${g.glassH} مم`, g.qtyPanes, `${g.singleArea} م²`, `${g.totalArea} م²`]);
@@ -1970,7 +2208,7 @@
         ['مخطط وأمر تشغيل قص بروفيلات الألمنيوم - Aluminum Shop Drawing'],
         ['المشروع:', currentProject.name, 'العميل:', currentProject.client, 'التاريخ:', new Date().toLocaleDateString('ar-EG')],
         [],
-        ['رقم العود', 'نوع العود', 'القطاع', 'طول العود', '# القص', 'النافذة / القطعة', 'النوع (W/H)', 'المقاس المطلوب (مم)', 'زاوية 1', 'زاوية 2', 'المستهلك', 'المتبقي']
+        ['رقم العود', 'نوع العود', 'القطاع المطلوب', 'طول العود', '# القص', 'النافذة / القطعة', 'النوع (W/H)', 'المقاس المطلوب (مم)', 'زاوية 1', 'زاوية 2', 'المستهلك', 'المتبقي']
       ];
 
       lastOptimizationResult.allBars.forEach(bar => {
