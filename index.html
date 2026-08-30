@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>محسن قص الألمنيوم | Aluminum Cutting Optimizer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap');
+    
+    :root {
+      --font-ar: 'Tajawal', sans-serif;
+      --font-en: 'Inter', sans-serif;
+    }
+    
+    body {
+      font-family: var(--font-ar);
+    }
+    
+    body.en {
+      font-family: var(--font-en);
+    }
+    
+    body.en {
+      direction: ltr;
+    }
+    
+    .lang-ar { display: block; }
+    .lang-en { display: none; }
+    
+    body.en .lang-ar { display: none; }
+    body.en .lang-en { display: block; }
+    
+    .card {
+      transition: all 0.2s ease;
+    }
+    
+    .card:hover {
+      box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.08);
+    }
+    
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-primary-600 flex items-center justify-center text-white font-bold text-lg">
+          AC
+        </div>
+        <div>
+          <h1 class="text-lg font-bold text-slate-900">
+            <span class="lang-ar">محسن قص الألمنيوم</span>
+            <span class="lang-en">Aluminum Cutting Optimizer</span>
+          </h1>
+          <p class="text-xs text-slate-500">
+            <span class="lang-ar">نظام تحسين قص بروفيلات الألمنيوم</span>
+            <span class="lang-en">Aluminum Profile Cutting Optimization System</span>
+          </p>
+        </div>
+      </div>
+      
+      <div class="flex items-center gap-3">
+        <button onclick="toggleLanguage()" class="px-3 py-1.5 text-sm font-medium rounded-lg border border-slate-300 hover:bg-slate-50 transition">
+          <span class="lang-ar">English</span>
+          <span class="lang-en">العربية</span>
+        </button>
+        <button class="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-lg transition">
+          <span class="lang-ar">حفظ المشروع</span>
+          <span class="lang-en">Save Project</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+    
+    <!-- Settings Bar -->
+    <div class="bg-white rounded-xl border border-slate-200 p-4 mb-6 card">
+      <div class="flex flex-wrap items-end gap-6">
+        <div>
+          <label class="block text-xs font-medium text-slate-500 mb-1">
+            <span class="lang-ar">طول العود (مم)</span>
+            <span class="lang-en">Stock Length (mm)</span>
+          </label>
+          <input type="number" id="stockLength" value="6000" class="w-32 px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none">
+        </div>
+        
+        <div>
+          <label class="block text-xs font-medium text-slate-500 mb-1">
+            <span class="lang-ar">سماكة السلاح - Kerf (مم)</span>
+            <span class="lang-en">Blade Kerf (mm)</span>
+          </label>
+          <input type="number" id="kerf" value="3" step="0.1" class="w-28 px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none">
+        </div>
+        
+        <div>
+          <label class="block text-xs font-medium text-slate-500 mb-1">
+            <span class="lang-ar">الحد الأدنى للبقايا المفيدة (مم)</span>
+            <span class="lang-en">Min Useful Offcut (mm)</span>
+          </label>
+          <input type="number" id="minOffcut" value="300" class="w-32 px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none">
+        </div>
+        
+        <div class="flex-1"></div>
+        
+        <button onclick="runOptimization()" class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg transition flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+          </svg>
+          <span class="lang-ar">حساب وتحسين القص</span>
+          <span class="lang-en">Calculate & Optimize</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+      <!-- Left Column: Profiles + Parts -->
+      <div class="lg:col-span-1 space-y-6">
+        
+        <!-- Profiles Section -->
+        <div class="bg-white rounded-xl border border-slate-200 card">
+          <div class="px-4 py-3 border-b border-slate-100 flex items-center justify-between">
+            <h2 class="font-bold text-slate-800">
+              <span class="lang-ar">القطاعات (Profiles)</span>
+              <span class="lang-en">Profiles</span>
+            </h2>
+            <button onclick="addProfile()" class="text-sm text-primary-600 hover:text-primary-700 font-medium">
+              + <span class="lang-ar">إضافة</span><span class="lang-en">Add</span>
+            </button>
+          </div>
+          
+          <div class="p-4">
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm" id="profilesTable">
+                <thead>
+                  <tr class="text-slate-500 text-xs border-b">
+                    <th class="pb-2 text-right font-medium"><span class="lang-ar">الكود</span><span class="lang-en">Code</span></th>
+                    <th class="pb-2 text-right font-medium"><span class="lang-ar">النوع</span><span class="lang-en">Type</span></th>
+                    <th class="pb-2 text-right font-medium"><span class="lang-ar">سكراب 45°</span><span class="lang-en">Scrap 45°</span></th>
+                    <th class="pb-2 text-right font-medium"><span class="lang-ar">سكراب 90°</span><span class="lang-en">Scrap 90°</span></th>
+                    <th class="pb-2"></th>
+                  </tr>
+                </thead>
+                <tbody id="profilesBody">
+                  <!-- Profiles will be added here -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Parts Section -->
+        <div class="bg-white rounded-xl border border-slate-200 card">
+          <div class="px-4 py-3 border-b border-slate-100 flex items-center justify-between">
+            <h2 class="font-bold text-slate-800">
+              <span class="lang-ar">القطع المطلوبة (Parts)</span>
+              <span class="lang-en">Required Parts</span>
+            </h2>
+            <button onclick="addPart()" class="text-sm text-primary-600 hover:text-primary-700 font-medium">
+              + <span class="lang-ar">إضافة</span><span class="lang-en">Add</span>
+            </button>
+          </div>
+          
+          <div class="p-4">
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm" id="partsTable">
+                <thead>
+                  <tr class="text-slate-500 text-xs border-b">
+                    <th class="pb-2 text-right font-medium"><span class="lang-ar">القطاع</span><span class="lang-en">Profile</span></th>
+                    <th class="pb-2 text-right font-medium"><span class="lang-ar">الطول</span><span class="lang-en">Length</span></th>
+                    <th class="pb-2 text-right font-medium"><span class="lang-ar">الكمية</span><span class="lang-en">Qty</span></th>
+                    <th class="pb-2 text-right font-medium"><span class="lang-ar">بداية</span><span class="lang-en">Start</span></th>
+                    <th class="pb-2 text-right font-medium"><span class="lang-ar">نهاية</span><span class="lang-en">End</span></th>
+                    <th class="pb-2"></th>
+                  </tr>
+                </thead>
+                <tbody id="partsBody">
+                  <!-- Parts will be added here -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Right Column: Results + Visualization -->
+      <div class="lg:col-span-2 space-y-6">
+        
+        <!-- Summary Cards -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="bg-white rounded-xl border border-slate-200 p-4 card">
+            <p class="text-xs text-slate-500 mb-1">
+              <span class="lang-ar">عدد العيدان</span>
+              <span class="lang-en">Bars Used</span>
+            </p>
+            <p class="text-2xl font-bold text-slate-900" id="summaryBars">0</p>
+          </div>
+          <div class="bg-white rounded-xl border border-slate-200 p-4 card">
+            <p class="text-xs text-slate-500 mb-1">
+              <span class="lang-ar">إجمالي الهدر</span>
+              <span class="lang-en">Total Waste</span>
+            </p>
+            <p class="text-2xl font-bold text-rose-600" id="summaryWaste">0</p>
+            <p class="text-xs text-slate-400">مم</p>
+          </div>
+          <div class="bg-white rounded-xl border border-slate-200 p-4 card">
+            <p class="text-xs text-slate-500 mb-1">
+              <span class="lang-ar">نسبة الهدر</span>
+              <span class="lang-en">Waste %</span>
+            </p>
+            <p class="text-2xl font-bold text-amber-600" id="summaryWastePercent">0%</p>
+          </div>
+          <div class="bg-white rounded-xl border border-slate-200 p-4 card">
+            <p class="text-xs text-slate-500 mb-1">
+              <span class="lang-ar">البقايا المفيدة</span>
+              <span class="lang-en">Useful Offcuts</span>
+            </p>
+            <p class="text-2xl font-bold text-emerald-600" id="summaryOffcuts">0</p>
+          </div>
+        </div>
+        
+        <!-- Visualization Area -->
+        <div class="bg-white rounded-xl border border-slate-200 card">
+          <div class="px-4 py-3 border-b border-slate-100 flex items-center justify-between">
+            <h2 class="font-bold text-slate-800">
+              <span class="lang-ar">مخطط القص (Cutting Layout)</span>
+              <span class="lang-en">Cutting Layout</span>
+            </h2>
+            <div class="flex gap-2">
+              <button class="text-xs px-3 py-1 rounded-lg border border-slate-300 hover:bg-slate-50">PDF</button>
+              <button class="text-xs px-3 py-1 rounded-lg border border-slate-300 hover:bg-slate-50">CSV</button>
+            </div>
+          </div>
+          
+          <div class="p-4" id="visualizationArea">
+            <div class="text-center py-16 text-slate-400">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+              </svg>
+              <p class="text-sm">
+                <span class="lang-ar">قم بإضافة القطاعات والقطع ثم اضغط على "حساب وتحسين القص"</span>
+                <span class="lang-en">Add profiles and parts, then click "Calculate & Optimize"</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Detailed Results -->
+        <div class="bg-white rounded-xl border border-slate-200 card">
+          <div class="px-4 py-3 border-b border-slate-100">
+            <h2 class="font-bold text-slate-800">
+              <span class="lang-ar">تفاصيل التوزيع</span>
+              <span class="lang-en">Distribution Details</span>
+            </h2>
+          </div>
+          <div class="p-4" id="detailsArea">
+            <p class="text-sm text-slate-400 text-center py-8">
+              <span class="lang-ar">ستظهر هنا تفاصيل توزيع القطع على كل عود</span>
+              <span class="lang-en">Cutting distribution details will appear here</span>
+            </p>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </main>
+
+  <footer class="max-w-7xl mx-auto px-4 sm:px-6 py-6 text-center text-xs text-slate-400">
+    <span class="lang-ar">محسن قص الألمنيوم © 2026 — نسخة تجريبية</span>
+    <span class="lang-en">Aluminum Cutting Optimizer © 2026 — Prototype</span>
+  </footer>
+
+  <script>
+    // ======================
+    // Language Toggle
+    // ======================
+    function toggleLanguage() {
+      document.body.classList.toggle('en');
+      const isEn = document.body.classList.contains('en');
+      document.documentElement.lang = isEn ? 'en' : 'ar';
+      document.documentElement.dir = isEn ? 'ltr' : 'rtl';
+    }
+
+    // ======================
+    // Data
+    // ======================
+    let profiles = [
+      { id: 1, code: 'FR-50', type: 'frame', scrap45: 25, scrap90: 5 },
+      { id: 2, code: 'SA-45', type: 'sash', scrap45: 22, scrap90: 5 },
+    ];
+    
+    let parts = [
+      { id: 1, profileId: 1, length: 1200, qty: 2, startAngle: 45, endAngle: 45 },
+      { id: 2, profileId: 1, length: 1400, qty: 2, startAngle: 45, endAngle: 45 },
+      { id: 3, profileId: 2, length: 1100, qty: 2, startAngle: 45, endAngle: 45 },
+      { id: 4, profileId: 2, length: 1300, qty: 2, startAngle: 45, endAngle: 45 },
+    ];
+    
+    let nextProfileId = 3;
+    let nextPartId = 5;
+
+    // ======================
+    // Render Profiles
+    // ======================
+    function renderProfiles() {
+      const tbody = document.getElementById('profilesBody');
+      tbody.innerHTML = profiles.map(p => `
+        <tr class="border-b border-slate-50 hover:bg-slate-50">
+          <td class="py-2">
+            <input type="text" value="${p.code}" onchange="updateProfile(${p.id}, 'code', this.value)" 
+              class="w-20 px-2 py-1 border border-slate-200 rounded text-sm">
+          </td>
+          <td class="py-2">
+            <select onchange="updateProfile(${p.id}, 'type', this.value)" class="px-2 py-1 border border-slate-200 rounded text-sm">
+              <option value="frame" ${p.type === 'frame' ? 'selected' : ''}>حلق / Frame</option>
+              <option value="sash" ${p.type === 'sash' ? 'selected' : ''}>درفة / Sash</option>
+              <option value="other" ${p.type === 'other' ? 'selected' : ''}>أخرى / Other</option>
+            </select>
+          </td>
+          <td class="py-2">
+            <input type="number" value="${p.scrap45}" onchange="updateProfile(${p.id}, 'scrap45', +this.value)" 
+              class="w-16 px-2 py-1 border border-slate-200 rounded text-sm">
+          </td>
+          <td class="py-2">
+            <input type="number" value="${p.scrap90}" onchange="updateProfile(${p.id}, 'scrap90', +this.value)" 
+              class="w-16 px-2 py-1 border border-slate-200 rounded text-sm">
+          </td>
+          <td class="py-2">
+            <button onclick="removeProfile(${p.id})" class="text-rose-500 hover:text-rose-700 text-xs">✕</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function updateProfile(id, field, value) {
+      const p = profiles.find(x => x.id === id);
+      if (p) p[field] = value;
+    }
+
+    function addProfile() {
+      profiles.push({
+        id: nextProfileId++,
+        code: 'NEW-' + nextProfileId,
+        type: 'frame',
+        scrap45: 25,
+        scrap90: 5
+      });
+      renderProfiles();
+      renderParts(); // refresh profile dropdowns
+    }
+
+    function removeProfile(id) {
+      profiles = profiles.filter(p => p.id !== id);
+      renderProfiles();
+      renderParts();
+    }
+
+    // ======================
+    // Render Parts
+    // ======================
+    function renderParts() {
+      const tbody = document.getElementById('partsBody');
+      tbody.innerHTML = parts.map(p => {
+        const profileOptions = profiles.map(pr => 
+          `<option value="${pr.id}" ${pr.id === p.profileId ? 'selected' : ''}>${pr.code}</option>`
+        ).join('');
+        
+        return `
+          <tr class="border-b border-slate-50 hover:bg-slate-50">
+            <td class="py-2">
+              <select onchange="updatePart(${p.id}, 'profileId', +this.value)" class="px-2 py-1 border border-slate-200 rounded text-sm">
+                ${profileOptions}
+              </select>
+            </td>
+            <td class="py-2">
+              <input type="number" value="${p.length}" onchange="updatePart(${p.id}, 'length', +this.value)" 
+                class="w-20 px-2 py-1 border border-slate-200 rounded text-sm">
+            </td>
+            <td class="py-2">
+              <input type="number" value="${p.qty}" onchange="updatePart(${p.id}, 'qty', +this.value)" 
+                class="w-14 px-2 py-1 border border-slate-200 rounded text-sm">
+            </td>
+            <td class="py-2">
+              <select onchange="updatePart(${p.id}, 'startAngle', +this.value)" class="px-1 py-1 border border-slate-200 rounded text-sm">
+                <option value="0" ${p.startAngle === 0 ? 'selected' : ''}>—</option>
+                <option value="45" ${p.startAngle === 45 ? 'selected' : ''}>45°</option>
+                <option value="90" ${p.startAngle === 90 ? 'selected' : ''}>90°</option>
+              </select>
+            </td>
+            <td class="py-2">
+              <select onchange="updatePart(${p.id}, 'endAngle', +this.value)" class="px-1 py-1 border border-slate-200 rounded text-sm">
+                <option value="0" ${p.endAngle === 0 ? 'selected' : ''}>—</option>
+                <option value="45" ${p.endAngle === 45 ? 'selected' : ''}>45°</option>
+                <option value="90" ${p.endAngle === 90 ? 'selected' : ''}>90°</option>
+              </select>
+            </td>
+            <td class="py-2">
+              <button onclick="removePart(${p.id})" class="text-rose-500 hover:text-rose-700 text-xs">✕</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function updatePart(id, field, value) {
+      const p = parts.find(x => x.id === id);
+      if (p) p[field] = value;
+    }
+
+    function addPart() {
+      parts.push({
+        id: nextPartId++,
+        profileId: profiles[0]?.id || 1,
+        length: 1000,
+        qty: 1,
+        startAngle: 45,
+        endAngle: 45
+      });
+      renderParts();
+    }
+
+    function removePart(id) {
+      parts = parts.filter(p => p.id !== id);
+      renderParts();
+    }
+
+    // ======================
+    // Optimization (Basic for now)
+    // ======================
+    function getScrap(profile, angle) {
+      if (angle === 45) return profile.scrap45 || 0;
+      if (angle === 90) return profile.scrap90 || 0;
+      return 0;
+    }
+
+    function runOptimization() {
+      const stockLength = +document.getElementById('stockLength').value || 6000;
+      const kerf = +document.getElementById('kerf').value || 0;
+      const minOffcut = +document.getElementById('minOffcut').value || 0;
+
+      // Expand parts according to quantity
+      let allPieces = [];
+      parts.forEach(p => {
+        const profile = profiles.find(pr => pr.id === p.profileId);
+        if (!profile) return;
+        
+        for (let i = 0; i < p.qty; i++) {
+          const startScrap = getScrap(profile, p.startAngle);
+          // Consumption = start scrap + length + kerf (kerf applied between pieces later)
+          allPieces.push({
+            profileCode: profile.code,
+            length: p.length,
+            startAngle: p.startAngle,
+            endAngle: p.endAngle,
+            startScrap: startScrap,
+            consumption: startScrap + p.length
+          });
+        }
+      });
+
+      // Sort by consumption descending (simple heuristic)
+      allPieces.sort((a, b) => b.consumption - a.consumption);
+
+      // Simple First Fit Decreasing
+      let bars = [];
+      
+      allPieces.forEach(piece => {
+        let placed = false;
+        
+        for (let bar of bars) {
+          const needed = piece.consumption + (bar.pieces.length > 0 ? kerf : 0);
+          if (bar.remaining >= needed) {
+            bar.pieces.push(piece);
+            bar.remaining -= needed;
+            bar.used += needed;
+            placed = true;
+            break;
+          }
+        }
+        
+        if (!placed) {
+          bars.push({
+            id: bars.length + 1,
+            pieces: [piece],
+            used: piece.consumption,
+            remaining: stockLength - piece.consumption
+          });
+        }
+      });
+
+      // Update Summary
+      const totalWaste = bars.reduce((sum, b) => sum + b.remaining, 0);
+      const totalMaterial = bars.length * stockLength;
+      const wastePercent = totalMaterial > 0 ? ((totalWaste / totalMaterial) * 100).toFixed(1) : 0;
+      const usefulOffcuts = bars.filter(b => b.remaining >= minOffcut).length;
+
+      document.getElementById('summaryBars').textContent = bars.length;
+      document.getElementById('summaryWaste').textContent = totalWaste.toLocaleString();
+      document.getElementById('summaryWastePercent').textContent = wastePercent + '%';
+      document.getElementById('summaryOffcuts').textContent = usefulOffcuts;
+
+      // Render Visualization
+      renderVisualization(bars, stockLength, kerf);
+      
+      // Render Details
+      renderDetails(bars, stockLength);
+    }
+
+    function renderVisualization(bars, stockLength, kerf) {
+      const container = document.getElementById('visualizationArea');
+      
+      if (bars.length === 0) {
+        container.innerHTML = `<div class="text-center py-16 text-slate-400"><p>لا توجد نتائج</p></div>`;
+        return;
+      }
+
+      let html = '';
+      
+      bars.forEach((bar, idx) => {
+        html += `
+          <div class="mb-6">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-sm font-medium text-slate-700">
+                <span class="lang-ar">عود رقم ${bar.id}</span>
+                <span class="lang-en">Bar #${bar.id}</span>
+              </span>
+              <span class="text-xs text-slate-500">
+                ${bar.used} / ${stockLength} مم 
+                (${((bar.used/stockLength)*100).toFixed(1)}%)
+              </span>
+            </div>
+            
+            <div class="relative h-14 bg-slate-100 rounded-lg overflow-hidden border border-slate-200 flex">
+        `;
+        
+        let currentPos = 0;
+        
+        bar.pieces.forEach((piece, pIdx) => {
+          const totalPieceWidth = piece.consumption + (pIdx > 0 ? kerf : 0);
+          const widthPercent = (piece.consumption / stockLength) * 100;
+          const kerfPercent = pIdx > 0 ? (kerf / stockLength) * 100 : 0;
+          
+          // Kerf separator
+          if (pIdx > 0 && kerf > 0) {
+            html += `<div class="h-full bg-slate-400" style="width: ${kerfPercent}%" title="Kerf: ${kerf}mm"></div>`;
+          }
+          
+          // Start scrap
+          if (piece.startScrap > 0) {
+            const scrapPercent = (piece.startScrap / stockLength) * 100;
+            html += `<div class="h-full bg-rose-300 flex items-center justify-center" style="width: ${scrapPercent}%" title="Scrap: ${piece.startScrap}mm">
+              <span class="text-[9px] text-rose-800 font-medium hidden sm:inline">S</span>
+            </div>`;
+          }
+          
+          // Main piece
+          const mainPercent = (piece.length / stockLength) * 100;
+          const angleLabel = `${piece.startAngle || '—'} / ${piece.endAngle || '—'}`;
+          
+          html += `
+            <div class="h-full bg-primary-500 hover:bg-primary-600 transition flex flex-col items-center justify-center text-white relative" 
+                 style="width: ${mainPercent}%" 
+                 title="${piece.profileCode} | ${piece.length}mm | Angles: ${angleLabel}">
+              <span class="text-[10px] font-bold leading-tight">${piece.profileCode}</span>
+              <span class="text-[9px] opacity-90">${piece.length}</span>
+              <span class="text-[8px] opacity-75">${angleLabel}</span>
+            </div>
+          `;
+          
+          currentPos += totalPieceWidth;
+        });
+        
+        // Remaining waste
+        if (bar.remaining > 0) {
+          const remainPercent = (bar.remaining / stockLength) * 100;
+          const isUseful = bar.remaining >= (+document.getElementById('minOffcut').value || 0);
+          html += `
+            <div class="h-full ${isUseful ? 'bg-emerald-200' : 'bg-slate-300'} flex items-center justify-center" 
+                 style="width: ${remainPercent}%" 
+                 title="Remaining: ${bar.remaining}mm">
+              <span class="text-[9px] ${isUseful ? 'text-emerald-800' : 'text-slate-600'} font-medium">
+                ${bar.remaining}
+              </span>
+            </div>
+          `;
+        }
+        
+        html += `
+            </div>
+          </div>
+        `;
+      });
+      
+      container.innerHTML = html;
+    }
+
+    function renderDetails(bars, stockLength) {
+      const container = document.getElementById('detailsArea');
+      
+      let html = '<div class="space-y-4">';
+      
+      bars.forEach(bar => {
+        html += `
+          <div class="border border-slate-200 rounded-lg overflow-hidden">
+            <div class="bg-slate-50 px-4 py-2 font-medium text-sm">
+              <span class="lang-ar">عود رقم ${bar.id}</span>
+              <span class="lang-en">Bar #${bar.id}</span>
+              <span class="text-slate-500 font-normal mr-2">— ${bar.used} مم مستخدم / ${bar.remaining} مم متبقي</span>
+            </div>
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="text-xs text-slate-500 border-b">
+                  <th class="px-4 py-2 text-right">#</th>
+                  <th class="px-4 py-2 text-right"><span class="lang-ar">القطاع</span><span class="lang-en">Profile</span></th>
+                  <th class="px-4 py-2 text-right"><span class="lang-ar">الطول</span><span class="lang-en">Length</span></th>
+                  <th class="px-4 py-2 text-right"><span class="lang-ar">زوايا</span><span class="lang-en">Angles</span></th>
+                  <th class="px-4 py-2 text-right"><span class="lang-ar">سكراب</span><span class="lang-en">Scrap</span></th>
+                  <th class="px-4 py-2 text-right"><span class="lang-ar">الاستهلاك</span><span class="lang-en">Consumption</span></th>
+                </tr>
+              </thead>
+              <tbody>
+        `;
+        
+        bar.pieces.forEach((piece, idx) => {
+          html += `
+            <tr class="border-b border-slate-50">
+              <td class="px-4 py-2">${idx + 1}</td>
+              <td class="px-4 py-2 font-medium">${piece.profileCode}</td>
+              <td class="px-4 py-2">${piece.length} مم</td>
+              <td class="px-4 py-2">${piece.startAngle || '—'}° / ${piece.endAngle || '—'}°</td>
+              <td class="px-4 py-2 text-rose-600">${piece.startScrap} مم</td>
+              <td class="px-4 py-2 font-medium">${piece.consumption} مم</td>
+            </tr>
+          `;
+        });
+        
+        html += `
+              </tbody>
+            </table>
+          </div>
+        `;
+      });
+      
+      html += '</div>';
+      container.innerHTML = html;
+    }
+
+    // ======================
+    // Init
+    // ======================
+    renderProfiles();
+    renderParts();
+  </script>
+</body>
+</html>
