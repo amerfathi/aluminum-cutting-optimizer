@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>محسن قص الألمنيوم وتفصيل النوافذ والأبواب | Aluminum Window Cutting Optimizer</title>
+  <title>محسن قص وتفصيل الألمنيوم | Aluminum Window Cutting Optimizer</title>
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -39,7 +39,7 @@
   </script>
   
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Inter:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Inter:wght@400;500;600;700&display=swap');
     
     :root {
       --font-ar: 'Tajawal', sans-serif;
@@ -85,6 +85,9 @@
       body {
         background: #ffffff !important;
         font-size: 10pt;
+        color: #000000 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
       header, .no-print, #navTabs, .btn-action {
         display: none !important;
@@ -96,6 +99,11 @@
         box-shadow: none !important;
         border: 1px solid #cbd5e1 !important;
         break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      .page-break {
+        page-break-before: always;
+        break-before: page;
       }
     }
   </style>
@@ -103,7 +111,7 @@
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
   <!-- Header -->
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm no-print">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-600 to-primary-800 flex items-center justify-center text-white shadow-md">
@@ -115,11 +123,11 @@
               <span class="lang-ar">محسن قص وتفصيل الألمنيوم</span>
               <span class="lang-en">Aluminum Window Cutting Optimizer</span>
             </h1>
-            <span class="px-2 py-0.5 text-[10px] font-bold bg-primary-100 text-primary-800 rounded-full">v2.5 Smart Miter</span>
+            <span class="px-2 py-0.5 text-[10px] font-bold bg-primary-100 text-primary-800 rounded-full">v3.0 Workshop Edition</span>
           </div>
           <p class="text-xs text-slate-500 mt-0.5">
-            <span class="lang-ar">إدخال مقاسات النوافذ والأبواب وحساب تفصيل القطع والقص آلياً</span>
-            <span class="lang-en">Enter window dimensions (W x H) & auto-derive cutting cuts</span>
+            <span class="lang-ar">إدخال مقاسات النوافذ والأبواب واستخراج أوامر سحب المواد وخرائط القص للفني</span>
+            <span class="lang-en">Window schedule entry with stock requisition and visual cutting maps</span>
           </p>
         </div>
       </div>
@@ -170,8 +178,8 @@
       </button>
       <button onclick="switchTab('tab-sheet')" id="btn-tab-sheet" class="tab-btn px-4 py-2 text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 rounded-t-lg transition flex items-center gap-2">
         <i data-lucide="file-text" class="w-4 h-4"></i>
-        <span class="lang-ar">5. ورقة القص للورشة</span>
-        <span class="lang-en">5. Workshop Sheet</span>
+        <span class="lang-ar">5. ورقة الفني (أمر الصرف والقص)</span>
+        <span class="lang-en">5. Technician Workshop Sheet</span>
       </button>
       <button onclick="switchTab('tab-projects')" id="btn-tab-projects" class="tab-btn px-4 py-2 text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 rounded-t-lg transition flex items-center gap-2">
         <i data-lucide="folder-open" class="w-4 h-4"></i>
@@ -185,7 +193,7 @@
   <main class="max-w-7xl mx-auto px-4 sm:px-6 py-5 flex-1 w-full">
 
     <!-- Global Parameters Bar -->
-    <div class="bg-white rounded-xl border border-slate-200 p-4 mb-6 shadow-sm">
+    <div class="bg-white rounded-xl border border-slate-200 p-4 mb-6 shadow-sm no-print">
       <div class="flex flex-wrap items-center justify-between gap-4">
         
         <div class="flex flex-wrap items-center gap-4 sm:gap-6">
@@ -287,42 +295,20 @@
               </tr>
             </thead>
             <tbody id="windowsBody">
-              <!-- Window rows dynamically injected -->
+              <!-- Window rows -->
             </tbody>
           </table>
         </div>
 
         <div class="px-4 py-3 bg-slate-50 border-t border-slate-100 flex flex-wrap items-center justify-between text-xs text-slate-600 rounded-b-xl gap-2">
           <div>
-            <span class="lang-ar">إجمالي الوحدات: </span>
+            <span class="lang-ar">إجمالي النوافذ والأبواب: </span>
             <strong id="totalUnitsCount" class="text-primary-700">0 وحدة</strong>
           </div>
           <div class="text-emerald-700 font-semibold flex items-center gap-1">
             <i data-lucide="check-circle" class="w-4 h-4"></i>
-            <span class="lang-ar">يتم توليد أطوال وزوايا الحلق والدرف وتخصيم الزجاج آلياً في التبويب 2</span>
-            <span class="lang-en">Frame, sash pieces and miter angles are auto-derived in Tab 2</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Quick Deduction Formulas Info Banner -->
-      <div class="bg-blue-50/70 border border-blue-200 rounded-xl p-4 text-xs text-blue-900 space-y-2">
-        <div class="flex items-center gap-2 font-bold text-blue-800">
-          <i data-lucide="info" class="w-4 h-4"></i>
-          <span>كيف يقوم البرنامج بحساب وتخصيم القطع تلقائياً؟</span>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1 text-[11px] text-blue-800">
-          <div class="bg-white/80 p-2.5 rounded-lg border border-blue-100">
-            <strong>🪟 شباك سحاب (2 درفة):</strong>
-            <p class="text-slate-600 mt-1">الحلق: عرض $W$ × 2، ارتفاع $H$ × 2 (45°/45°).<br>الدرفة: عرض $(W / 2) + 25\text{mm}$ × 4، ارتفاع $H - 75\text{mm}$ × 4 (45°/45°).</p>
-          </div>
-          <div class="bg-white/80 p-2.5 rounded-lg border border-blue-100">
-            <strong>🚪 شباك / باب مفصلي:</strong>
-            <p class="text-slate-600 mt-1">الحلق: عرض $W$ × 2، ارتفاع $H$ × 2 (45°/45°).<br>الدرفة: عرض $W - 86\text{mm}$ × 2، ارتفاع $H - 86\text{mm}$ × 2 (45°/45°).</p>
-          </div>
-          <div class="bg-white/80 p-2.5 rounded-lg border border-blue-100">
-            <strong>🖼️ نافذة ثابتة:</strong>
-            <p class="text-slate-600 mt-1">الحلق: عرض $W$ × 2، ارتفاع $H$ × 2 (45°/45°).<br>مع إمكانية تعديل قواعد التخصيم لكل قطاع في أي وقت.</p>
+            <span class="lang-ar">يتم توليد أطوال وزوايا الحلق والدرف وتخصيم الزجاج آلياً</span>
+            <span class="lang-en">Frame, sash pieces and miter angles are auto-derived</span>
           </div>
         </div>
       </div>
@@ -376,8 +362,8 @@
             <div class="flex items-center gap-2">
               <i data-lucide="list-checks" class="w-4 h-4 text-emerald-600"></i>
               <h2 class="font-bold text-slate-800 text-sm">
-                <span class="lang-ar">قائمة القطع المحسوبة تلقائياً للقص</span>
-                <span class="lang-en">Auto-Derived Cutting Parts</span>
+                <span class="lang-ar">قائمة القطع المفصلة للقص</span>
+                <span class="lang-en">Derived Cutting Parts</span>
               </h2>
             </div>
             
@@ -385,12 +371,7 @@
               <button onclick="recalculateAllPartsFromWindows()" class="px-2.5 py-1 text-xs bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold rounded-lg border border-emerald-200 transition flex items-center gap-1">
                 <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
                 <span class="lang-ar">تحديث الحسابات</span>
-                <span class="lang-en">Refresh Parts</span>
-              </button>
-              <button onclick="addManualPart()" class="px-2.5 py-1 text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-lg transition flex items-center gap-1">
-                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-                <span class="lang-ar">إضافة قطعة يدوية</span>
-                <span class="lang-en">Add Manual</span>
+                <span class="lang-en">Refresh</span>
               </button>
             </div>
           </div>
@@ -409,7 +390,7 @@
                 </tr>
               </thead>
               <tbody id="partsBody">
-                <!-- Parts rows dynamically injected -->
+                <!-- Parts rows -->
               </tbody>
             </table>
           </div>
@@ -480,8 +461,7 @@
             </tbody>
           </table>
           <div id="offcutsEmptyMsg" class="py-8 text-center text-slate-400 text-xs">
-            <span class="lang-ar">لا توجد فضلات مسجلة حالياً بالمخزون. يمكنك إضافة الفضلات المتوفرة لديك أو استخدام الأعواد الجديدة فقط.</span>
-            <span class="lang-en">No offcuts in inventory.</span>
+            <span class="lang-ar">لا توجد فضلات مسجلة حالياً بالمخزون.</span>
           </div>
         </div>
       </div>
@@ -562,16 +542,6 @@
             </h2>
           </div>
 
-          <!-- Color Legend -->
-          <div class="flex flex-wrap items-center gap-3 text-xs font-medium">
-            <span class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded bg-primary-600 inline-block"></span> <span class="lang-ar">قطعة مطلوبة</span><span class="lang-en">Cut Part</span></span>
-            <span class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded bg-rose-400 inline-block"></span> <span class="lang-ar">سكراب زاوية/تنظيف</span><span class="lang-en">Scrap/Trim</span></span>
-            <span class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded bg-slate-400 inline-block"></span> <span class="lang-ar">سلاح (Kerf)</span><span class="lang-en">Kerf</span></span>
-            <span class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded bg-teal-400 inline-block"></span> <span class="lang-ar">فضلة مفيدة</span><span class="lang-en">Useful Offcut</span></span>
-            <span class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded bg-slate-300 inline-block"></span> <span class="lang-ar">باقي تالف</span><span class="lang-en">Waste</span></span>
-          </div>
-
-          <!-- Actions -->
           <div class="flex items-center gap-2">
             <button onclick="addResultOffcutsToInventory()" id="btnSaveOffcuts" class="hidden px-3 py-1.5 bg-teal-50 hover:bg-teal-100 text-teal-800 font-bold text-xs rounded-lg border border-teal-200 transition flex items-center gap-1">
               <i data-lucide="download" class="w-3.5 h-3.5"></i>
@@ -595,28 +565,30 @@
     </div>
 
     <!-- ============================================== -->
-    <!-- TAB 5: WORKSHOP CUTTING SHEET (PRINT/PDF) -->
+    <!-- TAB 5: TECHNICIAN WORKSHOP SHEET (REDESIGNED) -->
     <!-- ============================================== -->
     <div id="tab-sheet" class="tab-content hidden space-y-6">
       
       <!-- Action Toolbar -->
       <div class="bg-white rounded-xl border border-slate-200 p-4 flex flex-wrap items-center justify-between gap-3 shadow-sm no-print">
         <div class="flex items-center gap-3">
-          <i data-lucide="printer" class="w-5 h-5 text-primary-600"></i>
+          <div class="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center">
+            <i data-lucide="printer" class="w-5 h-5"></i>
+          </div>
           <div>
-            <h3 class="font-bold text-slate-800 text-sm">
-              <span class="lang-ar">ورقة إرشادات القص لفني الورشة</span>
-              <span class="lang-en">Technician Workshop Cutting Sheet</span>
+            <h3 class="font-bold text-slate-900 text-sm">
+              <span class="lang-ar">ورقة الفني المتكاملة (أمر سحب المواد وخرائط القص)</span>
+              <span class="lang-en">Technician Workshop Work Order</span>
             </h3>
             <p class="text-xs text-slate-500">
-              <span class="lang-ar">ورقة عمل مجهزة للطباعة مع أسماء النوافذ والترتيب المتسلسل للقص والزوايا</span>
-              <span class="lang-en">Sequenced cutting orders labeled with window units</span>
+              <span class="lang-ar">مقسمة بدقة: كشف سحب الأعواد للحلوق والدرف أولاً، ثم خرائط القص التخطيطية لكل عود، ثم قائمة تجميع النوافذ</span>
+              <span class="lang-en">Divided into Stock Requisition (Frames/Sashes), Bar Visual Maps, and Window Assembly Checklist</span>
             </p>
           </div>
         </div>
 
         <div class="flex items-center gap-2">
-          <button onclick="window.print()" class="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs rounded-lg shadow transition flex items-center gap-1.5">
+          <button onclick="window.print()" class="px-4 py-2 bg-slate-900 hover:bg-black text-white font-bold text-xs rounded-lg shadow transition flex items-center gap-1.5">
             <i data-lucide="printer" class="w-4 h-4"></i>
             <span class="lang-ar">طباعة ورقة العمل (Print)</span>
             <span class="lang-en">Print Sheet</span>
@@ -630,41 +602,42 @@
 
           <button onclick="exportToExcel()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-lg shadow transition flex items-center gap-1.5">
             <i data-lucide="file-spreadsheet" class="w-4 h-4"></i>
-            <span class="lang-ar">تصدير Excel / CSV</span>
-            <span class="lang-en">Export Excel/CSV</span>
+            <span class="lang-ar">تصدير Excel</span>
+            <span class="lang-en">Export Excel</span>
           </button>
         </div>
       </div>
 
-      <!-- Printable Workshop Card Container -->
-      <div id="printableSheetContent" class="bg-white rounded-xl border border-slate-300 p-6 shadow-sm print:border-none print:p-0">
+      <!-- Printable Document Container -->
+      <div id="printableSheetContent" class="bg-white rounded-xl border border-slate-300 p-6 sm:p-8 shadow-sm print:border-none print:p-0 space-y-8">
         
-        <!-- Document Header for Print / PDF -->
-        <div class="border-b-2 border-slate-800 pb-4 mb-6 flex items-start justify-between">
+        <!-- Document Header -->
+        <div class="border-b-2 border-slate-900 pb-4 flex flex-wrap items-start justify-between gap-4">
           <div>
             <div class="flex items-center gap-2 mb-1">
+              <span class="w-3 h-3 rounded-full bg-emerald-600"></span>
               <h2 class="text-2xl font-black text-slate-900" id="printDocTitle">
-                <span class="lang-ar">أمر تشغيل وقص بروفيلات الألمنيوم</span>
-                <span class="lang-en">Aluminum Profile Cutting Work Order</span>
+                <span class="lang-ar">أمر تشغيل وقص وتجميع الألمنيوم</span>
+                <span class="lang-en">Aluminum Cutting & Assembly Work Order</span>
               </h2>
             </div>
-            <p class="text-xs text-slate-600" id="printProjectMeta">
-              <span class="lang-ar">المشروع: </span><strong id="metaProjName">مشروع فيلا الياسمين</strong> | 
-              <span class="lang-ar">العميل: </span><strong id="metaClientName">—</strong> | 
-              <span class="lang-ar">التاريخ: </span><strong id="metaDate">—</strong>
+            <p class="text-xs text-slate-700 font-semibold" id="printProjectMeta">
+              <span class="lang-ar">المشروع: </span><strong id="metaProjName" class="text-slate-900">مشروع فيلا الياسمين</strong> | 
+              <span class="lang-ar">العميل: </span><strong id="metaClientName" class="text-slate-900">—</strong> | 
+              <span class="lang-ar">التاريخ: </span><strong id="metaDate" class="text-slate-900">—</strong>
             </p>
           </div>
-          <div class="text-left text-xs text-slate-500 font-mono">
-            <p>System: Aluminum Optimizer Pro</p>
+          <div class="text-left text-xs text-slate-600 font-mono">
+            <p class="font-bold text-slate-900">Aluminum Optimizer Pro v3.0</p>
             <p id="printTimestamp"></p>
           </div>
         </div>
 
-        <!-- Sheet Body -->
-        <div id="cuttingSheetBody" class="space-y-6">
-          <p class="text-center py-12 text-slate-400 text-sm">
-            <span class="lang-ar">يرجى تشغيل "حساب وتحسين القص" أولاً لعرض ورقة العمل للفني.</span>
-            <span class="lang-en">Run "Calculate & Optimize Cuts" first to generate the cutting sheet.</span>
+        <!-- Dynamic Technician Sheet Content -->
+        <div id="technicianSheetContainer" class="space-y-8">
+          <p class="text-center py-16 text-slate-400 text-sm">
+            <span class="lang-ar">يرجى تشغيل "حساب وتحسين القص الذكي" أولاً لتوليد أوامر السحب وخرائط القص للفني.</span>
+            <span class="lang-en">Run "Calculate & Optimize Cuts" first to generate the workshop sheet.</span>
           </p>
         </div>
 
@@ -678,7 +651,7 @@
     <div id="tab-projects" class="tab-content hidden space-y-6">
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
-        <!-- Project Metadata & Save (Col 1) -->
+        <!-- Project Metadata (Col 1) -->
         <div class="bg-white rounded-xl border border-slate-200 p-5 card shadow-sm space-y-4">
           <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
             <i data-lucide="edit-3" class="w-5 h-5 text-primary-600"></i>
@@ -731,7 +704,7 @@
             <div class="flex items-center gap-2">
               <i data-lucide="folder-archive" class="w-5 h-5 text-amber-600"></i>
               <h3 class="font-bold text-slate-800 text-sm">
-                <span class="lang-ar">المشاريع المحفوظة (Saved Projects)</span>
+                <span class="lang-ar">المشاريع المحفوظة</span>
                 <span class="lang-en">Saved Projects</span>
               </h3>
             </div>
@@ -739,51 +712,35 @@
           </div>
 
           <div class="flex-1 overflow-y-auto max-h-[340px] space-y-2" id="savedProjectsList">
-            <!-- Dynamically populated -->
+            <!-- Populated -->
           </div>
         </div>
 
-        <!-- Import / Export & File Sharing (Col 3) -->
+        <!-- Export & Share (Col 3) -->
         <div class="bg-white rounded-xl border border-slate-200 p-5 card shadow-sm space-y-4">
           <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
             <i data-lucide="share-2" class="w-5 h-5 text-indigo-600"></i>
             <h3 class="font-bold text-slate-800 text-sm">
-              <span class="lang-ar">الاستيراد والتصدير والمشاركة</span>
-              <span class="lang-en">Import, Export & Sharing</span>
+              <span class="lang-ar">التصدير والملفات</span>
+              <span class="lang-en">Export & Files</span>
             </h3>
           </div>
 
           <div class="space-y-3">
-            <div>
-              <p class="text-xs font-semibold text-slate-700 mb-1">
-                <span class="lang-ar">تصدير المشروع كملف JSON:</span>
-                <span class="lang-en">Export Project as JSON:</span>
-              </p>
-              <button onclick="exportProjectJSON()" class="w-full px-3 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-800 font-bold text-xs rounded-lg border border-indigo-200 transition flex items-center justify-center gap-2">
-                <i data-lucide="file-json" class="w-4 h-4"></i>
-                <span class="lang-ar">تحميل ملف المشروع (.json)</span>
-                <span class="lang-en">Download JSON File</span>
-              </button>
-            </div>
+            <button onclick="exportProjectJSON()" class="w-full px-3 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-800 font-bold text-xs rounded-lg border border-indigo-200 transition flex items-center justify-center gap-2">
+              <i data-lucide="file-json" class="w-4 h-4"></i>
+              <span class="lang-ar">تحميل ملف المشروع (.json)</span>
+              <span class="lang-en">Download JSON</span>
+            </button>
 
-            <div>
-              <p class="text-xs font-semibold text-slate-700 mb-1">
-                <span class="lang-ar">استيراد مشروع من ملف:</span>
-                <span class="lang-en">Import Project from JSON:</span>
-              </p>
-              <label class="w-full px-3 py-2 bg-slate-50 hover:bg-slate-100 text-slate-800 font-bold text-xs rounded-lg border border-slate-300 border-dashed transition flex items-center justify-center gap-2 cursor-pointer">
-                <i data-lucide="upload" class="w-4 h-4 text-slate-500"></i>
-                <span class="lang-ar">اختيار ملف JSON للاستيراد</span>
-                <span class="lang-en">Select JSON to Import</span>
-                <input type="file" id="importJsonInput" accept=".json" class="hidden" onchange="importProjectJSON(event)">
-              </label>
-            </div>
+            <label class="w-full px-3 py-2 bg-slate-50 hover:bg-slate-100 text-slate-800 font-bold text-xs rounded-lg border border-slate-300 border-dashed transition flex items-center justify-center gap-2 cursor-pointer">
+              <i data-lucide="upload" class="w-4 h-4 text-slate-500"></i>
+              <span class="lang-ar">استيراد مشروع من ملف JSON</span>
+              <span class="lang-en">Import JSON</span>
+              <input type="file" id="importJsonInput" accept=".json" class="hidden" onchange="importProjectJSON(event)">
+            </label>
 
             <div class="pt-2 border-t border-slate-100">
-              <p class="text-xs font-semibold text-slate-700 mb-2">
-                <span class="lang-ar">تصدير التقارير وجداول الحسابات:</span>
-                <span class="lang-en">Export Reports & Spreadsheets:</span>
-              </p>
               <div class="grid grid-cols-2 gap-2">
                 <button onclick="exportToExcel()" class="px-3 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-xs rounded-lg border border-emerald-200 transition flex items-center justify-center gap-1">
                   <i data-lucide="file-spreadsheet" class="w-3.5 h-3.5"></i>
@@ -807,12 +764,8 @@
   <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500 no-print">
     <div class="max-w-7xl mx-auto px-4 flex flex-wrap items-center justify-between gap-2">
       <p>
-        <span class="lang-ar">محسن قص وتفصيل بروفيلات الألمنيوم © 2026 — حساب أوتوماتيكي لمقاسات النوافذ والأبواب</span>
+        <span class="lang-ar">محسن قص وتفصيل بروفيلات الألمنيوم © 2026 — أوامر سحب المواد وخرائط القص للورش</span>
         <span class="lang-en">Aluminum Window Cutting Optimizer Pro © 2026</span>
-      </p>
-      <p class="text-[11px] text-slate-400">
-        <span class="lang-ar">يدعم خوارزميات Miter Matching وتفصيل الحلق والدرف وتخصيم الزجاج</span>
-        <span class="lang-en">Supports Miter Matching & Automatic Window Deductions</span>
       </p>
     </div>
   </footer>
@@ -821,9 +774,7 @@
   <!-- APPLICATION SCRIPT LOGIC -->
   <!-- ============================================== -->
   <script>
-    // ===============================================
     // Global State
-    // ===============================================
     let currentProject = {
       name: 'مشروع فيلا الياسمين',
       client: 'أحمد عبد الله',
@@ -838,7 +789,6 @@
       { id: 4, code: 'BD-20 (باكتة)', type: 'bead', width: 20, scrap45: 15 },
     ];
 
-    // Primary Data: Windows & Doors Units entered by user
     let windowUnits = [
       { id: 1, code: 'W-01 (شباك صالة)', type: 'sliding-2', width: 1800, height: 1400, qty: 2, frameProfileId: 1, sashProfileId: 2 },
       { id: 2, code: 'W-02 (شباك غرفة)', type: 'sliding-2', width: 1200, height: 1200, qty: 3, frameProfileId: 1, sashProfileId: 2 },
@@ -846,7 +796,6 @@
       { id: 4, code: 'W-03 (شباك حمام قلاب)', type: 'hinged-window', width: 600, height: 600, qty: 2, frameProfileId: 1, sashProfileId: 2 }
     ];
 
-    // Auto-Derived Parts (Computed from Windows Schedule)
     let parts = [];
 
     let offcuts = [
@@ -860,9 +809,6 @@
     let nextPartId = 100;
     let nextOffcutId = 3;
 
-    // ===============================================
-    // UI Helpers & Tabs
-    // ===============================================
     function toggleLanguage() {
       document.body.classList.toggle('en');
       const isEn = document.body.classList.contains('en');
@@ -914,7 +860,7 @@
     }
 
     // ===============================================
-    // 1. WINDOWS & DOORS SCHEDULE MANAGEMENT
+    // Windows Schedule
     // ===============================================
     function renderWindowsSchedule() {
       const tbody = document.getElementById('windowsBody');
@@ -970,7 +916,7 @@
             </td>
             <td class="py-2 text-center">
               <div class="flex items-center justify-center gap-1">
-                <button onclick="duplicateWindowUnit(${u.id})" class="p-1 text-slate-400 hover:text-primary-600 rounded transition" title="تكرار الوحدة">
+                <button onclick="duplicateWindowUnit(${u.id})" class="p-1 text-slate-400 hover:text-primary-600 rounded transition" title="تكرار">
                   <i data-lucide="copy" class="w-4 h-4"></i>
                 </button>
                 <button onclick="removeWindowUnit(${u.id})" class="p-1 text-slate-400 hover:text-rose-600 rounded transition" title="حذف">
@@ -989,7 +935,7 @@
       const idx = windowUnits.length + 1;
       windowUnits.push({
         id: nextWindowId++,
-        code: `W-${idx < 10 ? '0' + idx : idx} (شباك جديد)`,
+        code: `W-${idx < 10 ? '0' + idx : idx}`,
         type: 'sliding-2',
         width: 1400,
         height: 1400,
@@ -1032,9 +978,6 @@
       }
     }
 
-    // ===============================================
-    // 2. AUTOMATIC PARTS DERIVATION (FORMULAS)
-    // ===============================================
     function recalculateAllPartsFromWindows() {
       let newParts = [];
       let partCounter = 1;
@@ -1048,11 +991,9 @@
         const code = unit.code || `وحدة #${unit.id}`;
 
         if (unit.type === 'sliding-2') {
-          // Frame: 2 Horizontal (W), 2 Vertical (H) - 45°/45°
           newParts.push({ id: partCounter++, unitCode: code, profileId: frameId, label: `${code} - حلق أفقي`, length: W, qty: 2 * qty, startAngle: 45, endAngle: 45 });
           newParts.push({ id: partCounter++, unitCode: code, profileId: frameId, label: `${code} - حلق رأسي`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 45 });
 
-          // Sashes: 4 Width pieces (W/2 + 25mm), 4 Height pieces (H - 75mm) - 45°/45°
           const sashW = Math.round((W / 2) + 25);
           const sashH = Math.round(H - 75);
           newParts.push({ id: partCounter++, unitCode: code, profileId: sashId, label: `${code} - درفة سحاب عرضي`, length: sashW, qty: 4 * qty, startAngle: 45, endAngle: 45 });
@@ -1086,7 +1027,6 @@
           newParts.push({ id: partCounter++, unitCode: code, profileId: sashId, label: `${code} - درفة مفصلي رأسي`, length: sashH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
         }
         else if (unit.type === 'hinged-door') {
-          // Door Frame: 1 Top (W), 2 Sides (H)
           newParts.push({ id: partCounter++, unitCode: code, profileId: frameId, label: `${code} - حلق باب علوي`, length: W, qty: 1 * qty, startAngle: 45, endAngle: 45 });
           newParts.push({ id: partCounter++, unitCode: code, profileId: frameId, label: `${code} - حلق باب جانبي`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 90 });
 
@@ -1095,28 +1035,13 @@
           newParts.push({ id: partCounter++, unitCode: code, profileId: sashId, label: `${code} - درفة باب عرضي`, length: sashW, qty: 2 * qty, startAngle: 45, endAngle: 45 });
           newParts.push({ id: partCounter++, unitCode: code, profileId: sashId, label: `${code} - درفة باب رأسي`, length: sashH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
         }
-        else { // Fixed
+        else {
           newParts.push({ id: partCounter++, unitCode: code, profileId: frameId, label: `${code} - حلق ثابت أفقي`, length: W, qty: 2 * qty, startAngle: 45, endAngle: 45 });
           newParts.push({ id: partCounter++, unitCode: code, profileId: frameId, label: `${code} - حلق ثابت رأسي`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 45 });
         }
       });
 
       parts = newParts;
-      renderParts();
-      updateSubtitleAndBadges();
-    }
-
-    function addManualPart() {
-      parts.push({
-        id: parts.length + 100,
-        unitCode: 'يدوي',
-        profileId: profiles[0]?.id || 1,
-        label: 'قطعة إضافية مخصصة',
-        length: 1000,
-        qty: 1,
-        startAngle: 45,
-        endAngle: 45
-      });
       renderParts();
       updateSubtitleAndBadges();
     }
@@ -1197,9 +1122,6 @@
       renderOffcuts();
     }
 
-    // ===============================================
-    // Parts Table Renderer
-    // ===============================================
     function renderParts() {
       const tbody = document.getElementById('partsBody');
       if (!tbody) return;
@@ -1439,7 +1361,7 @@
       renderVisualization(allBars, kerf, minOffcut);
       renderWorkshopSheet(allBars, kerf, minOffcut);
 
-      switchTab('tab-results');
+      switchTab('tab-sheet');
     }
 
     function solveProfileCutting({ profile, pieces, availableOffcuts, defaultStockLength, kerf, trimCut, minOffcut }) {
@@ -1455,6 +1377,7 @@
             id: bars.length + 1,
             profileId: profile.id,
             profileCode: profile.code,
+            profileType: profile.type || 'other',
             stockLength: off.length,
             isOffcut: true,
             offcutLocation: off.location,
@@ -1489,6 +1412,7 @@
             id: bars.length + 1,
             profileId: profile.id,
             profileCode: profile.code,
+            profileType: profile.type || 'other',
             stockLength: defaultStockLength,
             isOffcut: false,
             cuts: [],
@@ -1545,7 +1469,7 @@
         let kerfNeeded = requiresKerf ? kerfVal : 0;
 
         if (bar.currentEndAngle === 45 && piece.startAngle === 45) {
-          scrapNeeded = 0; // Perfect complementary miter cut!
+          scrapNeeded = 0;
         } else if (bar.currentEndAngle !== piece.startAngle) {
           scrapNeeded = scrap45;
         }
@@ -1632,9 +1556,6 @@
       };
     }
 
-    // ===============================================
-    // KPI Metrics Renderer
-    // ===============================================
     function renderMetrics(allBars, defaultStockLength, minOffcut) {
       const newBarsCount = allBars.filter(b => !b.isOffcut).length;
       const reusedOffcutsCount = allBars.filter(b => b.isOffcut).length;
@@ -1663,9 +1584,6 @@
       }
     }
 
-    // ===============================================
-    // Visualization Renderer
-    // ===============================================
     function renderVisualization(allBars, kerf, minOffcut) {
       const container = document.getElementById('visualizationArea');
       if (!container) return;
@@ -1754,11 +1672,11 @@
       container.innerHTML = html;
     }
 
-    // ===============================================
-    // Workshop Sheet Renderer
-    // ===============================================
+    // =========================================================================
+    // 3. WORKSHOP TECHNICIAN SHEET RENDERER (COMPREHENSIVE & SEPARATED)
+    // =========================================================================
     function renderWorkshopSheet(allBars, kerf, minOffcut) {
-      const container = document.getElementById('cuttingSheetBody');
+      const container = document.getElementById('technicianSheetContainer');
       if (!container) return;
 
       const projName = document.getElementById('projectInputName')?.value || currentProject.name || 'مشروع بدون عنوان';
@@ -1771,49 +1689,250 @@
       document.getElementById('printTimestamp').textContent = new Date().toLocaleString();
 
       if (allBars.length === 0) {
-        container.innerHTML = `<p class="text-center py-12 text-slate-400 text-sm">لا توجد بيانات قص</p>`;
+        container.innerHTML = `<p class="text-center py-16 text-slate-400 text-sm">لا توجد بيانات قص</p>`;
         return;
       }
 
+      // --- SECTION 1: STOCK REQUISITION & PICKING CHECKLIST (Frames vs Sashes) ---
+      let requisition = {};
+      profiles.forEach(pr => {
+        requisition[pr.id] = {
+          code: pr.code,
+          type: pr.type,
+          newBars: 0,
+          offcuts: []
+        };
+      });
+
+      allBars.forEach(b => {
+        if (!requisition[b.profileId]) {
+          requisition[b.profileId] = {
+            code: b.profileCode,
+            type: 'other',
+            newBars: 0,
+            offcuts: []
+          };
+        }
+        if (b.isOffcut) {
+          requisition[b.profileId].offcuts.push({
+            length: b.stockLength,
+            location: b.offcutLocation || 'المستودع',
+            barId: b.globalId
+          });
+        } else {
+          requisition[b.profileId].newBars++;
+        }
+      });
+
+      const frameReqs = Object.values(requisition).filter(r => r.type === 'frame' && (r.newBars > 0 || r.offcuts.length > 0));
+      const sashReqs = Object.values(requisition).filter(r => r.type === 'sash' && (r.newBars > 0 || r.offcuts.length > 0));
+      const otherReqs = Object.values(requisition).filter(r => r.type !== 'frame' && r.type !== 'sash' && (r.newBars > 0 || r.offcuts.length > 0));
+
+      const totalNewBarsAll = allBars.filter(b => !b.isOffcut).length;
+      const totalOffcutsAll = allBars.filter(b => b.isOffcut).length;
+
       let html = `
-        <div class="bg-slate-50 rounded-lg p-3 border border-slate-200 text-xs flex flex-wrap items-center justify-between gap-2 mb-4">
-          <div><strong>ملاحظات تشغيل الورشة:</strong> ${notes}</div>
-          <div><strong>سماكة السلاح (Kerf):</strong> ${kerf} مم</div>
+        <!-- ============================================== -->
+        <!-- PART A: STOCK REQUISITION ORDER (FOR WAREHOUSE) -->
+        <!-- ============================================== -->
+        <div class="border-2 border-slate-800 rounded-2xl overflow-hidden card print:border-slate-800 bg-white">
+          <div class="bg-slate-900 text-white px-5 py-3 flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span>
+              <h3 class="font-black text-base tracking-wide">القسم الأول: كشف سحب وصرف الأعواد من المستودع (Stock Picking)</h3>
+            </div>
+            <div class="text-xs font-mono text-amber-300">
+              إجمالي المطلوب سحبه: <strong>${totalNewBarsAll} عود جديد</strong> + <strong>${totalOffcutsAll} فضلة</strong>
+            </div>
+          </div>
+
+          <div class="p-5 space-y-5">
+            <p class="text-xs text-slate-600 font-medium leading-relaxed">
+              📋 يرجى من مسؤول المستودع أو الفني سحب الأعواد والفضلات التالية المحددة بدقة قبل التوجه لمنشار القص:
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              
+              <!-- Frame Profiles Requisition -->
+              <div class="border border-blue-300 bg-blue-50/50 rounded-xl p-4 space-y-3">
+                <div class="flex items-center justify-between border-b border-blue-200 pb-2">
+                  <span class="font-black text-blue-900 text-sm flex items-center gap-1.5">
+                    <span class="w-2.5 h-2.5 rounded bg-blue-600 inline-block"></span>
+                    أعواد وفضلات قطاعات الحلق (Frames)
+                  </span>
+                  <span class="text-[11px] font-bold bg-blue-200 text-blue-800 px-2 py-0.5 rounded">حلق</span>
+                </div>
+                ${frameReqs.length === 0 ? '<p class="text-xs text-slate-400">لا توجد حلوق مطلوبة</p>' : frameReqs.map(r => `
+                  <div class="bg-white rounded-lg p-3 border border-blue-100 shadow-sm space-y-2">
+                    <div class="flex items-center justify-between">
+                      <strong class="text-xs text-slate-900 font-black">${r.code}</strong>
+                      <span class="text-xs font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
+                        ${r.newBars} عود جديد (6000 مم)
+                      </span>
+                    </div>
+                    ${r.offcuts.length > 0 ? `
+                      <div class="text-[11px] text-slate-700 bg-amber-50/80 p-2 rounded border border-amber-200 font-medium">
+                        ♻ <strong>الفضلات المطلوب سحبها:</strong>
+                        <ul class="list-disc list-inside mt-1 text-slate-600 space-y-0.5">
+                          ${r.offcuts.map(o => `<li>فضلة بطول <strong>${o.length} مم</strong> (${o.location}) [لعود #${o.barId}]</li>`).join('')}
+                        </ul>
+                      </div>
+                    ` : ''}
+                  </div>
+                `).join('')}
+              </div>
+
+              <!-- Sash Profiles Requisition -->
+              <div class="border border-amber-300 bg-amber-50/50 rounded-xl p-4 space-y-3">
+                <div class="flex items-center justify-between border-b border-amber-200 pb-2">
+                  <span class="font-black text-amber-900 text-sm flex items-center gap-1.5">
+                    <span class="w-2.5 h-2.5 rounded bg-amber-600 inline-block"></span>
+                    أعواد وفضلات قطاعات الدرف (Sashes)
+                  </span>
+                  <span class="text-[11px] font-bold bg-amber-200 text-amber-800 px-2 py-0.5 rounded">درفة</span>
+                </div>
+                ${sashReqs.length === 0 ? '<p class="text-xs text-slate-400">لا توجد درف مطلوبة</p>' : sashReqs.map(r => `
+                  <div class="bg-white rounded-lg p-3 border border-amber-100 shadow-sm space-y-2">
+                    <div class="flex items-center justify-between">
+                      <strong class="text-xs text-slate-900 font-black">${r.code}</strong>
+                      <span class="text-xs font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+                        ${r.newBars} عود جديد (6000 مم)
+                      </span>
+                    </div>
+                    ${r.offcuts.length > 0 ? `
+                      <div class="text-[11px] text-slate-700 bg-amber-50/80 p-2 rounded border border-amber-200 font-medium">
+                        ♻ <strong>الفضلات المطلوب سحبها:</strong>
+                        <ul class="list-disc list-inside mt-1 text-slate-600 space-y-0.5">
+                          ${r.offcuts.map(o => `<li>فضلة بطول <strong>${o.length} مم</strong> (${o.location}) [لعود #${o.barId}]</li>`).join('')}
+                        </ul>
+                      </div>
+                    ` : ''}
+                  </div>
+                `).join('')}
+              </div>
+
+            </div>
+
+            ${otherReqs.length > 0 ? `
+              <!-- Other Profiles Requisition -->
+              <div class="border border-slate-300 bg-slate-50 rounded-xl p-3 space-y-2">
+                <span class="font-bold text-xs text-slate-800">قطاعات إضافية (قواطع / باكتات):</span>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                  ${otherReqs.map(r => `
+                    <div class="bg-white p-2.5 rounded border border-slate-200 text-xs">
+                      <strong>${r.code}:</strong> ${r.newBars} عود (6000 مم) ${r.offcuts.length > 0 ? `+ ${r.offcuts.length} فضلة` : ''}
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
+
+          </div>
         </div>
+
+        <!-- ============================================== -->
+        <!-- PART B: VISUAL CUTTING MAPS & STEP-BY-STEP -->
+        <!-- ============================================== -->
+        <div class="space-y-6 page-break">
+          
+          <div class="border-b-2 border-slate-900 pb-2 flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h3 class="font-black text-slate-900 text-lg">القسم الثاني: خرائط ومقاسات القص التنفيذية على المنشار</h3>
+              <p class="text-xs text-slate-600 font-medium">كل بطاقة تمثل عوداً مستقلاً موضحاً عليه رسم خريطة القص والمقاسات بالترتيب المتسلسل مع خانة التأكيد [✔]</p>
+            </div>
+            <div class="text-xs bg-slate-100 px-3 py-1 rounded-lg font-bold text-slate-700">
+              سماكة السلاح (Kerf): ${kerf} مم | قصة التنظيف: ${trimCut} مم
+            </div>
+          </div>
       `;
 
       allBars.forEach((bar) => {
         const partsInBar = bar.cuts.filter(c => c.type === 'part');
         const isOffcutBar = bar.isOffcut;
+        const isRemainUseful = bar.remainingLength >= minOffcut;
 
         html += `
-          <div class="border border-slate-300 rounded-xl overflow-hidden mb-6 card print:break-inside-avoid shadow-sm">
+          <div class="border-2 border-slate-300 rounded-2xl overflow-hidden card bg-white shadow-sm print:border-slate-800 print:break-inside-avoid">
             
-            <div class="bg-slate-800 text-white px-4 py-2.5 flex flex-wrap items-center justify-between gap-2">
-              <div class="flex items-center gap-2">
-                <span class="px-2 py-0.5 rounded text-xs font-black ${isOffcutBar ? 'bg-emerald-500 text-white' : 'bg-primary-500 text-white'}">
+            <!-- Bar Card Header -->
+            <div class="bg-slate-800 text-white px-4 py-3 flex flex-wrap items-center justify-between gap-2">
+              <div class="flex items-center gap-3">
+                <span class="px-3 py-1 rounded-lg text-xs font-black ${isOffcutBar ? 'bg-emerald-500 text-white' : 'bg-primary-500 text-white'} shadow-sm">
                   ${isOffcutBar ? '♻ فضلة سابقة' : 'عود جديد'} #${bar.globalId}
                 </span>
-                <span class="font-extrabold text-sm">${bar.profileCode}</span>
-                <span class="text-xs text-slate-300">الطول: ${bar.stockLength} مم</span>
+                <span class="font-black text-sm text-amber-300">${bar.profileCode}</span>
+                <span class="text-xs text-slate-300">الطول الكلي: <strong>${bar.stockLength} مم</strong></span>
+                ${isOffcutBar ? `<span class="text-[11px] text-emerald-300 font-medium">(${bar.offcutLocation || 'من الفضلات'})</span>` : ''}
               </div>
-              <div class="text-xs text-slate-300 font-medium">
-                المستهلك: <strong>${bar.usedLength} مم</strong> | المتبقي: <strong>${bar.remainingLength} مم</strong>
+              <div class="text-xs text-slate-300 font-mono">
+                المستهلك الصافي: <strong class="text-white">${bar.usedLength} مم</strong> | 
+                المتبقي: <strong class="${isRemainUseful ? 'text-teal-300' : 'text-slate-400'}">${bar.remainingLength} مم</strong>
               </div>
             </div>
 
-            <table class="w-full text-xs text-right">
-              <thead>
-                <tr class="bg-slate-100 text-slate-700 border-b border-slate-200">
-                  <th class="px-3 py-2 font-bold w-12 text-center"># القص</th>
-                  <th class="px-3 py-2 font-bold">اسم الوحدة والقطعة</th>
-                  <th class="px-3 py-2 font-bold text-emerald-800 text-base">الطول المطلوب</th>
-                  <th class="px-3 py-2 font-bold text-center">زاوية البداية</th>
-                  <th class="px-3 py-2 font-bold text-center">زاوية النهاية</th>
-                  <th class="px-3 py-2 font-bold">إرشادات الفني</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-slate-200">
+            <div class="p-4 space-y-4">
+              
+              <!-- VISUAL CUTTING MAP (HIGHLY VISIBLE BAR GRAPHIC) -->
+              <div class="space-y-1.5">
+                <div class="flex items-center justify-between text-[11px] font-bold text-slate-600">
+                  <span>🗺️ خريطة القص للعود #${bar.globalId}:</span>
+                  <span>الترتيب من اليمين ⬅ إلى اليسار</span>
+                </div>
+                
+                <div class="relative h-16 bg-slate-200 rounded-xl overflow-hidden border-2 border-slate-300 flex shadow-inner">
+        `;
+
+        bar.cuts.forEach((cut) => {
+          const pct = ((cut.length / bar.stockLength) * 100).toFixed(2);
+
+          if (cut.type === 'kerf') {
+            html += `<div class="h-full bg-slate-700 flex-shrink-0" style="width: ${pct}%" title="سلاح ${cut.length}مم"></div>`;
+          } else if (cut.type === 'trim' || cut.type === 'scrap') {
+            html += `
+              <div class="h-full bg-rose-400 flex flex-col items-center justify-center flex-shrink-0 text-[10px] text-white font-bold" style="width: ${pct}%" title="${cut.label}: ${cut.length}مم">
+                <span class="text-[9px] leading-none">سكراب</span>
+                <span class="text-[8px] leading-none opacity-90">${cut.length}</span>
+              </div>
+            `;
+          } else if (cut.type === 'part') {
+            const angleLabel = `${cut.startAngle}° / ${cut.endAngle}°`;
+            html += `
+              <div class="h-full bg-primary-600 hover:bg-primary-700 text-white flex flex-col items-center justify-center relative px-1 flex-shrink-0 border-r border-primary-800/40" style="width: ${pct}%">
+                <span class="text-[10px] font-semibold opacity-90 truncate w-full text-center leading-none">${cut.unitCode || cut.label}</span>
+                <span class="text-xs sm:text-sm font-black leading-tight tracking-wide">${cut.length} مم</span>
+                <span class="text-[9px] font-mono opacity-80 leading-none">${angleLabel}</span>
+              </div>
+            `;
+          }
+        });
+
+        if (bar.remainingLength > 0) {
+          const remainPct = ((bar.remainingLength / bar.stockLength) * 100).toFixed(2);
+          html += `
+            <div class="h-full ${isRemainUseful ? 'bg-teal-300 text-teal-900' : 'bg-slate-300 text-slate-600'} flex flex-col items-center justify-center flex-shrink-0 text-center px-1 font-bold" style="width: ${remainPct}%">
+              <span class="text-[11px] font-black">${bar.remainingLength} مم</span>
+              <span class="text-[8px]">${isRemainUseful ? 'فضلة صالحة' : 'هالك'}</span>
+            </div>
+          `;
+        }
+
+        html += `
+                </div>
+              </div>
+
+              <!-- DETAILED STEP-BY-STEP TABLE FOR TECHNICIAN -->
+              <table class="w-full text-xs text-right border border-slate-200 rounded-lg overflow-hidden">
+                <thead>
+                  <tr class="bg-slate-100 text-slate-800 border-b border-slate-200 font-bold">
+                    <th class="px-3 py-2 text-center w-12"># القص</th>
+                    <th class="px-3 py-2 text-emerald-900 font-black text-sm">المقاس المطلوب (الطول)</th>
+                    <th class="px-3 py-2 text-center">زاوية البداية</th>
+                    <th class="px-3 py-2 text-center">زاوية النهاية</th>
+                    <th class="px-3 py-2">تابع لأي نافذة / قطعة</th>
+                    <th class="px-3 py-2 text-center w-24">تم القص</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200">
         `;
 
         partsInBar.forEach((p, idx) => {
@@ -1821,47 +1940,114 @@
           const is45End = p.endAngle === 45;
 
           html += `
-            <tr class="hover:bg-slate-50 transition">
-              <td class="px-3 py-2.5 font-black text-center text-slate-800">${idx + 1}</td>
-              <td class="px-3 py-2.5 font-bold text-slate-900">${p.label || bar.profileCode}</td>
-              <td class="px-3 py-2.5 font-black text-base text-emerald-700">${p.length} <span class="text-xs font-normal text-slate-500">مم</span></td>
-              <td class="px-3 py-2.5 text-center">
-                <span class="px-2 py-0.5 rounded font-bold ${is45Start ? 'bg-amber-100 text-amber-900' : 'bg-slate-100 text-slate-800'}">
+            <tr class="hover:bg-slate-50 transition font-medium">
+              <td class="px-3 py-2 text-center font-black text-slate-900 bg-slate-50">${idx + 1}</td>
+              <td class="px-3 py-2 font-black text-base text-emerald-700">
+                ${p.length} <span class="text-xs font-normal text-slate-500">مم</span>
+              </td>
+              <td class="px-3 py-2 text-center font-bold">
+                <span class="px-2.5 py-0.5 rounded text-xs ${is45Start ? 'bg-amber-100 text-amber-900 border border-amber-300' : 'bg-slate-100 text-slate-700'}">
                   ${p.startAngle}°
                 </span>
               </td>
-              <td class="px-3 py-2.5 text-center">
-                <span class="px-2 py-0.5 rounded font-bold ${is45End ? 'bg-amber-100 text-amber-900' : 'bg-slate-100 text-slate-800'}">
+              <td class="px-3 py-2 text-center font-bold">
+                <span class="px-2.5 py-0.5 rounded text-xs ${is45End ? 'bg-amber-100 text-amber-900 border border-amber-300' : 'bg-slate-100 text-slate-700'}">
                   ${p.endAngle}°
                 </span>
               </td>
-              <td class="px-3 py-2.5 text-slate-600">
-                ${idx === 0 && bar.cuts[0]?.type === 'trim' ? '<span class="text-rose-600 font-semibold">قصة تنظيف أولية ثم </span>' : ''}
-                قص بزاوية ${p.startAngle}° و ${p.endAngle}°
+              <td class="px-3 py-2 font-bold text-slate-900">
+                <span class="text-primary-700">[${p.unitCode || 'شباك'}]</span> ${p.label}
+              </td>
+              <td class="px-3 py-2 text-center">
+                <label class="inline-flex items-center justify-center w-6 h-6 border-2 border-slate-400 rounded bg-white cursor-pointer hover:border-slate-800">
+                  <input type="checkbox" class="w-4 h-4 text-emerald-600 rounded">
+                </label>
               </td>
             </tr>
           `;
         });
 
-        const isRemainUseful = bar.remainingLength >= minOffcut;
-
         html += `
-              </tbody>
-            </table>
+                </tbody>
+              </table>
 
-            <div class="bg-slate-50 px-4 py-2 border-t border-slate-200 flex flex-wrap items-center justify-between text-xs text-slate-600">
-              <span>عدد القطع المقصوصة من هذا العود: <strong>${partsInBar.length} قطع</strong></span>
-              <span>
-                حالة الباقي: 
-                <strong class="${isRemainUseful ? 'text-teal-700 bg-teal-50 px-2 py-0.5 rounded' : 'text-slate-500'}">
-                  ${isRemainUseful ? `فضلة مفيدة (${bar.remainingLength} مم) احفظها بالمخزون` : `سكراب تالف (${bar.remainingLength} مم)`}
-                </strong>
-              </span>
+              <!-- Bar Footer Note -->
+              <div class="bg-slate-50 px-3.5 py-2 rounded-lg border border-slate-200 flex flex-wrap items-center justify-between text-xs text-slate-700">
+                <span>إجمالي قطع هذا العود: <strong>${partsInBar.length} قطع</strong></span>
+                <span>
+                  توجيه الباقي: 
+                  <strong class="${isRemainUseful ? 'text-teal-800 bg-teal-100 px-2 py-0.5 rounded border border-teal-300' : 'text-slate-500'}">
+                    ${isRemainUseful ? `فضلة مفيدة (${bar.remainingLength} مم) ⬅ احفظها بالمستودع` : `سكراب تالف (${bar.remainingLength} مم)`}
+                  </strong>
+                </span>
+              </div>
+
             </div>
-
           </div>
         `;
       });
+
+      html += `</div>`;
+
+      // --- SECTION 3: WINDOW ASSEMBLY CHECKLIST ---
+      html += `
+        <!-- ============================================== -->
+        <!-- PART C: WINDOW ASSEMBLY CHECKLIST -->
+        <!-- ============================================== -->
+        <div class="border-2 border-slate-800 rounded-2xl overflow-hidden card print:border-slate-800 bg-white page-break">
+          <div class="bg-slate-900 text-white px-5 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-teal-400 inline-block"></span>
+              <h3 class="font-black text-base tracking-wide">القسم الثالث: كشف تجميع النوافذ النهائي (Window Assembly Checklist)</h3>
+            </div>
+            <span class="text-xs text-slate-300 font-medium">قسم التجميع والتركيب</span>
+          </div>
+
+          <div class="p-5 space-y-4">
+            <p class="text-xs text-slate-600 font-medium">
+              📦 بعد اكتمال عمليات القص، يقوم قسم التجميع بفرز وتجميع قطع كل نافذة والتأكد من مطابقتها:
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      `;
+
+      windowUnits.forEach(unit => {
+        const unitParts = parts.filter(p => p.unitCode === unit.code || p.label.startsWith(unit.code));
+
+        html += `
+          <div class="border border-slate-300 rounded-xl p-4 bg-slate-50/70 space-y-2">
+            <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+              <div>
+                <h4 class="font-black text-slate-900 text-xs">${unit.code}</h4>
+                <p class="text-[11px] text-slate-500 font-semibold">${unit.width} مم (عرض) × ${unit.height} مم (ارتفاع) • العدد: ${unit.qty} وحدة</p>
+              </div>
+              <span class="text-xs bg-primary-100 text-primary-800 font-bold px-2 py-0.5 rounded">
+                ${unit.type}
+              </span>
+            </div>
+
+            <div class="space-y-1 text-xs">
+              ${unitParts.map(p => `
+                <div class="flex items-center justify-between text-slate-700 bg-white px-2 py-1.5 rounded border border-slate-200">
+                  <span>${p.label.replace(unit.code + ' - ', '')}:</span>
+                  <span class="font-black text-emerald-800">${p.length} مم <span class="font-normal text-slate-500">(${p.qty} قطع)</span></span>
+                </div>
+              `).join('')}
+            </div>
+
+            <div class="pt-2 flex items-center justify-end gap-2 text-xs font-bold text-slate-700">
+              <span>تأكيد اكتمال تجميع الوحدة:</span>
+              <input type="checkbox" class="w-4 h-4 text-emerald-600 rounded">
+            </div>
+          </div>
+        `;
+      });
+
+      html += `
+            </div>
+          </div>
+        </div>
+      `;
 
       container.innerHTML = html;
     }
@@ -1888,7 +2074,7 @@
     }
 
     // ===============================================
-    // PROJECT MANAGEMENT (LocalStorage & JSON)
+    // Project Management & Storage
     // ===============================================
     function saveCurrentProject(notify = true) {
       currentProject.name = document.getElementById('projectInputName').value || 'مشروع بدون عنوان';
@@ -2039,9 +2225,6 @@
       }
     }
 
-    // ===============================================
-    // EXPORT FUNCTIONS (PDF, EXCEL, CSV, JSON)
-    // ===============================================
     function exportProjectJSON() {
       saveCurrentProject(false);
       const projectData = {
@@ -2113,7 +2296,7 @@
 
     function exportSheetToPDF() {
       if (!lastOptimizationResult) {
-        alert('يرجى تشغيل "حساب وتحسين القص" أولاً قبل تصدير PDF.');
+        alert('يرجى تشغيل "حساب وتحسين القص الذكي" أولاً قبل تصدير PDF.');
         return;
       }
 
@@ -2121,8 +2304,8 @@
 
       const element = document.getElementById('printableSheetContent');
       const opt = {
-        margin: [10, 10, 10, 10],
-        filename: `أمر_قص_${currentProject.name || 'aluminum'}.pdf`,
+        margin: [8, 8, 8, 8],
+        filename: `أمر_قص_وتجميع_${currentProject.name || 'aluminum'}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2, useCORS: true },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
@@ -2212,9 +2395,6 @@
       URL.revokeObjectURL(url);
     }
 
-    // ===============================================
-    // Initialization
-    // ===============================================
     window.addEventListener('DOMContentLoaded', () => {
       try {
         const saved = localStorage.getItem('aluminum_opt_current');
