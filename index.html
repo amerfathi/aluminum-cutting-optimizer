@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>مخطط ومحسن قص الألمنيوم الهندسي | Aluminum Cutting & Shop Drawing Pro</title>
+  <title>مخطط ومحسن قص وتفصيل الألمنيوم والزجاج الهندسي | Aluminum & Glass CAD Optimizer</title>
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -17,7 +17,7 @@
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
-  <!-- Google Fonts: Cairo (Engineering Arabic) & JetBrains Mono / Inter -->
+  <!-- Google Fonts: Cairo & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -29,16 +29,6 @@
           fontFamily: {
             cairo: ['Cairo', 'sans-serif'],
             mono: ['JetBrains Mono', 'monospace'],
-          },
-          colors: {
-            cad: {
-              bg: '#f8fafc',
-              border: '#334155',
-              grid: '#e2e8f0',
-              line: '#0f172a',
-              scrap: '#94a3b8',
-              hatch: '#cbd5e1'
-            }
           }
         }
       }
@@ -75,7 +65,7 @@
     @media print {
       body {
         background: #ffffff !important;
-        font-size: 9pt;
+        font-size: 8.5pt;
         color: #000000 !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
@@ -110,7 +100,7 @@
 </head>
 <body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col font-cairo antialiased">
 
-  <!-- Header (Drafting Style) -->
+  <!-- Header -->
   <header class="bg-white border-b border-slate-300 sticky top-0 z-40 shadow-xs no-print">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex items-center justify-between">
       <div class="flex items-center gap-3">
@@ -120,14 +110,14 @@
         <div>
           <div class="flex items-center gap-2">
             <h1 class="text-base font-black text-slate-900 leading-tight">
-              <span class="lang-ar">محسن ومخطط قص الألمنيوم الهندسي</span>
-              <span class="lang-en">Aluminum Cutting CAD Optimizer</span>
+              <span class="lang-ar">محسن وقاص الألمنيوم والزجاج المتسلسل</span>
+              <span class="lang-en">Aluminum & Glass Cascading Optimizer</span>
             </h1>
-            <span class="px-1.5 py-0.2 text-[10px] font-mono font-bold bg-slate-200 text-slate-800 rounded border border-slate-300">v3.5 2D CAD</span>
+            <span class="px-1.5 py-0.2 text-[10px] font-mono font-bold bg-slate-200 text-slate-800 rounded border border-slate-300">v4.0 Cascade</span>
           </div>
           <p class="text-[11px] text-slate-500 font-medium">
-            <span class="lang-ar">نظام الرسم الهندسي وتفصيل مقاسات النوافذ (W/H) وتوليد خرائط القص 2D</span>
-            <span class="lang-en">Engineering 2D cutting shop drawings & window schedules</span>
+            <span class="lang-ar">سلسلة التخصيم المتتالية: مقاس الحلق ⬅ مقاس الدرفة ⬅ مقاس الزجاج الصافي ومساحته (كميات فقط)</span>
+            <span class="lang-en">Cascading Engine: Frame Outer Size ➔ Sash Dimensions ➔ Glass Pane Cut & Area</span>
           </p>
         </div>
       </div>
@@ -156,30 +146,35 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 flex gap-1 border-t border-slate-200 overflow-x-auto" id="navTabs">
       <button onclick="switchTab('tab-windows')" id="btn-tab-windows" class="tab-btn active px-3.5 py-2 text-xs font-bold rounded-t transition flex items-center gap-1.5">
         <i data-lucide="layout-template" class="w-3.5 h-3.5"></i>
-        <span class="lang-ar">1. جدول النوافذ والمقاسات</span>
-        <span class="lang-en">1. Windows Schedule</span>
+        <span class="lang-ar">1. جدول النوافذ وتفصيل المقاسات</span>
+        <span class="lang-en">1. Windows & Glass Schedule</span>
+      </button>
+      <button onclick="switchTab('tab-systems')" id="btn-tab-systems" class="tab-btn px-3.5 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 rounded-t transition flex items-center gap-1.5">
+        <i data-lucide="sliders" class="w-3.5 h-3.5"></i>
+        <span class="lang-ar">2. ضبط خلوصات وسماكات السيستم</span>
+        <span class="lang-en">2. System Deductions Setup</span>
       </button>
       <button onclick="switchTab('tab-parts')" id="btn-tab-parts" class="tab-btn px-3.5 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 rounded-t transition flex items-center gap-1.5">
         <i data-lucide="list-checks" class="w-3.5 h-3.5"></i>
-        <span class="lang-ar">2. القطع والقطاعات</span>
-        <span class="lang-en">2. Parts & Profiles</span>
+        <span class="lang-ar">3. قطع الألمنيوم للقص</span>
+        <span class="lang-en">3. Derived Cutting Parts</span>
         <span id="totalPartsBadge" class="px-1.5 py-0.2 bg-slate-200 text-slate-800 rounded font-mono text-[10px]">0</span>
       </button>
       <button onclick="switchTab('tab-offcuts')" id="btn-tab-offcuts" class="tab-btn px-3.5 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 rounded-t transition flex items-center gap-1.5">
         <i data-lucide="recycle" class="w-3.5 h-3.5"></i>
-        <span class="lang-ar">3. مخزون الفضلات</span>
-        <span class="lang-en">3. Offcuts Stock</span>
+        <span class="lang-ar">4. مخزون الفضلات</span>
+        <span class="lang-en">4. Offcuts Stock</span>
         <span id="offcutsCountBadge" class="px-1.5 py-0.2 bg-slate-200 text-slate-700 rounded font-mono text-[10px]">0</span>
       </button>
       <button onclick="switchTab('tab-sheet')" id="btn-tab-sheet" class="tab-btn px-3.5 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 rounded-t transition flex items-center gap-1.5">
         <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
-        <span class="lang-ar">4. ورقة الفني ومخطط القص 2D</span>
-        <span class="lang-en">4. Shop Cutting Sheet</span>
+        <span class="lang-ar">5. ورقة الفني ومخطط القص والزجاج</span>
+        <span class="lang-en">5. Workshop CAD & Glass Sheet</span>
       </button>
       <button onclick="switchTab('tab-projects')" id="btn-tab-projects" class="tab-btn px-3.5 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 rounded-t transition flex items-center gap-1.5">
         <i data-lucide="folder-open" class="w-3.5 h-3.5"></i>
-        <span class="lang-ar">5. المشاريع والتصدير</span>
-        <span class="lang-en">5. Projects & Export</span>
+        <span class="lang-ar">6. المشاريع والتصدير</span>
+        <span class="lang-en">6. Projects & Export</span>
       </button>
     </div>
   </header>
@@ -187,7 +182,7 @@
   <!-- Main Content -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex-1 w-full">
 
-    <!-- Global Parameters Bar (Technical Style) -->
+    <!-- Global Parameters Bar -->
     <div class="bg-white rounded-lg border border-slate-300 p-3.5 mb-5 shadow-2xs no-print">
       <div class="flex flex-wrap items-center justify-between gap-3">
         
@@ -248,8 +243,8 @@
         <div>
           <button onclick="runAdvancedOptimization()" class="w-full sm:w-auto px-5 py-2 bg-slate-900 hover:bg-black text-white font-bold text-xs rounded shadow transition flex items-center justify-center gap-1.5">
             <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i>
-            <span class="lang-ar">حساب وتوليد المخطط الهندسي</span>
-            <span class="lang-en">Generate CAD Shop Drawing</span>
+            <span class="lang-ar">حساب وتوليد المخطط الهندسي والزجاج</span>
+            <span class="lang-en">Calculate CAD & Glass Schedule</span>
           </button>
         </div>
 
@@ -257,7 +252,7 @@
     </div>
 
     <!-- ============================================== -->
-    <!-- TAB 1: WINDOWS & DOORS SCHEDULE -->
+    <!-- TAB 1: WINDOWS & DOORS SCHEDULE (CASCADE PREVIEW) -->
     <!-- ============================================== -->
     <div id="tab-windows" class="tab-content space-y-4">
       
@@ -265,10 +260,15 @@
         <div class="px-4 py-2.5 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2 bg-slate-50">
           <div class="flex items-center gap-2">
             <i data-lucide="layout-template" class="w-4 h-4 text-slate-700"></i>
-            <h2 class="font-black text-slate-900 text-xs sm:text-sm">
-              <span class="lang-ar">جدول مواصفات ومقاسات النوافذ والأبواب (Windows Schedule)</span>
-              <span class="lang-en">Windows & Doors Schedule</span>
-            </h2>
+            <div>
+              <h2 class="font-black text-slate-900 text-xs sm:text-sm">
+                <span class="lang-ar">جدول مقاسات النوافذ وحسابات التخصيم المتسلسل (Windows & Glass Schedule)</span>
+                <span class="lang-en">Windows & Glass Schedule</span>
+              </h2>
+              <p class="text-[11px] text-slate-500 font-medium">
+                <span class="lang-ar">أدخل مقاس الحلق الخارجي (W × H)، ويقوم النظام بحساب مقاسات الدرفة ثم مقاسات الزجاج الصافي تلقائياً</span>
+              </p>
+            </div>
           </div>
           
           <button onclick="addWindowUnit()" class="px-2.5 py-1 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded transition flex items-center gap-1">
@@ -281,110 +281,133 @@
         <div class="p-3 overflow-x-auto">
           <table class="w-full text-xs text-right border-collapse" id="windowsTable">
             <thead>
-              <tr class="bg-slate-100 text-slate-700 border-b border-slate-300 font-bold font-mono">
-                <th class="py-1.5 px-2 text-center w-10">#</th>
-                <th class="py-1.5 px-2"><span class="lang-ar">كود / اسم الوحدة</span><span class="lang-en">Unit Code</span></th>
-                <th class="py-1.5 px-2"><span class="lang-ar">نوع النظام</span><span class="lang-en">Type</span></th>
-                <th class="py-1.5 px-2 text-center"><span class="lang-ar">العرض W (مم)</span><span class="lang-en">Width W</span></th>
-                <th class="py-1.5 px-2 text-center"><span class="lang-ar">الارتفاع H (مم)</span><span class="lang-en">Height H</span></th>
+              <tr class="bg-slate-100 text-slate-800 border-b border-slate-300 font-bold font-mono text-[11px]">
+                <th class="py-1.5 px-2 text-center w-8">#</th>
+                <th class="py-1.5 px-2 font-cairo"><span class="lang-ar">كود النافذة</span><span class="lang-en">Code</span></th>
+                <th class="py-1.5 px-2 font-cairo"><span class="lang-ar">نوع النظام</span><span class="lang-en">Type</span></th>
+                <th class="py-1.5 px-2 text-center"><span class="lang-ar">مقاس الحلق W×H</span><span class="lang-en">Frame WxH</span></th>
                 <th class="py-1.5 px-2 text-center"><span class="lang-ar">العدد</span><span class="lang-en">Qty</span></th>
-                <th class="py-1.5 px-2"><span class="lang-ar">قطاع الحلق (Frame)</span><span class="lang-en">Frame Profile</span></th>
-                <th class="py-1.5 px-2"><span class="lang-ar">قطاع الدرفة (Sash)</span><span class="lang-en">Sash Profile</span></th>
-                <th class="py-1.5 px-2 text-center w-16"></th>
+                <th class="py-1.5 px-2 font-cairo"><span class="lang-ar">نظام القطاع (السيستم)</span><span class="lang-en">Profile System</span></th>
+                <th class="py-1.5 px-2 text-center font-cairo bg-blue-50/70 text-blue-900 border-x border-blue-200"><span class="lang-ar">مقاس الدرفة الصافي (Ws × Hs)</span></th>
+                <th class="py-1.5 px-2 text-center font-cairo bg-emerald-50/70 text-emerald-900 border-x border-emerald-200"><span class="lang-ar">مقاس الزجاج الصافي (Wg × Hg)</span></th>
+                <th class="py-1.5 px-2 text-center w-14"></th>
               </tr>
             </thead>
-            <tbody id="windowsBody" class="divide-y divide-slate-200">
+            <tbody id="windowsBody" class="divide-y divide-slate-200 font-mono text-xs">
+              <!-- Dynamically populated with live cascade calculations -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="px-4 py-2 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center justify-between text-xs text-slate-700 font-mono">
+          <div>
+            إجمالي النوافذ: <strong id="totalUnitsCount" class="text-slate-900 font-bold">0 وحدة</strong> | 
+            إجمالي ألواح الزجاج: <strong id="totalGlassPanesCount" class="text-emerald-800 font-bold">0 لوح</strong> | 
+            إجمالي مساحة الزجاج: <strong id="totalGlassAreaSquareMeters" class="text-emerald-800 font-bold">0.00 م²</strong>
+          </div>
+          <div class="text-[11px] text-slate-500 font-cairo">
+            حسابات كميات وأمتار فقط (Quantities & Cut Measurements Only)
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ============================================== -->
+    <!-- TAB 2: SYSTEM DEDUCTION RULES & CLEARANCES -->
+    <!-- ============================================== -->
+    <div id="tab-systems" class="tab-content hidden space-y-4">
+      
+      <div class="bg-white rounded-lg border border-slate-300 shadow-2xs">
+        <div class="px-4 py-2.5 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+          <div>
+            <h3 class="font-black text-slate-900 text-xs sm:text-sm">
+              <span class="lang-ar">أنظمة القطاعات وقواعد التخصيم المتسلسلة (System Deductions & Clearances)</span>
+              <span class="lang-en">System Deductions & Clearances</span>
+            </h3>
+            <p class="text-[11px] text-slate-500 font-medium">
+              <span class="lang-ar">تحديد سماكة الحلق، وعرض بروفيل الدرفة، وخلوصات الحركة وعمق فرزة الزجاج لكل سيستم</span>
+            </p>
+          </div>
+          
+          <button onclick="addNewSystem()" class="px-2.5 py-1 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded transition flex items-center gap-1">
+            <i data-lucide="plus" class="w-3 h-3"></i>
+            <span class="lang-ar">إضافة سيستم مخصص</span>
+            <span class="lang-en">Add Custom System</span>
+          </button>
+        </div>
+
+        <div class="p-4 overflow-x-auto">
+          <table class="w-full text-xs text-right border-collapse font-mono" id="systemsTable">
+            <thead>
+              <tr class="bg-slate-100 text-slate-800 border-b border-slate-300 font-bold font-cairo text-[11px]">
+                <th class="py-1.5 px-2">اسم السيستم / القطاع</th>
+                <th class="py-1.5 px-2">كود الحلق</th>
+                <th class="py-1.5 px-2">كود الدرفة</th>
+                <th class="py-1.5 px-2 text-center">سمك الفريم (مم)</th>
+                <th class="py-1.5 px-2 text-center">عرض بروفيل الدرفة (مم)</th>
+                <th class="py-1.5 px-2 text-center">خلوص الفريم-الدرفة (مم)</th>
+                <th class="py-1.5 px-2 text-center">عمق فرزة الزجاج (مم)</th>
+                <th class="py-1.5 px-2 text-center">خلوص أمان الزجاج (مم)</th>
+                <th class="py-1.5 px-2 text-center w-12"></th>
+              </tr>
+            </thead>
+            <tbody id="systemsBody" class="divide-y divide-slate-200">
               <!-- Dynamically populated -->
             </tbody>
           </table>
         </div>
 
-        <div class="px-4 py-2 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600 font-medium">
-          <div>
-            <span class="lang-ar">إجمالي النوافذ: </span>
-            <strong id="totalUnitsCount" class="text-slate-900 font-mono">0</strong>
-          </div>
-          <div class="text-[11px] text-slate-500">
-            <span class="lang-ar">💡 يتم تخصيم الحلق والدرف وتحديد (W/H) لكل قطعة آلياً</span>
-          </div>
+        <div class="p-4 bg-slate-50/70 border-t border-slate-200 text-xs text-slate-700 space-y-1.5 font-cairo">
+          <p class="font-bold text-slate-900">📐 كيف تُحسب معادلات التخصيم المتسلسل في السيستم؟</p>
+          <ul class="list-disc list-inside text-[11px] text-slate-600 space-y-0.5 font-mono">
+            <li><strong>مقاس الدرفة (Sash Size):</strong> ارتفاع الدرفة $H_s = H - \text{خلوص الارتفاع}$ | عرض الدرفة السحاب $W_s = (W + \text{تراكب}) / 2$.</li>
+            <li><strong>مقاس الزجاج (Glass Size):</strong> $W_g = W_s - (2 \times \text{عرض الدرفة}) + (2 \times \text{عمق فرزة الزجاج}) - \text{خلوص الزجاج}$.</li>
+            <li>$H_g = H_s - (2 \times \text{عرض الدرفة}) + (2 \times \text{عمق فرزة الزجاج}) - \text{خلوص الزجاج}$.</li>
+          </ul>
         </div>
       </div>
 
     </div>
 
     <!-- ============================================== -->
-    <!-- TAB 2: DERIVED PARTS & PROFILES -->
+    <!-- TAB 3: DERIVED PARTS -->
     <!-- ============================================== -->
     <div id="tab-parts" class="tab-content hidden space-y-4">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+      <div class="bg-white rounded-lg border border-slate-300 shadow-2xs">
+        <div class="px-3.5 py-2 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+          <h3 class="font-black text-slate-900 text-xs">
+            <span class="lang-ar">قائمة قطع الألمنيوم المحسوبة للقص (مع تمييز W/H)</span>
+            <span class="lang-en">Derived Aluminum Cutting Pieces</span>
+          </h3>
+          <button onclick="recalculateAllPartsFromWindows()" class="px-2.5 py-1 text-xs bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold rounded">
+            تحديث الحسابات
+          </button>
+        </div>
         
-        <!-- Profiles Setup (5 cols) -->
-        <div class="lg:col-span-5 bg-white rounded-lg border border-slate-300 shadow-2xs">
-          <div class="px-3.5 py-2 border-b border-slate-200 flex items-center justify-between bg-slate-50">
-            <h3 class="font-black text-slate-900 text-xs">
-              <span class="lang-ar">تعريف القطاعات (Profiles)</span>
-              <span class="lang-en">Profiles</span>
-            </h3>
-            <button onclick="addProfile()" class="px-2 py-0.5 text-xs bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold rounded">
-              + إضافة
-            </button>
-          </div>
-          
-          <div class="p-3 overflow-x-auto">
-            <table class="w-full text-xs text-right" id="profilesTable">
-              <thead>
-                <tr class="text-slate-600 border-b border-slate-200 font-bold">
-                  <th class="pb-1.5">كود القطاع</th>
-                  <th class="pb-1.5">النوع</th>
-                  <th class="pb-1.5 text-center">العرض</th>
-                  <th class="pb-1.5 text-center">سكراب 45°</th>
-                  <th class="pb-1.5"></th>
-                </tr>
-              </thead>
-              <tbody id="profilesBody" class="divide-y divide-slate-100">
-                <!-- Profiles -->
-              </tbody>
-            </table>
-          </div>
+        <div class="p-3 overflow-x-auto max-h-[420px]">
+          <table class="w-full text-xs text-right font-mono" id="partsTable">
+            <thead>
+              <tr class="text-slate-600 border-b border-slate-200 font-bold font-cairo">
+                <th class="pb-1.5">القطاع</th>
+                <th class="pb-1.5">الوحدة / القطعة</th>
+                <th class="pb-1.5 text-center">النوع</th>
+                <th class="pb-1.5 text-center">المقاس (مم)</th>
+                <th class="pb-1.5 text-center">العدد</th>
+                <th class="pb-1.5 text-center">الزوايا</th>
+                <th class="pb-1.5 text-center"></th>
+              </tr>
+            </thead>
+            <tbody id="partsBody" class="divide-y divide-slate-100">
+              <!-- Parts -->
+            </tbody>
+          </table>
         </div>
-
-        <!-- Derived Parts (7 cols) -->
-        <div class="lg:col-span-7 bg-white rounded-lg border border-slate-300 shadow-2xs">
-          <div class="px-3.5 py-2 border-b border-slate-200 flex items-center justify-between bg-slate-50">
-            <h3 class="font-black text-slate-900 text-xs">
-              <span class="lang-ar">قائمة القطع المفصلة للقص (مع تمييز W/H)</span>
-              <span class="lang-en">Derived Cutting Pieces</span>
-            </h3>
-            <button onclick="recalculateAllPartsFromWindows()" class="px-2 py-0.5 text-xs bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold rounded">
-              تحديث
-            </button>
-          </div>
-          
-          <div class="p-3 overflow-x-auto max-h-[420px]">
-            <table class="w-full text-xs text-right font-mono" id="partsTable">
-              <thead>
-                <tr class="text-slate-600 border-b border-slate-200 font-bold">
-                  <th class="pb-1.5 font-cairo">القطاع</th>
-                  <th class="pb-1.5 font-cairo">الوحدة / القطعة</th>
-                  <th class="pb-1.5 text-center font-cairo">النوع</th>
-                  <th class="pb-1.5 text-center font-cairo">المقاس (مم)</th>
-                  <th class="pb-1.5 text-center font-cairo">العدد</th>
-                  <th class="pb-1.5 text-center font-cairo">الزوايا</th>
-                  <th class="pb-1.5"></th>
-                </tr>
-              </thead>
-              <tbody id="partsBody" class="divide-y divide-slate-100">
-                <!-- Parts -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-
       </div>
     </div>
 
     <!-- ============================================== -->
-    <!-- TAB 3: OFFCUTS STOCK -->
+    <!-- TAB 4: OFFCUTS STOCK -->
     <!-- ============================================== -->
     <div id="tab-offcuts" class="tab-content hidden space-y-4">
       <div class="bg-white rounded-lg border border-slate-300 shadow-2xs">
@@ -392,7 +415,7 @@
           <div class="flex items-center gap-2">
             <i data-lucide="recycle" class="w-4 h-4 text-slate-700"></i>
             <h3 class="font-black text-slate-900 text-xs sm:text-sm">
-              <span class="lang-ar">مخزون الفضلات والأعواد المتوفرة بالورشة</span>
+              <span class="lang-ar">مخزون الفضلات المتوفرة بالورشة</span>
               <span class="lang-en">Available Offcuts Stock</span>
             </h3>
           </div>
@@ -431,7 +454,7 @@
     </div>
 
     <!-- ========================================================================= -->
-    <!-- TAB 4: TECHNICIAN WORKSHOP SHEET (2D CAD ENGINEERING DRAFTING STYLE) -->
+    <!-- TAB 5: TECHNICIAN WORKSHOP SHEET (CAD 2D BAR MAPS + GLASS SCHEDULE) -->
     <!-- ========================================================================= -->
     <div id="tab-sheet" class="tab-content space-y-4">
       
@@ -440,14 +463,14 @@
         <div class="flex items-center gap-2">
           <span class="w-2.5 h-2.5 rounded-full bg-slate-900 inline-block"></span>
           <span class="font-bold text-xs text-slate-800">
-            مخطط القص التنفيذي للورشة (2D CAD Shop Cutting Drawing)
+            مخطط وأمر تشغيل قص الألمنيوم وتفصيل الزجاج للورشة (CAD Shop & Glass Schedule)
           </span>
         </div>
 
         <div class="flex items-center gap-2">
           <button onclick="window.print()" class="px-3.5 py-1.5 bg-slate-900 hover:bg-black text-white font-bold text-xs rounded shadow transition flex items-center gap-1">
             <i data-lucide="printer" class="w-3.5 h-3.5"></i>
-            <span>طباعة المخطط الهندسي (Print)</span>
+            <span>طباعة المخطط الهندسي وكشف الزجاج (Print)</span>
           </button>
           
           <button onclick="exportSheetToPDF()" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-800 text-white font-bold text-xs rounded transition flex items-center gap-1">
@@ -465,13 +488,13 @@
       <!-- Printable Engineering Sheet Container -->
       <div id="printableSheetContent" class="bg-white rounded-lg border-2 border-slate-900 p-5 sm:p-6 shadow-sm print:border-slate-900 print:p-0 space-y-6">
         
-        <!-- TECHNICAL TITLE BLOCK (لوحة بيانات المخطط الهندسي) -->
+        <!-- TECHNICAL TITLE BLOCK -->
         <div class="border-2 border-slate-900 rounded p-3 bg-slate-50 flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
           <div class="space-y-1">
             <div class="flex items-center gap-2">
               <span class="px-1.5 py-0.5 bg-slate-900 text-white font-black text-[11px] rounded">DWG-01</span>
               <h2 class="text-base font-black font-cairo text-slate-900 tracking-tight" id="printDocTitle">
-                مخطط وأمر تشغيل قص بروفيلات الألمنيوم
+                مخطط وأمر تشغيل قص بروفيلات الألمنيوم وتفصيل الزجاج
               </h2>
             </div>
             <p class="text-[11px] text-slate-700 font-cairo font-semibold">
@@ -481,8 +504,8 @@
             </p>
           </div>
           <div class="text-left text-[10px] text-slate-600 border-l border-slate-300 pl-3">
-            <p>SCALE: NOT TO SCALE (2D DIAGRAM)</p>
-            <p>SYSTEM: ALUMINUM / UPVC OPTIMIZER</p>
+            <p>SCALE: NOT TO SCALE (2D SHOP DRAWING)</p>
+            <p>CASCADING ALUMINUM & GLASS ENGINE</p>
             <p id="printTimestamp"></p>
           </div>
         </div>
@@ -499,12 +522,11 @@
     </div>
 
     <!-- ============================================== -->
-    <!-- TAB 5: PROJECTS MANAGEMENT & EXPORT -->
+    <!-- TAB 6: PROJECTS MANAGEMENT & EXPORT -->
     <!-- ============================================== -->
     <div id="tab-projects" class="tab-content hidden space-y-4">
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
         
-        <!-- Project Metadata (Col 1) -->
         <div class="bg-white rounded-lg border border-slate-300 p-4 shadow-2xs space-y-3">
           <div class="flex items-center gap-1.5 border-b border-slate-200 pb-2">
             <i data-lucide="edit-3" class="w-4 h-4 text-slate-700"></i>
@@ -536,19 +558,15 @@
           </div>
         </div>
 
-        <!-- Saved Projects (Col 2) -->
         <div class="bg-white rounded-lg border border-slate-300 p-4 shadow-2xs flex flex-col space-y-3">
           <div class="flex items-center justify-between border-b border-slate-200 pb-2">
             <h3 class="font-black text-slate-900 text-xs">المشاريع المحفوظة</h3>
             <span id="savedProjectsCount" class="text-xs bg-slate-100 px-1.5 py-0.2 rounded font-mono font-bold">0</span>
           </div>
 
-          <div class="flex-1 overflow-y-auto max-h-[300px] space-y-1.5" id="savedProjectsList">
-            <!-- Projects list -->
-          </div>
+          <div class="flex-1 overflow-y-auto max-h-[300px] space-y-1.5" id="savedProjectsList"></div>
         </div>
 
-        <!-- Import / Export (Col 3) -->
         <div class="bg-white rounded-lg border border-slate-300 p-4 shadow-2xs space-y-3">
           <div class="flex items-center gap-1.5 border-b border-slate-200 pb-2">
             <i data-lucide="share-2" class="w-4 h-4 text-slate-700"></i>
@@ -577,43 +595,111 @@
   <!-- Footer -->
   <footer class="bg-white border-t border-slate-300 py-3 text-center text-xs text-slate-500 font-cairo no-print">
     <div class="max-w-7xl mx-auto px-4 flex items-center justify-between">
-      <span>محسن ومخطط قص وتفصيل بروفيلات الألمنيوم © 2026</span>
-      <span class="font-mono text-[11px] text-slate-400">2D CAD Technical Engine</span>
+      <span>محسن ومخطط قص وتفصيل بروفيلات الألمنيوم والزجاج © 2026</span>
+      <span class="font-mono text-[11px] text-slate-400">Cascading Engineering CAD Engine</span>
     </div>
   </footer>
 
   <!-- ============================================== -->
-  <!-- JAVASCRIPT LOGIC (2D CAD SHOP DRAWINGS) -->
+  <!-- JAVASCRIPT: CASCADING ENGINEERING ENGINE -->
   <!-- ============================================== -->
   <script>
+    // Global Project State
     let currentProject = {
       name: 'مشروع فيلا الياسمين',
       client: 'أحمد عبد الله',
-      notes: 'ألمنيوم قطاع خاص 50مم، لون رمادي كلاسيك',
+      notes: 'قطاع سحاب 10سم مع زجاج دبل 24مم',
       updatedAt: new Date().toISOString()
     };
 
-    let profiles = [
-      { id: 1, code: 'FR-50 (حلق)', type: 'frame', width: 50, scrap45: 35 },
-      { id: 2, code: 'SA-45 (درفة)', type: 'sash', width: 45, scrap45: 30 },
-      { id: 3, code: 'TB-40 (تيوب/قاطع)', type: 'other', width: 40, scrap45: 25 },
+    // System Deduction Presets (أنظمة القطاعات وقواعد التخصيم)
+    let systems = [
+      {
+        id: 1,
+        name: 'نظام سحاب 10سم (سرايا / الراجحي)',
+        type: 'sliding',
+        frameCode: 'FR-100 (حلق 10سم)',
+        sashCode: 'SA-45 (درفة سحاب)',
+        frameThickness: 45,       // سمك الفريم (مم)
+        sashWidth: 65,            // عرض مقطع بروفيل الدرفة (مم)
+        heightClearance: 75,      // خلوص ارتفاع الدرفة عن الفريم (مم)
+        widthOverlap: 25,         // تراكب عرض الدرفة (مم)
+        glassPocketDepth: 15,     // عمق فرزة الزجاج في الدرفة (مم)
+        glassClearance: 4,        // خلوص الأمان للزجاج (مم)
+        scrap45: 35
+      },
+      {
+        id: 2,
+        name: 'نظام سحاب 12سم جامبو (Super Saraya)',
+        type: 'sliding',
+        frameCode: 'FR-120 (حلق 12سم)',
+        sashCode: 'SA-50 (درفة جامبو)',
+        frameThickness: 50,
+        sashWidth: 75,
+        heightClearance: 80,
+        widthOverlap: 30,
+        glassPocketDepth: 18,
+        glassClearance: 5,
+        scrap45: 40
+      },
+      {
+        id: 3,
+        name: 'نظام مفصلي 50مم (Casement / Door)',
+        type: 'hinged',
+        frameCode: 'FR-50 (حلق مفصلي)',
+        sashCode: 'SA-50 (درفة مفصلي)',
+        frameThickness: 50,
+        sashWidth: 68,
+        heightClearance: 86,
+        widthOverlap: 86,         // Frame deduction for hinged width
+        glassPocketDepth: 15,
+        glassClearance: 4,
+        scrap45: 35
+      },
+      {
+        id: 4,
+        name: 'نظام ثابت 50مم (Fixed Frame)',
+        type: 'fixed',
+        frameCode: 'FR-50 (حلق ثابت)',
+        sashCode: 'BD-20 (باكتة زجاج)',
+        frameThickness: 45,
+        sashWidth: 0,             // Glass directly inside frame pocket
+        heightClearance: 0,
+        widthOverlap: 0,
+        glassPocketDepth: 16,
+        glassClearance: 4,
+        scrap45: 35
+      }
     ];
 
+    // Profiles List (Derived from Systems)
+    let profiles = [
+      { id: 1, code: 'FR-100 (حلق 10سم)', type: 'frame', width: 50, scrap45: 35 },
+      { id: 2, code: 'SA-45 (درفة سحاب)', type: 'sash', width: 45, scrap45: 30 },
+      { id: 3, code: 'FR-50 (حلق مفصلي)', type: 'frame', width: 50, scrap45: 35 },
+      { id: 4, code: 'SA-50 (درفة مفصلي)', type: 'sash', width: 50, scrap45: 35 },
+    ];
+
+    // Windows & Doors Schedule (Primary Input)
     let windowUnits = [
-      { id: 1, code: 'W-01 (شباك صالة)', type: 'sliding-2', width: 1800, height: 1400, qty: 2, frameProfileId: 1, sashProfileId: 2 },
-      { id: 2, code: 'W-02 (شباك غرفة)', type: 'sliding-2', width: 1200, height: 1200, qty: 3, frameProfileId: 1, sashProfileId: 2 },
-      { id: 3, code: 'D-01 (باب بلكونة)', type: 'hinged-door', width: 900, height: 2100, qty: 1, frameProfileId: 1, sashProfileId: 2 },
+      { id: 1, code: 'W-01 (شباك صالة)', systemId: 1, type: 'sliding-2', width: 1800, height: 1400, qty: 2 },
+      { id: 2, code: 'W-02 (شباك غرفة)', systemId: 1, type: 'sliding-2', width: 1200, height: 1200, qty: 3 },
+      { id: 3, code: 'D-01 (باب بلكونة)', systemId: 3, type: 'hinged-door', width: 900, height: 2100, qty: 1 },
+      { id: 4, code: 'W-03 (شباك حمام)', systemId: 3, type: 'hinged-window', width: 600, height: 600, qty: 2 }
     ];
 
     let parts = [];
+    let glassSchedule = [];
+
     let offcuts = [
       { id: 1, profileId: 1, length: 1850, qty: 1, startAngle: 45, endAngle: 90, location: 'مستودع أ' },
       { id: 2, profileId: 2, length: 2400, qty: 1, startAngle: 90, endAngle: 90, location: 'مستودع ب' },
     ];
 
     let lastOptimizationResult = null;
-    let nextWindowId = 4;
-    let nextProfileId = 4;
+    let nextWindowId = 5;
+    let nextSystemId = 5;
+    let nextProfileId = 5;
     let nextOffcutId = 3;
 
     function toggleLanguage() {
@@ -642,87 +728,164 @@
       lucide.createIcons();
     }
 
-    function updateSubtitleAndBadges() {
-      const name = document.getElementById('projectInputName')?.value || currentProject.name || 'مشروع بدون عنوان';
-      const activeBadge = document.getElementById('activeProjectBadge');
-      if (activeBadge) activeBadge.textContent = name;
-      
-      const totalUnits = windowUnits.reduce((sum, u) => sum + (u.qty || 1), 0);
-      const totalUnitsEl = document.getElementById('totalUnitsCount');
-      if (totalUnitsEl) totalUnitsEl.textContent = `${totalUnits} وحدة`;
+    // =========================================================================
+    // CASCADING CALCULATION ENGINE (WINDOW ➔ SASH ➔ GLASS)
+    // =========================================================================
+    function computeCascadeForUnit(unit) {
+      const sys = systems.find(s => s.id === unit.systemId) || systems[0];
+      const W = unit.width;
+      const H = unit.height;
+      const qty = unit.qty || 1;
 
-      const offcutCount = offcuts.reduce((sum, o) => sum + (o.qty || 1), 0);
-      const badge = document.getElementById('offcutsCountBadge');
-      if (badge) badge.textContent = offcutCount;
+      let sashW = 0, sashH = 0, numSashes = 0, sashTypeLabel = '';
+      let glassW = 0, glassH = 0, panesPerUnit = 0;
 
-      const totalParts = parts.reduce((sum, p) => sum + (p.qty || 1), 0);
-      const badgeEl = document.getElementById('totalPartsBadge');
-      if (badgeEl) badgeEl.textContent = totalParts;
+      if (unit.type === 'sliding-2') {
+        numSashes = 2;
+        sashW = Math.round((W + sys.widthOverlap) / 2);
+        sashH = Math.round(H - sys.heightClearance);
+        sashTypeLabel = '2 درفة سحاب';
+        panesPerUnit = 2 * qty;
+      }
+      else if (unit.type === 'sliding-3') {
+        numSashes = 3;
+        sashW = Math.round((W + 2 * sys.widthOverlap) / 3);
+        sashH = Math.round(H - sys.heightClearance);
+        sashTypeLabel = '3 درف سحاب';
+        panesPerUnit = 3 * qty;
+      }
+      else if (unit.type === 'sliding-4') {
+        numSashes = 4;
+        sashW = Math.round((W + 2 * sys.widthOverlap) / 4);
+        sashH = Math.round(H - sys.heightClearance);
+        sashTypeLabel = '4 درف سحاب';
+        panesPerUnit = 4 * qty;
+      }
+      else if (unit.type === 'hinged-window') {
+        numSashes = 1;
+        sashW = Math.max(100, Math.round(W - sys.widthOverlap));
+        sashH = Math.max(100, Math.round(H - sys.heightClearance));
+        sashTypeLabel = '1 درفة مفصلي';
+        panesPerUnit = 1 * qty;
+      }
+      else if (unit.type === 'hinged-door') {
+        numSashes = 1;
+        sashW = Math.max(100, Math.round(W - 100));
+        sashH = Math.max(100, Math.round(H - 65));
+        sashTypeLabel = 'درفة باب مفصلي';
+        panesPerUnit = 1 * qty;
+      }
+      else { // Fixed
+        numSashes = 0;
+        sashW = W;
+        sashH = H;
+        sashTypeLabel = 'ثابت (حلق مباشر)';
+        panesPerUnit = 1 * qty;
+        // Glass directly in fixed frame
+        glassW = Math.round(W - (2 * sys.frameThickness) + (2 * sys.glassPocketDepth) - sys.glassClearance);
+        glassH = Math.round(H - (2 * sys.frameThickness) + (2 * sys.glassPocketDepth) - sys.glassClearance);
+      }
+
+      // If sash exists, calculate glass from sash
+      if (numSashes > 0) {
+        glassW = Math.round(sashW - (2 * sys.sashWidth) + (2 * sys.glassPocketDepth) - sys.glassClearance);
+        glassH = Math.round(sashH - (2 * sys.sashWidth) + (2 * sys.glassPocketDepth) - sys.glassClearance);
+      }
+
+      const singleGlassArea = ((glassW / 1000) * (glassH / 1000));
+      const totalGlassArea = singleGlassArea * panesPerUnit;
+
+      return {
+        sys,
+        sashW,
+        sashH,
+        numSashes,
+        sashTypeLabel,
+        glassW,
+        glassH,
+        panesPerUnit,
+        singleGlassArea: singleGlassArea.toFixed(3),
+        totalGlassArea: totalGlassArea.toFixed(3)
+      };
     }
 
     // ===============================================
-    // Windows Schedule Management
+    // WINDOWS SCHEDULE RENDERER
     // ===============================================
     function renderWindowsSchedule() {
       const tbody = document.getElementById('windowsBody');
       if (!tbody) return;
 
+      let totalGlassPanes = 0;
+      let totalGlassArea = 0;
+
       tbody.innerHTML = windowUnits.map((u, idx) => {
-        const frameOptions = profiles.map(pr => 
-          `<option value="${pr.id}" ${pr.id === u.frameProfileId ? 'selected' : ''}>${pr.code}</option>`
+        const sysOptions = systems.map(s => 
+          `<option value="${s.id}" ${s.id === u.systemId ? 'selected' : ''}>${s.name}</option>`
         ).join('');
 
-        const sashOptions = profiles.map(pr => 
-          `<option value="${pr.id}" ${pr.id === u.sashProfileId ? 'selected' : ''}>${pr.code}</option>`
-        ).join('');
+        const cascade = computeCascadeForUnit(u);
+        totalGlassPanes += cascade.panesPerUnit;
+        totalGlassArea += parseFloat(cascade.totalGlassArea);
 
         return `
           <tr class="hover:bg-slate-50 transition">
-            <td class="py-1 px-2 text-center font-bold text-slate-500 font-mono">${idx + 1}</td>
-            <td class="py-1 px-2 font-cairo">
+            <td class="py-1.5 px-2 text-center font-bold text-slate-500">${idx + 1}</td>
+            <td class="py-1.5 px-2 font-cairo">
               <input type="text" value="${u.code}" onchange="updateWindowUnit(${u.id}, 'code', this.value)" 
-                class="w-36 px-2 py-1 border border-slate-300 rounded font-bold text-slate-900 bg-white">
+                class="w-32 px-2 py-1 border border-slate-300 rounded font-bold text-slate-900 bg-white">
             </td>
-            <td class="py-1 px-2 font-cairo">
-              <select onchange="updateWindowUnit(${u.id}, 'type', this.value)" class="px-2 py-1 border border-slate-300 rounded bg-white text-slate-800">
-                <option value="sliding-2" ${u.type === 'sliding-2' ? 'selected' : ''}>شباك سحاب (2 درفة)</option>
-                <option value="sliding-3" ${u.type === 'sliding-3' ? 'selected' : ''}>شباك سحاب (3 درف)</option>
-                <option value="sliding-4" ${u.type === 'sliding-4' ? 'selected' : ''}>شباك سحاب (4 درف)</option>
-                <option value="hinged-window" ${u.type === 'hinged-window' ? 'selected' : ''}>شباك مفصلي (1 درفة)</option>
+            <td class="py-1.5 px-2 font-cairo">
+              <select onchange="updateWindowUnit(${u.id}, 'type', this.value)" class="px-2 py-1 border border-slate-300 rounded bg-white text-slate-800 font-medium">
+                <option value="sliding-2" ${u.type === 'sliding-2' ? 'selected' : ''}>سحاب (2 درفة)</option>
+                <option value="sliding-3" ${u.type === 'sliding-3' ? 'selected' : ''}>سحاب (3 درف)</option>
+                <option value="sliding-4" ${u.type === 'sliding-4' ? 'selected' : ''}>سحاب (4 درف)</option>
+                <option value="hinged-window" ${u.type === 'hinged-window' ? 'selected' : ''}>شباك مفصلي</option>
                 <option value="hinged-door" ${u.type === 'hinged-door' ? 'selected' : ''}>باب مفصلي</option>
-                <option value="fixed" ${u.type === 'fixed' ? 'selected' : ''}>نافذة ثابتة</option>
+                <option value="fixed" ${u.type === 'fixed' ? 'selected' : ''}>ثابت (Fixed)</option>
               </select>
             </td>
-            <td class="py-1 px-2 text-center">
-              <input type="number" value="${u.width}" min="100" max="6000" onchange="updateWindowUnit(${u.id}, 'width', +this.value)" 
-                class="w-20 px-1.5 py-1 border border-slate-300 rounded font-bold text-center">
+            <td class="py-1.5 px-2 text-center font-bold font-mono">
+              <input type="number" value="${u.width}" onchange="updateWindowUnit(${u.id}, 'width', +this.value)" class="w-16 px-1 py-1 border rounded text-center"> × 
+              <input type="number" value="${u.height}" onchange="updateWindowUnit(${u.id}, 'height', +this.value)" class="w-16 px-1 py-1 border rounded text-center">
             </td>
-            <td class="py-1 px-2 text-center">
-              <input type="number" value="${u.height}" min="100" max="6000" onchange="updateWindowUnit(${u.id}, 'height', +this.value)" 
-                class="w-20 px-1.5 py-1 border border-slate-300 rounded font-bold text-center">
+            <td class="py-1.5 px-2 text-center">
+              <input type="number" value="${u.qty}" min="1" max="100" onchange="updateWindowUnit(${u.id}, 'qty', +this.value)" class="w-12 px-1 py-1 border rounded text-center font-bold">
             </td>
-            <td class="py-1 px-2 text-center">
-              <input type="number" value="${u.qty}" min="1" max="100" onchange="updateWindowUnit(${u.id}, 'qty', +this.value)" 
-                class="w-14 px-1.5 py-1 border border-slate-300 rounded font-bold text-center">
-            </td>
-            <td class="py-1 px-2 font-cairo">
-              <select onchange="updateWindowUnit(${u.id}, 'frameProfileId', +this.value)" class="w-32 px-2 py-1 border border-slate-300 rounded bg-white font-bold text-slate-800">
-                ${frameOptions}
+            <td class="py-1.5 px-2 font-cairo">
+              <select onchange="updateWindowUnit(${u.id}, 'systemId', +this.value)" class="w-44 px-2 py-1 border border-slate-300 rounded bg-white font-bold text-slate-800">
+                ${sysOptions}
               </select>
             </td>
-            <td class="py-1 px-2 font-cairo">
-              <select onchange="updateWindowUnit(${u.id}, 'sashProfileId', +this.value)" class="w-32 px-2 py-1 border border-slate-300 rounded bg-white font-bold text-slate-800">
-                ${sashOptions}
-              </select>
+            
+            <!-- Cascaded Sash Size (Auto-derived) -->
+            <td class="py-1.5 px-2 text-center font-mono font-bold text-blue-900 bg-blue-50/50 border-x border-blue-100">
+              ${cascade.numSashes > 0 ? `${cascade.sashW} × ${cascade.sashH} مم <span class="block text-[10px] font-normal text-slate-500 font-cairo">(${cascade.numSashes} درف)</span>` : '—'}
             </td>
-            <td class="py-1 px-2 text-center font-cairo">
-              <button onclick="removeWindowUnit(${u.id})" class="p-1 text-slate-400 hover:text-rose-600 rounded" title="حذف">
-                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-              </button>
+
+            <!-- Cascaded Glass Size (Auto-derived) -->
+            <td class="py-1.5 px-2 text-center font-mono font-black text-emerald-800 bg-emerald-50/50 border-x border-emerald-100">
+              ${cascade.glassW} × ${cascade.glassH} مم
+              <span class="block text-[10px] font-normal text-slate-600 font-cairo font-mono">(${cascade.panesPerUnit} لوح • ${cascade.totalGlassArea} م²)</span>
+            </td>
+
+            <td class="py-1.5 px-2 text-center font-cairo">
+              <div class="flex items-center justify-center gap-1">
+                <button onclick="duplicateWindowUnit(${u.id})" class="text-slate-400 hover:text-slate-700" title="تكرار">
+                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                </button>
+                <button onclick="removeWindowUnit(${u.id})" class="text-slate-400 hover:text-rose-600" title="حذف">
+                  <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
             </td>
           </tr>
         `;
       }).join('');
+
+      document.getElementById('totalUnitsCount').textContent = `${windowUnits.reduce((s, u) => s + (u.qty || 1), 0)} وحدة`;
+      document.getElementById('totalGlassPanesCount').textContent = `${totalGlassPanes} لوح`;
+      document.getElementById('totalGlassAreaSquareMeters').textContent = `${totalGlassArea.toFixed(2)} م²`;
 
       lucide.createIcons();
     }
@@ -732,22 +895,27 @@
       windowUnits.push({
         id: nextWindowId++,
         code: `W-${idx < 10 ? '0' + idx : idx}`,
+        systemId: systems[0]?.id || 1,
         type: 'sliding-2',
         width: 1400,
         height: 1400,
-        qty: 1,
-        frameProfileId: profiles.find(p => p.type === 'frame')?.id || profiles[0]?.id || 1,
-        sashProfileId: profiles.find(p => p.type === 'sash')?.id || profiles[1]?.id || profiles[0]?.id || 1
+        qty: 1
       });
       renderWindowsSchedule();
       recalculateAllPartsFromWindows();
     }
 
-    function removeWindowUnit(id) {
-      if (windowUnits.length <= 1) {
-        alert('يجب الإبقاء على نافذة واحدة على الأقل.');
-        return;
+    function duplicateWindowUnit(id) {
+      const u = windowUnits.find(x => x.id === id);
+      if (u) {
+        windowUnits.push({ ...u, id: nextWindowId++, code: u.code + ' (نسخة)' });
+        renderWindowsSchedule();
+        recalculateAllPartsFromWindows();
       }
+    }
+
+    function removeWindowUnit(id) {
+      if (windowUnits.length <= 1) { alert('يجب الإبقاء على نافذة واحدة على الأقل.'); return; }
       windowUnits = windowUnits.filter(u => u.id !== id);
       renderWindowsSchedule();
       recalculateAllPartsFromWindows();
@@ -757,126 +925,158 @@
       const u = windowUnits.find(x => x.id === id);
       if (u) {
         u[field] = value;
+        renderWindowsSchedule();
         recalculateAllPartsFromWindows();
       }
     }
 
     // ===============================================
-    // Automatic Parts Derivation (Labeled with W / H)
+    // SYSTEMS & DEDUCTIONS RULES SETUP
     // ===============================================
-    function recalculateAllPartsFromWindows() {
-      let newParts = [];
-      let partCounter = 1;
-
-      windowUnits.forEach(unit => {
-        const W = unit.width;
-        const H = unit.height;
-        const qty = unit.qty || 1;
-        const frameId = unit.frameProfileId;
-        const sashId = unit.sashProfileId;
-        const code = unit.code || `W-${unit.id}`;
-
-        if (unit.type === 'sliding-2') {
-          // Frame
-          newParts.push({ id: partCounter++, unitCode: code, profileId: frameId, dimType: 'W', label: `${code} - حلق أفقي`, length: W, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-          newParts.push({ id: partCounter++, unitCode: code, profileId: frameId, dimType: 'H', label: `${code} - حلق رأسي`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-
-          // Sashes
-          const sashW = Math.round((W / 2) + 25);
-          const sashH = Math.round(H - 75);
-          newParts.push({ id: partCounter++, unitCode: code, profileId: sashId, dimType: 'W', label: `${code} - درفة عرضية`, length: sashW, qty: 4 * qty, startAngle: 45, endAngle: 45 });
-          newParts.push({ id: partCounter++, unitCode: code, profileId: sashId, dimType: 'H', label: `${code} - درفة رأسية`, length: sashH, qty: 4 * qty, startAngle: 45, endAngle: 45 });
-        }
-        else if (unit.type === 'sliding-3') {
-          newParts.push({ id: partCounter++, unitCode: code, profileId: frameId, dimType: 'W', label: `${code} - حلق 3 سكة أفقي`, length: W, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-          newParts.push({ id: partCounter++, unitCode: code, profileId: frameId, dimType: 'H', label: `${code} - حلق 3 سكة رأسي`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-
-          const sashW = Math.round((W + 50) / 3);
-          const sashH = Math.round(H - 75);
-          newParts.push({ id: partCounter++, unitCode: code, profileId: sashId, dimType: 'W', label: `${code} - درفة عرضية`, length: sashW, qty: 6 * qty, startAngle: 45, endAngle: 45 });
-          newParts.push({ id: partCounter++, unitCode: code, profileId: sashId, dimType: 'H', label: `${code} - درفة رأسية`, length: sashH, qty: 6 * qty, startAngle: 45, endAngle: 45 });
-        }
-        else if (unit.type === 'sliding-4') {
-          newParts.push({ id: partCounter++, unitCode: code, profileId: frameId, dimType: 'W', label: `${code} - حلق أفقي`, length: W, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-          newParts.push({ id: partCounter++, unitCode: code, profileId: frameId, dimType: 'H', label: `${code} - حلق رأسي`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-
-          const sashW = Math.round((W + 50) / 4);
-          const sashH = Math.round(H - 75);
-          newParts.push({ id: partCounter++, unitCode: code, profileId: sashId, dimType: 'W', label: `${code} - درفة عرضية`, length: sashW, qty: 8 * qty, startAngle: 45, endAngle: 45 });
-          newParts.push({ id: partCounter++, unitCode: code, profileId: sashId, dimType: 'H', label: `${code} - درفة رأسية`, length: sashH, qty: 8 * qty, startAngle: 45, endAngle: 45 });
-        }
-        else if (unit.type === 'hinged-window') {
-          newParts.push({ id: partCounter++, unitCode: code, profileId: frameId, dimType: 'W', label: `${code} - حلق مفصلي أفقي`, length: W, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-          newParts.push({ id: partCounter++, unitCode: code, profileId: frameId, dimType: 'H', label: `${code} - حلق مفصلي رأسي`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-
-          const sashW = Math.max(100, W - 86);
-          const sashH = Math.max(100, H - 86);
-          newParts.push({ id: partCounter++, unitCode: code, profileId: sashId, dimType: 'W', label: `${code} - درفة مفصلي عرضي`, length: sashW, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-          newParts.push({ id: partCounter++, unitCode: code, profileId: sashId, dimType: 'H', label: `${code} - درفة مفصلي رأسي`, length: sashH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-        }
-        else if (unit.type === 'hinged-door') {
-          newParts.push({ id: partCounter++, unitCode: code, profileId: frameId, dimType: 'W', label: `${code} - حلق باب علوي`, length: W, qty: 1 * qty, startAngle: 45, endAngle: 45 });
-          newParts.push({ id: partCounter++, unitCode: code, profileId: frameId, dimType: 'H', label: `${code} - حلق باب جانبي`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 90 });
-
-          const sashW = Math.max(100, W - 100);
-          const sashH = Math.max(100, H - 65);
-          newParts.push({ id: partCounter++, unitCode: code, profileId: sashId, dimType: 'W', label: `${code} - درفة باب عرضي`, length: sashW, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-          newParts.push({ id: partCounter++, unitCode: code, profileId: sashId, dimType: 'H', label: `${code} - درفة باب رأسي`, length: sashH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-        }
-        else {
-          newParts.push({ id: partCounter++, unitCode: code, profileId: frameId, dimType: 'W', label: `${code} - حلق ثابت أفقي`, length: W, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-          newParts.push({ id: partCounter++, unitCode: code, profileId: frameId, dimType: 'H', label: `${code} - حلق ثابت رأسي`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-        }
-      });
-
-      parts = newParts;
-      renderParts();
-      updateSubtitleAndBadges();
-    }
-
-    function renderProfiles() {
-      const tbody = document.getElementById('profilesBody');
+    function renderSystemsTable() {
+      const tbody = document.getElementById('systemsBody');
       if (!tbody) return;
 
-      tbody.innerHTML = profiles.map(p => `
+      tbody.innerHTML = systems.map(s => `
         <tr class="hover:bg-slate-50">
-          <td class="py-1"><input type="text" value="${p.code}" onchange="updateProfile(${p.id}, 'code', this.value)" class="w-28 px-1.5 py-0.5 border border-slate-300 rounded font-bold text-xs"></td>
-          <td class="py-1">
-            <select onchange="updateProfile(${p.id}, 'type', this.value)" class="px-1 py-0.5 border border-slate-300 rounded text-xs">
-              <option value="frame" ${p.type === 'frame' ? 'selected' : ''}>حلق</option>
-              <option value="sash" ${p.type === 'sash' ? 'selected' : ''}>درفة</option>
-              <option value="other" ${p.type === 'other' ? 'selected' : ''}>أخرى</option>
-            </select>
+          <td class="py-1 px-2 font-bold font-cairo">
+            <input type="text" value="${s.name}" onchange="updateSystem(${s.id}, 'name', this.value)" class="w-48 px-1.5 py-1 border border-slate-300 rounded font-bold text-slate-900 bg-white">
           </td>
-          <td class="py-1 text-center"><input type="number" value="${p.width}" onchange="updateProfile(${p.id}, 'width', +this.value)" class="w-12 px-1 py-0.5 border border-slate-300 rounded text-center text-xs font-mono"></td>
-          <td class="py-1 text-center"><input type="number" value="${p.scrap45}" onchange="updateProfile(${p.id}, 'scrap45', +this.value)" class="w-12 px-1 py-0.5 border border-slate-300 rounded text-center text-xs font-mono"></td>
-          <td class="py-1 text-center"><button onclick="removeProfile(${p.id})" class="text-slate-400 hover:text-rose-600">✕</button></td>
+          <td class="py-1 px-2 font-cairo">
+            <input type="text" value="${s.frameCode}" onchange="updateSystem(${s.id}, 'frameCode', this.value)" class="w-32 px-1.5 py-1 border border-slate-300 rounded text-slate-800">
+          </td>
+          <td class="py-1 px-2 font-cairo">
+            <input type="text" value="${s.sashCode}" onchange="updateSystem(${s.id}, 'sashCode', this.value)" class="w-32 px-1.5 py-1 border border-slate-300 rounded text-slate-800">
+          </td>
+          <td class="py-1 px-2 text-center">
+            <input type="number" value="${s.frameThickness}" onchange="updateSystem(${s.id}, 'frameThickness', +this.value)" class="w-14 px-1 py-1 border rounded text-center font-bold">
+          </td>
+          <td class="py-1 px-2 text-center">
+            <input type="number" value="${s.sashWidth}" onchange="updateSystem(${s.id}, 'sashWidth', +this.value)" class="w-14 px-1 py-1 border rounded text-center font-bold">
+          </td>
+          <td class="py-1 px-2 text-center">
+            <input type="number" value="${s.heightClearance}" onchange="updateSystem(${s.id}, 'heightClearance', +this.value)" class="w-14 px-1 py-1 border rounded text-center font-bold">
+          </td>
+          <td class="py-1 px-2 text-center">
+            <input type="number" value="${s.glassPocketDepth}" onchange="updateSystem(${s.id}, 'glassPocketDepth', +this.value)" class="w-14 px-1 py-1 border rounded text-center font-bold">
+          </td>
+          <td class="py-1 px-2 text-center">
+            <input type="number" value="${s.glassClearance}" onchange="updateSystem(${s.id}, 'glassClearance', +this.value)" class="w-14 px-1 py-1 border rounded text-center font-bold">
+          </td>
+          <td class="py-1 px-2 text-center">
+            <button onclick="removeSystem(${s.id})" class="text-slate-400 hover:text-rose-600">✕</button>
+          </td>
         </tr>
       `).join('');
     }
 
-    function updateProfile(id, field, value) {
-      const p = profiles.find(x => x.id === id);
-      if (p) {
-        p[field] = value;
+    function updateSystem(id, field, value) {
+      const s = systems.find(x => x.id === id);
+      if (s) {
+        s[field] = value;
         renderWindowsSchedule();
-        renderParts();
+        recalculateAllPartsFromWindows();
       }
     }
 
-    function addProfile() {
-      profiles.push({ id: nextProfileId++, code: 'PR-' + (profiles.length + 1) * 10, type: 'frame', width: 50, scrap45: 35 });
-      renderProfiles();
+    function addNewSystem() {
+      systems.push({
+        id: nextSystemId++,
+        name: 'نظام مخصص جديد #' + systems.length,
+        type: 'sliding',
+        frameCode: 'FR-CUSTOM',
+        sashCode: 'SA-CUSTOM',
+        frameThickness: 45,
+        sashWidth: 65,
+        heightClearance: 75,
+        widthOverlap: 25,
+        glassPocketDepth: 15,
+        glassClearance: 4,
+        scrap45: 35
+      });
+      renderSystemsTable();
       renderWindowsSchedule();
-      renderParts();
     }
 
-    function removeProfile(id) {
-      if (profiles.length <= 1) return;
-      profiles = profiles.filter(p => p.id !== id);
-      renderProfiles();
+    function removeSystem(id) {
+      if (systems.length <= 1) { alert('يجب الإبقاء على سيستم واحد على الأقل.'); return; }
+      systems = systems.filter(s => s.id !== id);
+      renderSystemsTable();
       renderWindowsSchedule();
+      recalculateAllPartsFromWindows();
+    }
+
+    // ===============================================
+    // RECALCULATE PARTS & GLASS FROM WINDOWS
+    // ===============================================
+    function recalculateAllPartsFromWindows() {
+      let newParts = [];
+      let newGlass = [];
+      let partCounter = 1;
+
+      // Sync profiles list with systems
+      let syncProfiles = [];
+      let pId = 1;
+      systems.forEach(s => {
+        if (!syncProfiles.find(p => p.code === s.frameCode)) {
+          syncProfiles.push({ id: pId++, code: s.frameCode, type: 'frame', width: s.frameThickness, scrap45: s.scrap45 });
+        }
+        if (s.sashCode && !syncProfiles.find(p => p.code === s.sashCode)) {
+          syncProfiles.push({ id: pId++, code: s.sashCode, type: 'sash', width: s.sashWidth, scrap45: s.scrap45 });
+        }
+      });
+      profiles = syncProfiles;
+
+      windowUnits.forEach(unit => {
+        const cascade = computeCascadeForUnit(unit);
+        const sys = cascade.sys;
+        const W = unit.width;
+        const H = unit.height;
+        const qty = unit.qty || 1;
+        const code = unit.code || `W-${unit.id}`;
+
+        const frameProfile = profiles.find(p => p.code === sys.frameCode) || profiles[0];
+        const sashProfile = profiles.find(p => p.code === sys.sashCode) || profiles[1] || profiles[0];
+
+        // 1. Frame Cuts
+        if (unit.type === 'hinged-door') {
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProfile.id, dimType: 'W', label: `${code} - حلق باب علوي`, length: W, qty: 1 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProfile.id, dimType: 'H', label: `${code} - حلق باب جانبي`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 90 });
+        } else {
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProfile.id, dimType: 'W', label: `${code} - حلق أفقي`, length: W, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProfile.id, dimType: 'H', label: `${code} - حلق رأسي`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+        }
+
+        // 2. Sash Cuts
+        if (cascade.numSashes > 0) {
+          const horizQty = (unit.type === 'sliding-2' ? 4 : unit.type === 'sliding-3' ? 6 : unit.type === 'sliding-4' ? 8 : 2) * qty;
+          const vertQty = horizQty;
+
+          newParts.push({ id: partCounter++, unitCode: code, profileId: sashProfile.id, dimType: 'W', label: `${code} - درفة عرضي`, length: cascade.sashW, qty: horizQty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: sashProfile.id, dimType: 'H', label: `${code} - درفة رأسي`, length: cascade.sashH, qty: vertQty, startAngle: 45, endAngle: 45 });
+        }
+
+        // 3. Glass Schedule Entry
+        newGlass.push({
+          unitCode: code,
+          unitName: unit.code,
+          systemName: sys.name,
+          sashType: cascade.sashTypeLabel,
+          sashSize: `${cascade.sashW} × ${cascade.sashH} مم`,
+          glassW: cascade.glassW,
+          glassH: cascade.glassH,
+          qtyPanes: cascade.panesPerUnit,
+          singleArea: cascade.singleGlassArea,
+          totalArea: cascade.totalGlassArea
+        });
+      });
+
+      parts = newParts;
+      glassSchedule = newGlass;
+
       renderParts();
+      renderOffcuts();
+      updateSubtitleAndBadges();
     }
 
     function renderParts() {
@@ -905,8 +1105,22 @@
       renderParts();
     }
 
+    function updateSubtitleAndBadges() {
+      const name = document.getElementById('projectInputName')?.value || currentProject.name || 'مشروع بدون عنوان';
+      const activeBadge = document.getElementById('activeProjectBadge');
+      if (activeBadge) activeBadge.textContent = name;
+      
+      const offcutCount = offcuts.reduce((sum, o) => sum + (o.qty || 1), 0);
+      const badge = document.getElementById('offcutsCountBadge');
+      if (badge) badge.textContent = offcutCount;
+
+      const totalParts = parts.reduce((sum, p) => sum + (p.qty || 1), 0);
+      const badgeEl = document.getElementById('totalPartsBadge');
+      if (badgeEl) badgeEl.textContent = totalParts;
+    }
+
     // ===============================================
-    // Offcuts Stock
+    // OFFCUTS STOCK
     // ===============================================
     function renderOffcuts() {
       const tbody = document.getElementById('offcutsBody');
@@ -958,7 +1172,7 @@
     }
 
     // ===============================================
-    // Smart Cutting Solver
+    // OPTIMIZER SOLVER
     // ===============================================
     function runAdvancedOptimization() {
       const defaultStockLength = +document.getElementById('stockLength').value || 6000;
@@ -967,7 +1181,8 @@
       const trimCut = +document.getElementById('trimCut').value || 10;
       const prioritizeOffcuts = document.getElementById('useOffcutsFirst').checked;
 
-      if (parts.length === 0) recalculateAllPartsFromWindows();
+      recalculateAllPartsFromWindows();
+
       if (parts.length === 0) { alert('يرجى إدخال نافذة واحدة على الأقل.'); return; }
 
       let profileResults = [];
@@ -1037,7 +1252,6 @@
             id: bars.length + 1,
             profileId: profile.id,
             profileCode: profile.code,
-            profileType: profile.type || 'other',
             stockLength: off.length,
             isOffcut: true,
             offcutLocation: off.location,
@@ -1070,7 +1284,6 @@
             id: bars.length + 1,
             profileId: profile.id,
             profileCode: profile.code,
-            profileType: profile.type || 'other',
             stockLength: defaultStockLength,
             isOffcut: false,
             cuts: [],
@@ -1166,7 +1379,7 @@
     }
 
     // =========================================================================
-    // 2D CAD TECHNICAL BAR SVG GENERATOR (PURE VECTOR DRAFTING STYLE)
+    // 2D CAD TECHNICAL BAR SVG GENERATOR
     // =========================================================================
     function generate2DTechnicalBarSVG(bar, kerf, minOffcut) {
       const totalLen = bar.stockLength;
@@ -1177,7 +1390,6 @@
       let currentX = 0;
       let elements = [];
 
-      // Defs for hatching patterns (Engineering CAD style)
       let defs = `
         <defs>
           <pattern id="hatch-scrap" width="6" height="6" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
@@ -1195,13 +1407,9 @@
         const x2 = currentX + cutW;
 
         if (cut.type === 'kerf') {
-          // Kerf blade line
-          elements.push(`
-            <rect x="${x1.toFixed(2)}" y="6" width="${Math.max(1.5, cutW).toFixed(2)}" height="34" fill="#0f172a" stroke="none" />
-          `);
+          elements.push(`<rect x="${x1.toFixed(2)}" y="6" width="${Math.max(1.5, cutW).toFixed(2)}" height="34" fill="#0f172a" stroke="none" />`);
         }
         else if (cut.type === 'trim' || cut.type === 'scrap') {
-          // Scrap hatched box
           elements.push(`
             <rect x="${x1.toFixed(2)}" y="6" width="${cutW.toFixed(2)}" height="34" fill="url(#hatch-scrap)" stroke="#0f172a" stroke-width="1" />
             <text x="${(x1 + cutW/2).toFixed(2)}" y="26" font-family="JetBrains Mono" font-size="8" font-weight="700" fill="#0f172a" text-anchor="middle">S:${cut.length}</text>
@@ -1212,16 +1420,12 @@
           const is45End = cut.endAngle === 45;
           const dimLabel = cut.dimType ? `(${cut.dimType})` : '';
 
-          // 2D CAD Part Box (Pure Clean White with 1.2px Black Border)
           elements.push(`
             <g>
               <rect x="${x1.toFixed(2)}" y="6" width="${cutW.toFixed(2)}" height="34" fill="#ffffff" stroke="#0f172a" stroke-width="1.2" />
-              
-              <!-- Miter Angle Indicators -->
               ${is45Start ? `<line x1="${x1.toFixed(2)}" y1="40" x2="${(x1 + 6).toFixed(2)}" y2="6" stroke="#d97706" stroke-width="1.5" />` : ''}
               ${is45End ? `<line x1="${(x2 - 6).toFixed(2)}" y1="40" x2="${x2.toFixed(2)}" y2="6" stroke="#d97706" stroke-width="1.5" />` : ''}
 
-              <!-- Part Label & Dimension in 2D Engineering font -->
               <text x="${(x1 + cutW/2).toFixed(2)}" y="21" font-family="Cairo" font-size="9" font-weight="800" fill="#0f172a" text-anchor="middle">
                 ${cut.unitCode || ''} ${dimLabel}
               </text>
@@ -1235,7 +1439,6 @@
         currentX += cutW;
       });
 
-      // Remaining stock
       if (bar.remainingLength > 0) {
         const remainW = bar.remainingLength * scale;
         const isUseful = bar.remainingLength >= minOffcut;
@@ -1261,7 +1464,7 @@
     }
 
     // =========================================================================
-    // RENDER WORKSHOP TECHNICIAN SHEET (CAD 2D DRAFTING LAYOUT)
+    // RENDER WORKSHOP TECHNICIAN SHEET (CAD 2D DRAFTING + GLASS SCHEDULE)
     // =========================================================================
     function renderWorkshopSheet(allBars, kerf, trimCut, minOffcut) {
       const container = document.getElementById('technicianSheetContainer');
@@ -1269,7 +1472,6 @@
 
       const projName = document.getElementById('projectInputName')?.value || currentProject.name || 'مشروع بدون عنوان';
       const clientName = document.getElementById('projectInputClient')?.value || currentProject.client || '—';
-      const notes = document.getElementById('projectInputNotes')?.value || currentProject.notes || '—';
 
       document.getElementById('metaProjName').textContent = projName;
       document.getElementById('metaClientName').textContent = clientName;
@@ -1281,7 +1483,6 @@
         return;
       }
 
-      // Requisition breakdown
       let requisition = {};
       profiles.forEach(pr => {
         requisition[pr.id] = { code: pr.code, type: pr.type, newBars: 0, offcuts: [] };
@@ -1299,16 +1500,14 @@
       });
 
       const totalNewBarsAll = allBars.filter(b => !b.isOffcut).length;
-      const totalOffcutsAll = allBars.filter(b => b.isOffcut).length;
 
       let html = `
-        <!-- SECTION 1: COMPACT WINDOWS SCHEDULE & STOCK REQUISITION (DUAL TABLE) -->
+        <!-- SECTION 1: WINDOWS & STOCK SCHEDULE -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
           
-          <!-- Windows Included in Project (7 cols) -->
           <div class="lg:col-span-7 border-2 border-slate-900 rounded p-3 bg-white space-y-2">
             <div class="flex items-center justify-between border-b border-slate-900 pb-1.5 font-mono text-xs font-bold">
-              <span class="font-cairo">1. قائمة النوافذ الداخلة في أمر القص (Units Schedule)</span>
+              <span class="font-cairo">1. قائمة النوافذ الداخلة في أمر القص والتفصيل</span>
               <span>COUNT: ${windowUnits.reduce((s, u) => s + (u.qty || 1), 0)} UNITS</span>
             </div>
             
@@ -1316,29 +1515,24 @@
               <thead>
                 <tr class="bg-slate-100 text-slate-800 border-b border-slate-300 font-bold font-cairo text-[11px]">
                   <th class="py-1 px-2">كود النافذة</th>
-                  <th class="py-1 px-2 text-center">العرض W</th>
-                  <th class="py-1 px-2 text-center">الارتفاع H</th>
+                  <th class="py-1 px-2 text-center">مقاس الحلق W×H</th>
                   <th class="py-1 px-2 text-center">العدد</th>
-                  <th class="py-1 px-2">قطاع الحلق</th>
-                  <th class="py-1 px-2">قطاع الدرفة</th>
+                  <th class="py-1 px-2">السيستم / القطاع</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-200">
                 ${windowUnits.map(u => `
                   <tr>
                     <td class="py-1 px-2 font-bold font-cairo">${u.code}</td>
-                    <td class="py-1 px-2 text-center font-bold">${u.width} mm</td>
-                    <td class="py-1 px-2 text-center font-bold">${u.height} mm</td>
+                    <td class="py-1 px-2 text-center font-bold">${u.width} × ${u.height} mm</td>
                     <td class="py-1 px-2 text-center font-bold">${u.qty}</td>
-                    <td class="py-1 px-2 font-cairo text-[11px]">${profiles.find(p => p.id === u.frameProfileId)?.code || '—'}</td>
-                    <td class="py-1 px-2 font-cairo text-[11px]">${profiles.find(p => p.id === u.sashProfileId)?.code || '—'}</td>
+                    <td class="py-1 px-2 font-cairo text-[11px]">${systems.find(s => s.id === u.systemId)?.name || '—'}</td>
                   </tr>
                 `).join('')}
               </tbody>
             </table>
           </div>
 
-          <!-- Stock Picking Pull List (5 cols) -->
           <div class="lg:col-span-5 border-2 border-slate-900 rounded p-3 bg-white space-y-2">
             <div class="flex items-center justify-between border-b border-slate-900 pb-1.5 font-mono text-xs font-bold">
               <span class="font-cairo">2. إذن سحب الأعواد من المستودع (Stock Pull)</span>
@@ -1359,7 +1553,7 @@
                     <td class="py-1 px-2 font-bold font-cairo">${r.code}</td>
                     <td class="py-1 px-2 text-center font-bold">${r.newBars} عود</td>
                     <td class="py-1 px-2 text-[10px] text-slate-700 font-cairo">
-                      ${r.offcuts.length > 0 ? r.offcuts.map(o => `${o.length}mm (${o.location})`).join(', ') : '—'}
+                      ${r.offcuts.length > 0 ? r.offcuts.map(o => `${o.length}mm`).join(', ') : '—'}
                     </td>
                   </tr>
                 `).join('')}
@@ -1369,7 +1563,7 @@
 
         </div>
 
-        <!-- SECTION 2: 2D CAD CUTTING DIAGRAMS PER BAR (ORDERED & PROPORTIONAL) -->
+        <!-- SECTION 2: 2D CAD CUTTING DIAGRAMS PER BAR -->
         <div class="space-y-4">
           <div class="border-b-2 border-slate-900 pb-1 flex items-center justify-between font-mono text-xs font-bold">
             <span class="font-cairo text-sm text-slate-900">3. خرائط ومخططات القص التنفيذية على المنشار (2D Bar Cutting Maps)</span>
@@ -1385,7 +1579,6 @@
         html += `
           <div class="border-2 border-slate-900 rounded p-3 bg-white space-y-2 tech-card">
             
-            <!-- Bar Header Block -->
             <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-300 pb-1.5 font-mono text-xs">
               <div class="flex items-center gap-2">
                 <span class="px-2 py-0.5 bg-slate-900 text-white font-black text-xs rounded">
@@ -1401,12 +1594,10 @@
               </div>
             </div>
 
-            <!-- 2D SVG CAD CUTTING DIAGRAM -->
             <div class="w-full">
               ${svgDiagram}
             </div>
 
-            <!-- Compact Technical Step Table -->
             <table class="w-full text-xs text-right border border-slate-300 font-mono mt-1">
               <thead>
                 <tr class="bg-slate-100 text-slate-800 border-b border-slate-300 font-bold font-cairo text-[11px]">
@@ -1441,11 +1632,70 @@
       });
 
       html += `</div>`;
+
+      // SECTION 3: CASCADED GLASS CUTTING & AREA SCHEDULE
+      const totalPanesSum = glassSchedule.reduce((s, g) => s + g.qtyPanes, 0);
+      const totalAreaSum = glassSchedule.reduce((s, g) => s + parseFloat(g.totalArea), 0).toFixed(2);
+
+      html += `
+        <!-- SECTION 3: GLASS CUTTING & FABRICATION SCHEDULE -->
+        <div class="border-2 border-slate-900 rounded p-4 bg-white space-y-3 tech-card page-break">
+          <div class="flex flex-wrap items-center justify-between border-b-2 border-slate-900 pb-2 font-mono text-xs">
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-emerald-600 inline-block"></span>
+              <h3 class="font-cairo text-sm font-black text-slate-900">4. كشف تفصيل ومقاسات ومساحات الزجاج (Glass Cutting Schedule)</h3>
+            </div>
+            <div class="text-xs text-emerald-900 font-bold bg-emerald-50 px-3 py-1 rounded border border-emerald-300">
+              إجمالي ألواح الزجاج: <strong>${totalPanesSum} لوح</strong> | المساحة الكلية: <strong>${totalAreaSum} م²</strong>
+            </div>
+          </div>
+
+          <p class="text-[11px] text-slate-600 font-cairo font-medium">
+            🔍 تم حساب مقاسات ألواح الزجاج بعد خصم سماكات الدرف وإضافة عمق الفرزة وخصم خلوصات الأمان والكاوتشوك:
+          </p>
+
+          <table class="w-full text-xs text-right border border-slate-300 font-mono">
+            <thead>
+              <tr class="bg-slate-100 text-slate-800 border-b border-slate-300 font-bold font-cairo text-[11px]">
+                <th class="py-1.5 px-2">كود النافذة</th>
+                <th class="py-1.5 px-2">نوع الوحدة</th>
+                <th class="py-1.5 px-2">السيستم المستخدم</th>
+                <th class="py-1.5 px-2 text-center text-blue-900">مقاس الدرفة (Ws × Hs)</th>
+                <th class="py-1.5 px-2 text-center text-emerald-900 font-black text-sm bg-emerald-50/70 border-x border-emerald-200">مقاس الزجاج الصافي (Wg × Hg)</th>
+                <th class="py-1.5 px-2 text-center">عدد الألواح</th>
+                <th class="py-1.5 px-2 text-center">مساحة اللوح (م²)</th>
+                <th class="py-1.5 px-2 text-center">إجمالي المساحة (م²)</th>
+                <th class="py-1.5 px-2 text-center w-16 font-cairo">تم القص [✔]</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 text-xs">
+              ${glassSchedule.map(g => `
+                <tr class="hover:bg-slate-50 font-medium">
+                  <td class="py-1.5 px-2 font-bold font-cairo text-slate-900">${g.unitCode}</td>
+                  <td class="py-1.5 px-2 font-cairo text-slate-700">${g.sashType}</td>
+                  <td class="py-1.5 px-2 font-cairo text-[11px] text-slate-600">${g.systemName}</td>
+                  <td class="py-1.5 px-2 text-center font-bold text-blue-900">${g.sashSize}</td>
+                  <td class="py-1.5 px-2 text-center font-black text-sm text-emerald-800 bg-emerald-50/50 border-x border-emerald-200">
+                    ${g.glassW} × ${g.glassH} مم
+                  </td>
+                  <td class="py-1.5 px-2 text-center font-bold">${g.qtyPanes}</td>
+                  <td class="py-1.5 px-2 text-center">${g.singleArea} م²</td>
+                  <td class="py-1.5 px-2 text-center font-bold text-slate-900">${g.totalArea} م²</td>
+                  <td class="py-1.5 px-2 text-center">
+                    <input type="checkbox" class="w-4 h-4 text-emerald-600 rounded">
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+
       container.innerHTML = html;
     }
 
     // ===============================================
-    // Storage & Export Functions
+    // STORAGE & EXPORTS
     // ===============================================
     function saveCurrentProject(notify = true) {
       currentProject.name = document.getElementById('projectInputName').value || 'مشروع بدون عنوان';
@@ -1456,6 +1706,7 @@
       const projectData = {
         meta: currentProject,
         windowUnits,
+        systems,
         profiles,
         parts,
         offcuts,
@@ -1468,10 +1719,10 @@
       };
 
       try {
-        localStorage.setItem('aluminum_opt_cad_current', JSON.stringify(projectData));
-        let allProjects = JSON.parse(localStorage.getItem('aluminum_opt_cad_projects') || '{}');
+        localStorage.setItem('aluminum_opt_cascade_current', JSON.stringify(projectData));
+        let allProjects = JSON.parse(localStorage.getItem('aluminum_opt_cascade_projects') || '{}');
         allProjects[currentProject.name] = projectData;
-        localStorage.setItem('aluminum_opt_cad_projects', JSON.stringify(allProjects));
+        localStorage.setItem('aluminum_opt_cascade_projects', JSON.stringify(allProjects));
         
         renderSavedProjectsList();
         updateSubtitleAndBadges();
@@ -1487,7 +1738,7 @@
       if (!listEl) return;
 
       let allProjects = {};
-      try { allProjects = JSON.parse(localStorage.getItem('aluminum_opt_cad_projects') || '{}'); } catch(e) {}
+      try { allProjects = JSON.parse(localStorage.getItem('aluminum_opt_cascade_projects') || '{}'); } catch(e) {}
 
       const keys = Object.keys(allProjects);
       if (countEl) countEl.textContent = keys.length;
@@ -1512,12 +1763,13 @@
 
     function loadSavedProject(encodedKey) {
       const key = decodeURIComponent(encodedKey);
-      let allProjects = JSON.parse(localStorage.getItem('aluminum_opt_cad_projects') || '{}');
+      let allProjects = JSON.parse(localStorage.getItem('aluminum_opt_cascade_projects') || '{}');
       const p = allProjects[key];
       if (!p) return;
 
       currentProject = p.meta || { name: key };
       windowUnits = p.windowUnits || [];
+      systems = p.systems || systems;
       profiles = p.profiles || [];
       parts = p.parts || [];
       offcuts = p.offcuts || [];
@@ -1533,7 +1785,7 @@
       document.getElementById('projectInputClient').value = currentProject.client || '';
       document.getElementById('projectInputNotes').value = currentProject.notes || '';
 
-      renderProfiles();
+      renderSystemsTable();
       renderWindowsSchedule();
       recalculateAllPartsFromWindows();
       renderOffcuts();
@@ -1545,9 +1797,9 @@
     function deleteSavedProject(encodedKey) {
       const key = decodeURIComponent(encodedKey);
       if (confirm(`حذف المشروع: "${key}"؟`)) {
-        let allProjects = JSON.parse(localStorage.getItem('aluminum_opt_cad_projects') || '{}');
+        let allProjects = JSON.parse(localStorage.getItem('aluminum_opt_cascade_projects') || '{}');
         delete allProjects[key];
-        localStorage.setItem('aluminum_opt_cad_projects', JSON.stringify(allProjects));
+        localStorage.setItem('aluminum_opt_cascade_projects', JSON.stringify(allProjects));
         renderSavedProjectsList();
       }
     }
@@ -1555,13 +1807,13 @@
     function createNewProject() {
       if (confirm('إنشاء مشروع جديد ومسح البيانات الحالية؟')) {
         currentProject = { name: 'مشروع جديد #' + Math.floor(Math.random() * 1000), client: '', notes: '', updatedAt: new Date().toISOString() };
-        windowUnits = [{ id: 1, code: 'W-01', type: 'sliding-2', width: 1200, height: 1200, qty: 1, frameProfileId: 1, sashProfileId: 2 }];
+        windowUnits = [{ id: 1, code: 'W-01', systemId: 1, type: 'sliding-2', width: 1200, height: 1200, qty: 1 }];
         offcuts = [];
         document.getElementById('projectInputName').value = currentProject.name;
         document.getElementById('projectInputClient').value = '';
         document.getElementById('projectInputNotes').value = '';
 
-        renderProfiles();
+        renderSystemsTable();
         renderWindowsSchedule();
         recalculateAllPartsFromWindows();
         renderOffcuts();
@@ -1575,6 +1827,7 @@
       const projectData = {
         meta: currentProject,
         windowUnits,
+        systems,
         profiles,
         parts,
         offcuts,
@@ -1589,7 +1842,7 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `${currentProject.name || 'aluminum_cad_project'}.json`;
+      a.download = `${currentProject.name || 'aluminum_cascade_project'}.json`;
       a.click();
       URL.revokeObjectURL(url);
     }
@@ -1604,6 +1857,7 @@
           if (p.windowUnits || p.parts) {
             currentProject = p.meta || { name: file.name.replace('.json', '') };
             windowUnits = p.windowUnits || [];
+            systems = p.systems || systems;
             profiles = p.profiles || [];
             parts = p.parts || [];
             offcuts = p.offcuts || [];
@@ -1619,7 +1873,7 @@
             document.getElementById('projectInputClient').value = currentProject.client || '';
             document.getElementById('projectInputNotes').value = currentProject.notes || '';
 
-            renderProfiles();
+            renderSystemsTable();
             renderWindowsSchedule();
             recalculateAllPartsFromWindows();
             renderOffcuts();
@@ -1641,7 +1895,7 @@
       const element = document.getElementById('printableSheetContent');
       const opt = {
         margin: [6, 6, 6, 6],
-        filename: `مخطط_قص_${currentProject.name || 'aluminum_cad'}.pdf`,
+        filename: `مخطط_قص_وزجاج_${currentProject.name || 'aluminum_cad'}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2, useCORS: true },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
@@ -1653,6 +1907,20 @@
       if (!lastOptimizationResult) { alert('يرجى تشغيل الحساب أولاً.'); return; }
       const wb = XLSX.utils.book_new();
 
+      // Sheet 1: Windows & Glass Schedule
+      let glassData = [
+        ['كشف مقاسات ومساحات الزجاج - Glass Cutting Schedule'],
+        ['المشروع:', currentProject.name, 'العميل:', currentProject.client, 'التاريخ:', new Date().toLocaleDateString('ar-EG')],
+        [],
+        ['كود النافذة', 'نوع الوحدة', 'السيستم', 'مقاس الدرفة (Ws × Hs)', 'مقاس الزجاج الصافي (Wg × Hg)', 'عدد الألواح', 'مساحة اللوح (م²)', 'إجمالي المساحة (م²)']
+      ];
+      glassSchedule.forEach(g => {
+        glassData.push([g.unitCode, g.sashType, g.systemName, g.sashSize, `${g.glassW} x ${g.glassH} mm`, g.qtyPanes, `${g.singleArea} m2`, `${g.totalArea} m2`]);
+      });
+      const wsGlass = XLSX.utils.aoa_to_sheet(glassData);
+      XLSX.utils.book_append_sheet(wb, wsGlass, 'كشف تفصيل الزجاج');
+
+      // Sheet 2: Aluminum Cutting Bars
       let sheetData = [
         ['مخطط وأمر تشغيل قص بروفيلات الألمنيوم - Aluminum Shop Drawing'],
         ['المشروع:', currentProject.name, 'العميل:', currentProject.client, 'التاريخ:', new Date().toLocaleDateString('ar-EG')],
@@ -1681,19 +1949,21 @@
       });
 
       const ws = XLSX.utils.aoa_to_sheet(sheetData);
-      XLSX.utils.book_append_sheet(wb, ws, 'مخطط القص للورشة');
-      XLSX.writeFile(wb, `${currentProject.name || 'aluminum_cad'}.xlsx`);
+      XLSX.utils.book_append_sheet(wb, ws, 'مخطط قص الألمنيوم');
+
+      XLSX.writeFile(wb, `${currentProject.name || 'aluminum_cad_glass'}.xlsx`);
     }
 
     // ===============================================
-    // Init
+    // INITIALIZATION
     // ===============================================
     window.addEventListener('DOMContentLoaded', () => {
       try {
-        const saved = localStorage.getItem('aluminum_opt_cad_current');
+        const saved = localStorage.getItem('aluminum_opt_cascade_current');
         if (saved) {
           const p = JSON.parse(saved);
           if (p.windowUnits) windowUnits = p.windowUnits;
+          if (p.systems) systems = p.systems;
           if (p.profiles) profiles = p.profiles;
           if (p.offcuts) offcuts = p.offcuts;
           if (p.meta) currentProject = p.meta;
@@ -1710,7 +1980,7 @@
       document.getElementById('projectInputClient').value = currentProject.client || '';
       document.getElementById('projectInputNotes').value = currentProject.notes || '';
 
-      renderProfiles();
+      renderSystemsTable();
       renderWindowsSchedule();
       recalculateAllPartsFromWindows();
       renderOffcuts();
@@ -1718,7 +1988,6 @@
       updateSubtitleAndBadges();
       lucide.createIcons();
 
-      // Automatically compute first run for live demo
       runAdvancedOptimization();
     });
   </script>
