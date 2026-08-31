@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>مخطط ومحسن قص وتفصيل الألمنيوم والزجاج الهندسي | CAD Cutting Optimizer</title>
+  <title>مخطط ومحسن قص وتفصيل الألمنيوم والزجاج الهندسي | Aluminum & Glass CAD Optimizer</title>
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -123,13 +123,13 @@
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <h1 class="text-sm sm:text-base font-bold text-slate-900 leading-tight">
+            <h1 class="text-sm sm:text-base font-bold text-slate-900 leading-tight" id="ui-appTitle">
               محسن ومخطط قص الألمنيوم والزجاج الهندسي
             </h1>
-            <span class="px-1.5 py-0.2 text-[10px] font-mono font-bold bg-slate-100 text-slate-700 rounded border border-slate-300">v6.5 A4 CAD Pro</span>
+            <span class="px-1.5 py-0.2 text-[10px] font-mono font-bold bg-slate-100 text-slate-700 rounded border border-slate-300">v7.0 Bilingual CAD</span>
           </div>
-          <p class="text-[11px] text-slate-500 font-medium">
-            تخطيط هندسي معياري مصمم خصيصاً لمقاس A4 مع جداول تسلسلية تمنع تداخل وتشويه الأرقام
+          <p class="text-[11px] text-slate-500 font-medium" id="ui-appSubtitle">
+            تخصيم متسلسل وهندسي مستقل لكل قطاع | أرقام ومقاسات بالمليمتر (كميات وأطوال فقط)
           </p>
         </div>
       </div>
@@ -140,9 +140,15 @@
           <span id="activeProjectBadge">Project-01</span>
         </div>
 
+        <!-- Language Switcher Button -->
+        <button onclick="toggleLanguage()" class="px-3 py-1 bg-white hover:bg-slate-50 border border-slate-300 text-slate-800 text-xs font-bold rounded transition flex items-center gap-1.5 shadow-2xs">
+          <i data-lucide="globe" class="w-3.5 h-3.5 text-slate-600"></i>
+          <span id="langSwitchLabel" class="font-mono font-bold">English</span>
+        </button>
+
         <button onclick="saveCurrentProject(true)" class="px-3 py-1 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded transition flex items-center gap-1">
           <i data-lucide="save" class="w-3.5 h-3.5"></i>
-          <span>حفظ</span>
+          <span id="ui-saveBtn">حفظ</span>
         </button>
       </div>
     </div>
@@ -151,29 +157,29 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 flex gap-1 border-t border-slate-200 overflow-x-auto" id="navTabs">
       <button onclick="switchTab('tab-windows')" id="btn-tab-windows" class="tab-btn active px-3.5 py-2 text-xs font-bold rounded-t transition flex items-center gap-1.5 border-b-2 border-transparent">
         <i data-lucide="layout-template" class="w-3.5 h-3.5"></i>
-        <span>1. جدول النوافذ وتفصيل المقاسات</span>
+        <span id="ui-tabWindows">1. جدول النوافذ وتفصيل المقاسات</span>
       </button>
       <button onclick="switchTab('tab-systems')" id="btn-tab-systems" class="tab-btn px-3.5 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 rounded-t transition flex items-center gap-1.5 border-b-2 border-transparent">
         <i data-lucide="sliders" class="w-3.5 h-3.5"></i>
-        <span>2. تعريف قطاعات السيستم (مفصولة بالنوع)</span>
+        <span id="ui-tabSystems">2. تعريف قطاعات السيستم (مفصولة بالنوع)</span>
       </button>
       <button onclick="switchTab('tab-parts')" id="btn-tab-parts" class="tab-btn px-3.5 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 rounded-t transition flex items-center gap-1.5 border-b-2 border-transparent">
         <i data-lucide="list-checks" class="w-3.5 h-3.5"></i>
-        <span>3. قطع الألمنيوم المحسوبة للقص</span>
+        <span id="ui-tabParts">3. قطع الألمنيوم المحسوبة للقص</span>
         <span id="totalPartsBadge" class="px-1.5 py-0.2 bg-slate-200 text-slate-800 rounded font-mono text-[10px]">0</span>
       </button>
       <button onclick="switchTab('tab-offcuts')" id="btn-tab-offcuts" class="tab-btn px-3.5 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 rounded-t transition flex items-center gap-1.5 border-b-2 border-transparent">
         <i data-lucide="recycle" class="w-3.5 h-3.5"></i>
-        <span>4. مخزون الفضلات</span>
+        <span id="ui-tabOffcuts">4. مخزون الفضلات</span>
         <span id="offcutsCountBadge" class="px-1.5 py-0.2 bg-slate-200 text-slate-700 rounded font-mono text-[10px]">0</span>
       </button>
       <button onclick="switchTab('tab-sheet')" id="btn-tab-sheet" class="tab-btn px-3.5 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 rounded-t transition flex items-center gap-1.5 border-b-2 border-transparent">
         <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
-        <span>5. ورقة الفني ومخطط القص والزجاج</span>
+        <span id="ui-tabSheet">5. ورقة الفني ومخطط القص والزجاج</span>
       </button>
       <button onclick="switchTab('tab-projects')" id="btn-tab-projects" class="tab-btn px-3.5 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 rounded-t transition flex items-center gap-1.5 border-b-2 border-transparent">
         <i data-lucide="folder-open" class="w-3.5 h-3.5"></i>
-        <span>6. المشاريع والتصدير</span>
+        <span id="ui-tabProjects">6. المشاريع والتصدير</span>
       </button>
     </div>
   </header>
@@ -187,7 +193,7 @@
         
         <div class="flex flex-wrap items-center gap-4 sm:gap-6 text-xs">
           <div>
-            <label class="block text-[11px] font-bold text-slate-600 mb-0.5">طول العود الخام</label>
+            <label class="block text-[11px] font-bold text-slate-600 mb-0.5" id="ui-stockLength">طول العود الخام</label>
             <div class="flex items-center gap-1">
               <input type="number" id="stockLength" value="6000" min="500" max="12000" class="w-20 px-2 py-1 border border-slate-300 rounded font-mono font-bold text-center focus:border-slate-900 outline-none">
               <span class="text-slate-500 font-mono text-[11px]">mm</span>
@@ -195,7 +201,7 @@
           </div>
           
           <div>
-            <label class="block text-[11px] font-bold text-slate-600 mb-0.5">سماكة السلاح (Kerf)</label>
+            <label class="block text-[11px] font-bold text-slate-600 mb-0.5" id="ui-bladeKerf">سماكة السلاح (Kerf)</label>
             <div class="flex items-center gap-1">
               <input type="number" id="kerf" value="3.5" step="0.1" min="0" max="15" class="w-16 px-2 py-1 border border-slate-300 rounded font-mono font-bold text-center focus:border-slate-900 outline-none">
               <span class="text-slate-500 font-mono text-[11px]">mm</span>
@@ -203,7 +209,7 @@
           </div>
           
           <div>
-            <label class="block text-[11px] font-bold text-slate-600 mb-0.5">الحد الأدنى للفضلة</label>
+            <label class="block text-[11px] font-bold text-slate-600 mb-0.5" id="ui-minOffcut">الحد الأدنى للفضلة</label>
             <div class="flex items-center gap-1">
               <input type="number" id="minOffcut" value="300" min="50" max="2000" class="w-20 px-2 py-1 border border-slate-300 rounded font-mono font-bold text-center focus:border-slate-900 outline-none">
               <span class="text-slate-500 font-mono text-[11px]">mm</span>
@@ -211,7 +217,7 @@
           </div>
 
           <div>
-            <label class="block text-[11px] font-bold text-slate-600 mb-0.5">قصة تنظيف (Trim)</label>
+            <label class="block text-[11px] font-bold text-slate-600 mb-0.5" id="ui-trimCut">قصة تنظيف (Trim)</label>
             <div class="flex items-center gap-1">
               <input type="number" id="trimCut" value="10" min="0" max="100" class="w-16 px-2 py-1 border border-slate-300 rounded font-mono font-bold text-center focus:border-slate-900 outline-none">
               <span class="text-slate-500 font-mono text-[11px]">mm</span>
@@ -220,7 +226,7 @@
 
           <div class="flex items-center gap-1.5 pt-4">
             <input type="checkbox" id="useOffcutsFirst" checked class="w-3.5 h-3.5 text-slate-900 rounded border-slate-300">
-            <label for="useOffcutsFirst" class="text-xs font-bold text-slate-700 cursor-pointer">
+            <label for="useOffcutsFirst" class="text-xs font-bold text-slate-700 cursor-pointer" id="ui-useOffcutsFirst">
               استهلاك الفضلات أولاً
             </label>
           </div>
@@ -229,7 +235,7 @@
         <div>
           <button onclick="runAdvancedOptimization()" class="w-full sm:w-auto px-5 py-2 bg-slate-900 hover:bg-black text-white font-bold text-xs rounded transition flex items-center justify-center gap-1.5">
             <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i>
-            <span>حساب وتوليد المخطط الهندسي والزجاج</span>
+            <span id="ui-calcBtn">حساب وتوليد المخطط الهندسي والزجاج</span>
           </button>
         </div>
 
@@ -246,34 +252,26 @@
           <div class="flex items-center gap-2">
             <i data-lucide="layout-template" class="w-4 h-4 text-slate-700"></i>
             <div>
-              <h2 class="font-bold text-slate-900 text-xs sm:text-sm">
+              <h2 class="font-bold text-slate-900 text-xs sm:text-sm" id="ui-winScheduleTitle">
                 جدول مقاسات النوافذ وحسابات التخصيم المتسلسل (Windows & Glass Schedule)
               </h2>
-              <p class="text-[11px] text-slate-500 font-medium">
-                اختر نوع الوحدة (سحاب / مفصلي / باب / ثابت) وسيقوم النظام بتطبيق المنطق الهندسي الخاص به تلقائياً
+              <p class="text-[11px] text-slate-500 font-medium" id="ui-winScheduleSubtitle">
+                اختر نوع الوحدة وسيقوم النظام بتطبيق المنطق الهندسي وتفصيل الدرف والزجاج الصافي تلقائياً
               </p>
             </div>
           </div>
           
           <button onclick="addWindowUnit()" class="px-2.5 py-1 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded transition flex items-center gap-1">
             <i data-lucide="plus" class="w-3 h-3"></i>
-            <span>إضافة نافذة جديدة</span>
+            <span id="ui-addUnitBtn">إضافة نافذة جديدة</span>
           </button>
         </div>
 
         <div class="p-3 overflow-x-auto">
           <table class="w-full text-xs text-right border-collapse" id="windowsTable">
             <thead>
-              <tr class="bg-slate-100 text-slate-800 border-b border-slate-300 font-bold text-[11px]">
-                <th class="py-1.5 px-2 text-center w-8 font-mono">#</th>
-                <th class="py-1.5 px-2">كود النافذة</th>
-                <th class="py-1.5 px-2">نوع الوحدة</th>
-                <th class="py-1.5 px-2 text-center font-mono">Frame (W × H)</th>
-                <th class="py-1.5 px-2 text-center font-mono">Qty</th>
-                <th class="py-1.5 px-2">نظام القطاع المطابق</th>
-                <th class="py-1.5 px-2 text-center border-x border-slate-300 bg-slate-50">تفصيل الدرفة الصافي (Ws × Hs)</th>
-                <th class="py-1.5 px-2 text-center border-x border-slate-300 bg-slate-50 font-mono">Glass Cut (Wg × Hg)</th>
-                <th class="py-1.5 px-2 text-center w-14"></th>
+              <tr class="bg-slate-100 text-slate-800 border-b border-slate-300 font-bold text-[11px]" id="windowsHeadRow">
+                <!-- Dynamically localized -->
               </tr>
             </thead>
             <tbody id="windowsBody" class="divide-y divide-slate-200 text-xs">
@@ -283,10 +281,8 @@
         </div>
 
         <div class="px-4 py-2 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center justify-between text-xs text-slate-700">
-          <div>
-            إجمالي النوافذ: <strong id="totalUnitsCount" class="text-slate-900 font-mono font-bold">0</strong> وحدة | 
-            إجمالي ألواح الزجاج: <strong id="totalGlassPanesCount" class="text-slate-900 font-mono font-bold">0</strong> لوح | 
-            إجمالي مساحة الزجاج: <strong id="totalGlassAreaSquareMeters" class="text-slate-900 font-mono font-bold">0.00</strong> m²
+          <div id="windowsSummaryRow">
+            <!-- Dynamically populated -->
           </div>
           <div class="text-[11px] text-slate-500 font-mono">
             Quantities & Cut Measurements Only
@@ -305,24 +301,24 @@
         
         <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-3">
           <div>
-            <h3 class="font-bold text-slate-900 text-sm">
+            <h3 class="font-bold text-slate-900 text-sm" id="ui-sysHeader">
               أنظمة القطاعات المخصصة (مفصولة هندسياً حسب نوع النظام)
             </h3>
-            <p class="text-xs text-slate-500 font-medium">
+            <p class="text-xs text-slate-500 font-medium" id="ui-sysSubHeader">
               لكل نوع نظام منطق ومقاطع تختلف تماماً عن غيره:
             </p>
           </div>
           <div class="flex items-center gap-1.5">
-            <button onclick="addNewSystem('sliding')" class="px-2.5 py-1 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded transition">
+            <button onclick="addNewSystem('sliding')" class="px-2.5 py-1 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded transition" id="ui-addSlidingBtn">
               + سيستم سحاب
             </button>
-            <button onclick="addNewSystem('hinged-window')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs rounded transition">
+            <button onclick="addNewSystem('hinged-window')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs rounded transition" id="ui-addHingedBtn">
               + سيستم مفصلي
             </button>
-            <button onclick="addNewSystem('hinged-door')" class="px-2.5 py-1 bg-slate-700 hover:bg-slate-600 text-white font-bold text-xs rounded transition">
+            <button onclick="addNewSystem('hinged-door')" class="px-2.5 py-1 bg-slate-700 hover:bg-slate-600 text-white font-bold text-xs rounded transition" id="ui-addDoorBtn">
               + سيستم أبواب
             </button>
-            <button onclick="addNewSystem('fixed')" class="px-2.5 py-1 bg-slate-600 hover:bg-slate-500 text-white font-bold text-xs rounded transition">
+            <button onclick="addNewSystem('fixed')" class="px-2.5 py-1 bg-slate-600 hover:bg-slate-500 text-white font-bold text-xs rounded transition" id="ui-addFixedBtn">
               + سيستم ثابت
             </button>
           </div>
@@ -331,24 +327,13 @@
         <!-- CATEGORY 1: SLIDING SYSTEMS -->
         <div class="space-y-2">
           <div class="flex items-center justify-between text-xs font-bold text-slate-900 bg-slate-100 px-3 py-1.5 rounded border border-slate-300">
-            <span>1. أنظمة السحاب (Sliding) ⬅ تتكون الدرفة من: [درفة جنب + درفة شنكل + درفة كعب]</span>
+            <span id="ui-catSlidingTitle">1. أنظمة السحاب (Sliding) ⬅ تتكون الدرفة من: [درفة جنب + درفة شنكل + درفة كعب]</span>
             <span class="font-mono text-[10px] text-slate-600">SLIDING SECTIONS</span>
           </div>
           <div class="overflow-x-auto">
             <table class="w-full text-xs text-right border-collapse" id="slidingSystemsTable">
               <thead>
-                <tr class="bg-slate-50 text-slate-800 border-b border-slate-300 font-bold text-[11px]">
-                  <th class="py-1.5 px-2">اسم السيستم</th>
-                  <th class="py-1.5 px-2 font-mono">Frame</th>
-                  <th class="py-1.5 px-2 font-mono">Side Stile</th>
-                  <th class="py-1.5 px-2 font-mono">Interlock</th>
-                  <th class="py-1.5 px-2 font-mono">Rail</th>
-                  <th class="py-1.5 px-2 text-center">عرض الدرفة (mm)</th>
-                  <th class="py-1.5 px-2 text-center">خلوص الارتفاع (mm)</th>
-                  <th class="py-1.5 px-2 text-center">تراكب العرض (mm)</th>
-                  <th class="py-1.5 px-2 text-center">فرزة الزجاج (mm)</th>
-                  <th class="py-1.5 px-2 text-center w-8"></th>
-                </tr>
+                <tr class="bg-slate-50 text-slate-800 border-b border-slate-300 font-bold text-[11px]" id="slidingHeadRow"></tr>
               </thead>
               <tbody id="slidingSystemsBody" class="divide-y divide-slate-200"></tbody>
             </table>
@@ -358,23 +343,13 @@
         <!-- CATEGORY 2: HINGED WINDOWS -->
         <div class="space-y-2 pt-3 border-t border-slate-200">
           <div class="flex items-center justify-between text-xs font-bold text-slate-900 bg-slate-100 px-3 py-1.5 rounded border border-slate-300">
-            <span>2. أنظمة الشبابيك المفصلية والقلاب (Casement Windows) ⬅ تتكون من: [حلق مفصلي + درفة مفصلي موحدة + باكتة زجاج]</span>
+            <span id="ui-catHingedTitle">2. أنظمة الشبابيك المفصلية والقلاب (Casement Windows) ⬅ تتكون من: [حلق مفصلي + درفة مفصلي موحدة + باكتة زجاج]</span>
             <span class="font-mono text-[10px] text-slate-600">CASEMENT SECTIONS</span>
           </div>
           <div class="overflow-x-auto">
             <table class="w-full text-xs text-right border-collapse" id="hingedSystemsTable">
               <thead>
-                <tr class="bg-slate-50 text-slate-800 border-b border-slate-300 font-bold text-[11px]">
-                  <th class="py-1.5 px-2">اسم السيستم</th>
-                  <th class="py-1.5 px-2 font-mono">Frame</th>
-                  <th class="py-1.5 px-2 font-mono">Sash</th>
-                  <th class="py-1.5 px-2 font-mono">Bead</th>
-                  <th class="py-1.5 px-2 text-center">عرض الدرفة (mm)</th>
-                  <th class="py-1.5 px-2 text-center">خصم العرض (mm)</th>
-                  <th class="py-1.5 px-2 text-center">خصم الارتفاع (mm)</th>
-                  <th class="py-1.5 px-2 text-center">فرزة الزجاج (mm)</th>
-                  <th class="py-1.5 px-2 text-center w-8"></th>
-                </tr>
+                <tr class="bg-slate-50 text-slate-800 border-b border-slate-300 font-bold text-[11px]" id="hingedHeadRow"></tr>
               </thead>
               <tbody id="hingedSystemsBody" class="divide-y divide-slate-200"></tbody>
             </table>
@@ -384,23 +359,13 @@
         <!-- CATEGORY 3: HINGED DOORS -->
         <div class="space-y-2 pt-3 border-t border-slate-200">
           <div class="flex items-center justify-between text-xs font-bold text-slate-900 bg-slate-100 px-3 py-1.5 rounded border border-slate-300">
-            <span>3. أنظمة الأبواب المفصلية (Doors) ⬅ تتكون من: [حلق باب 3 جهات + قائم باب + كعب باب سفلي + باكتة]</span>
+            <span id="ui-catDoorTitle">3. أنظمة الأبواب المفصلية (Doors) ⬅ تتكون من: [حلق باب 3 جهات + قائم باب + كعب باب سفلي + باكتة]</span>
             <span class="font-mono text-[10px] text-slate-600">DOOR SECTIONS</span>
           </div>
           <div class="overflow-x-auto">
             <table class="w-full text-xs text-right border-collapse" id="doorSystemsTable">
               <thead>
-                <tr class="bg-slate-50 text-slate-800 border-b border-slate-300 font-bold text-[11px]">
-                  <th class="py-1.5 px-2">اسم السيستم</th>
-                  <th class="py-1.5 px-2 font-mono">Frame</th>
-                  <th class="py-1.5 px-2 font-mono">Door Stile</th>
-                  <th class="py-1.5 px-2 font-mono">Bottom Rail</th>
-                  <th class="py-1.5 px-2 font-mono">Bead</th>
-                  <th class="py-1.5 px-2 text-center">عرض القائم (mm)</th>
-                  <th class="py-1.5 px-2 text-center">خصم العرض (mm)</th>
-                  <th class="py-1.5 px-2 text-center">خصم الارتفاع (mm)</th>
-                  <th class="py-1.5 px-2 text-center w-8"></th>
-                </tr>
+                <tr class="bg-slate-50 text-slate-800 border-b border-slate-300 font-bold text-[11px]" id="doorHeadRow"></tr>
               </thead>
               <tbody id="doorSystemsBody" class="divide-y divide-slate-200"></tbody>
             </table>
@@ -410,21 +375,13 @@
         <!-- CATEGORY 4: FIXED SYSTEMS -->
         <div class="space-y-2 pt-3 border-t border-slate-200">
           <div class="flex items-center justify-between text-xs font-bold text-slate-900 bg-slate-100 px-3 py-1.5 rounded border border-slate-300">
-            <span>4. الأنظمة الثابتة (Fixed Windows) ⬅ تتكون فقط من: [حلق ثابت + باكتة زجاج] (بدون أي درف نهائياً)</span>
+            <span id="ui-catFixedTitle">4. الأنظمة الثابتة (Fixed Windows) ⬅ تتكون فقط من: [حلق ثابت + باكتة زجاج] (بدون أي درف نهائياً)</span>
             <span class="font-mono text-[10px] text-slate-600">FIXED SECTIONS</span>
           </div>
           <div class="overflow-x-auto">
             <table class="w-full text-xs text-right border-collapse" id="fixedSystemsTable">
               <thead>
-                <tr class="bg-slate-50 text-slate-800 border-b border-slate-300 font-bold text-[11px]">
-                  <th class="py-1.5 px-2">اسم السيستم الثابت</th>
-                  <th class="py-1.5 px-2 font-mono">Fixed Frame</th>
-                  <th class="py-1.5 px-2 font-mono">Glass Bead</th>
-                  <th class="py-1.5 px-2 text-center">سماكة الفريم (mm)</th>
-                  <th class="py-1.5 px-2 text-center">عمق فرزة الزجاج (mm)</th>
-                  <th class="py-1.5 px-2 text-center">خلوص الزجاج والكاوتشوك (mm)</th>
-                  <th class="py-1.5 px-2 text-center w-8"></th>
-                </tr>
+                <tr class="bg-slate-50 text-slate-800 border-b border-slate-300 font-bold text-[11px]" id="fixedHeadRow"></tr>
               </thead>
               <tbody id="fixedSystemsBody" class="divide-y divide-slate-200"></tbody>
             </table>
@@ -441,10 +398,10 @@
     <div id="tab-parts" class="tab-content hidden space-y-4">
       <div class="bg-white rounded border border-slate-300">
         <div class="px-3.5 py-2 border-b border-slate-200 flex items-center justify-between bg-slate-50">
-          <h3 class="font-bold text-slate-900 text-xs">
+          <h3 class="font-bold text-slate-900 text-xs" id="ui-partsHeader">
             قائمة قطع الألمنيوم المحسوبة للقص (مفصلة حسب نوع القطاع)
           </h3>
-          <button onclick="recalculateAllPartsFromWindows()" class="px-2.5 py-1 text-xs bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold rounded">
+          <button onclick="recalculateAllPartsFromWindows()" class="px-2.5 py-1 text-xs bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold rounded" id="ui-refreshPartsBtn">
             تحديث الحسابات
           </button>
         </div>
@@ -452,19 +409,9 @@
         <div class="p-3 overflow-x-auto max-h-[420px]">
           <table class="w-full text-xs text-right" id="partsTable">
             <thead>
-              <tr class="text-slate-600 border-b border-slate-200 font-bold">
-                <th class="pb-1.5">القطاع المطلوب سحبه</th>
-                <th class="pb-1.5">الوحدة / مسمى القطعة</th>
-                <th class="pb-1.5 text-center font-mono">Type (W/H)</th>
-                <th class="pb-1.5 text-center font-mono">Length (mm)</th>
-                <th class="pb-1.5 text-center font-mono">Qty</th>
-                <th class="pb-1.5 text-center font-mono">Angles</th>
-                <th class="pb-1.5 text-center"></th>
-              </tr>
+              <tr class="text-slate-600 border-b border-slate-200 font-bold" id="partsHeadRow"></tr>
             </thead>
-            <tbody id="partsBody" class="divide-y divide-slate-100 font-mono text-xs">
-              <!-- Parts -->
-            </tbody>
+            <tbody id="partsBody" class="divide-y divide-slate-100 font-mono text-xs"></tbody>
           </table>
         </div>
       </div>
@@ -478,15 +425,15 @@
         <div class="px-4 py-2.5 border-b border-slate-200 flex items-center justify-between bg-slate-50">
           <div class="flex items-center gap-2">
             <i data-lucide="recycle" class="w-4 h-4 text-slate-700"></i>
-            <h3 class="font-bold text-slate-900 text-xs sm:text-sm">
+            <h3 class="font-bold text-slate-900 text-xs sm:text-sm" id="ui-offcutsHeader">
               مخزون الفضلات المتوفرة بالورشة (Offcuts Stock)
             </h3>
           </div>
           <div class="flex items-center gap-1.5">
-            <button onclick="addOffcut()" class="px-2.5 py-1 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded">
+            <button onclick="addOffcut()" class="px-2.5 py-1 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded" id="ui-addOffcutBtn">
               + إضافة فضلة
             </button>
-            <button onclick="clearOffcuts()" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs rounded border border-slate-300">
+            <button onclick="clearOffcuts()" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs rounded border border-slate-300" id="ui-clearOffcutsBtn">
               مسح الكل
             </button>
           </div>
@@ -495,19 +442,9 @@
         <div class="p-3 overflow-x-auto">
           <table class="w-full text-xs text-right" id="offcutsTable">
             <thead>
-              <tr class="text-slate-600 border-b border-slate-200 font-bold">
-                <th class="pb-1.5">القطاع</th>
-                <th class="pb-1.5 text-center font-mono">Length (mm)</th>
-                <th class="pb-1.5 text-center font-mono">Qty</th>
-                <th class="pb-1.5 text-center font-mono">Angle 1</th>
-                <th class="pb-1.5 text-center font-mono">Angle 2</th>
-                <th class="pb-1.5">موقع الفضلة</th>
-                <th class="pb-1.5 text-center"></th>
-              </tr>
+              <tr class="text-slate-600 border-b border-slate-200 font-bold" id="offcutsHeadRow"></tr>
             </thead>
-            <tbody id="offcutsBody" class="divide-y divide-slate-100 font-mono text-xs">
-              <!-- Offcut rows -->
-            </tbody>
+            <tbody id="offcutsBody" class="divide-y divide-slate-100 font-mono text-xs"></tbody>
           </table>
           <div id="offcutsEmptyMsg" class="py-6 text-center text-slate-400 text-xs">
             لا توجد فضلات مسجلة بالمخزون حالياً.
@@ -525,7 +462,7 @@
       <div class="bg-white rounded border border-slate-300 p-2.5 flex flex-wrap items-center justify-between gap-2 no-print">
         <div class="flex items-center gap-2">
           <span class="w-2.5 h-2.5 rounded bg-slate-900 inline-block"></span>
-          <span class="font-bold text-xs text-slate-800">
+          <span class="font-bold text-xs text-slate-800" id="ui-sheetToolbarTitle">
             مخطط وأمر تشغيل قص الألمنيوم وتفصيل الزجاج للورشة (CAD Shop & Glass Schedule)
           </span>
         </div>
@@ -533,17 +470,17 @@
         <div class="flex items-center gap-2">
           <button onclick="window.print()" class="px-3.5 py-1.5 bg-slate-900 hover:bg-black text-white font-bold text-xs rounded transition flex items-center gap-1">
             <i data-lucide="printer" class="w-3.5 h-3.5"></i>
-            <span>طباعة المخطط الهندسي (A4 Print / PDF)</span>
+            <span id="ui-printBtn">طباعة المخطط الهندسي (A4 Print / PDF)</span>
           </button>
           
           <button onclick="exportSheetToPDF()" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-800 text-white font-bold text-xs rounded transition flex items-center gap-1">
             <i data-lucide="file-down" class="w-3.5 h-3.5"></i>
-            <span>تحميل PDF مباشر</span>
+            <span id="ui-pdfBtn">تحميل PDF مباشر</span>
           </button>
 
           <button onclick="exportToExcel()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs rounded border border-slate-300 transition flex items-center gap-1">
             <i data-lucide="file-spreadsheet" class="w-3.5 h-3.5"></i>
-            <span>Excel</span>
+            <span id="ui-excelBtn">Excel</span>
           </button>
         </div>
       </div>
@@ -561,9 +498,9 @@
               </h2>
             </div>
             <p class="text-[11px] text-slate-700">
-              المشروع: <strong id="metaProjName" class="text-slate-900 font-mono">Project-01</strong> | 
-              العميل: <strong id="metaClientName" class="text-slate-900">—</strong> | 
-              التاريخ: <strong id="metaDate" class="text-slate-900 font-mono">—</strong>
+              <span id="ui-metaProj">المشروع:</span> <strong id="metaProjName" class="text-slate-900 font-mono">Project-01</strong> | 
+              <span id="ui-metaClient">العميل:</span> <strong id="metaClientName" class="text-slate-900">—</strong> | 
+              <span id="ui-metaDate">التاريخ:</span> <strong id="metaDate" class="text-slate-900 font-mono">—</strong>
             </p>
           </div>
           <div class="text-left font-mono text-[10px] text-slate-600 border-l border-slate-300 pl-3">
@@ -575,7 +512,7 @@
 
         <!-- DYNAMIC CAD SHEET BODY -->
         <div id="technicianSheetContainer" class="space-y-4">
-          <p class="text-center py-12 text-slate-400 text-xs">
+          <p class="text-center py-12 text-slate-400 text-xs" id="ui-emptySheetMsg">
             يرجى تشغيل "حساب وتوليد المخطط الهندسي" لعرض لوحات القص والبيانات.
           </p>
         </div>
@@ -593,29 +530,29 @@
         <div class="bg-white rounded border border-slate-300 p-4 space-y-3">
           <div class="flex items-center gap-1.5 border-b border-slate-200 pb-2">
             <i data-lucide="edit-3" class="w-4 h-4 text-slate-700"></i>
-            <h3 class="font-bold text-slate-900 text-xs">بيانات المشروع</h3>
+            <h3 class="font-bold text-slate-900 text-xs" id="ui-projectDataHeader">بيانات المشروع</h3>
           </div>
 
           <div>
-            <label class="block text-[11px] font-bold text-slate-600 mb-0.5">اسم المشروع</label>
-            <input type="text" id="projectInputName" value="Project-01" class="w-full px-2.5 py-1.5 border border-slate-300 rounded text-xs font-bold outline-none">
+            <label class="block text-[11px] font-bold text-slate-600 mb-0.5" id="ui-projNameLabel">اسم المشروع</label>
+            <input type="text" id="projectInputName" value="Project-01" class="w-full px-2.5 py-1.5 border border-slate-300 rounded text-xs font-bold outline-none font-mono">
           </div>
 
           <div>
-            <label class="block text-[11px] font-bold text-slate-600 mb-0.5">اسم العميل</label>
-            <input type="text" id="projectInputClient" placeholder="اسم العميل" class="w-full px-2.5 py-1.5 border border-slate-300 rounded text-xs font-bold outline-none">
+            <label class="block text-[11px] font-bold text-slate-600 mb-0.5" id="ui-clientNameLabel">اسم العميل</label>
+            <input type="text" id="projectInputClient" placeholder="Client Name" class="w-full px-2.5 py-1.5 border border-slate-300 rounded text-xs font-bold outline-none">
           </div>
 
           <div>
-            <label class="block text-[11px] font-bold text-slate-600 mb-0.5">ملاحظات التشغيل</label>
-            <textarea id="projectInputNotes" rows="2" placeholder="ملاحظات..." class="w-full px-2.5 py-1.5 border border-slate-300 rounded text-xs outline-none"></textarea>
+            <label class="block text-[11px] font-bold text-slate-600 mb-0.5" id="ui-notesLabel">ملاحظات التشغيل</label>
+            <textarea id="projectInputNotes" rows="2" placeholder="Notes..." class="w-full px-2.5 py-1.5 border border-slate-300 rounded text-xs outline-none"></textarea>
           </div>
 
           <div class="flex items-center gap-2 pt-1">
-            <button onclick="saveCurrentProject(true)" class="flex-1 px-3 py-1.5 bg-slate-900 hover:bg-black text-white font-bold text-xs rounded transition">
+            <button onclick="saveCurrentProject(true)" class="flex-1 px-3 py-1.5 bg-slate-900 hover:bg-black text-white font-bold text-xs rounded transition" id="ui-saveProjBtn">
               حفظ المشروع
             </button>
-            <button onclick="createNewProject()" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs rounded border border-slate-300">
+            <button onclick="createNewProject()" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs rounded border border-slate-300" id="ui-newProjBtn">
               جديد
             </button>
           </div>
@@ -623,7 +560,7 @@
 
         <div class="bg-white rounded border border-slate-300 p-4 flex flex-col space-y-3">
           <div class="flex items-center justify-between border-b border-slate-200 pb-2">
-            <h3 class="font-bold text-slate-900 text-xs">المشاريع المحفوظة</h3>
+            <h3 class="font-bold text-slate-900 text-xs" id="ui-savedProjectsHeader">المشاريع المحفوظة</h3>
             <span id="savedProjectsCount" class="text-xs bg-slate-100 px-1.5 py-0.2 rounded font-mono font-bold">0</span>
           </div>
 
@@ -633,18 +570,18 @@
         <div class="bg-white rounded border border-slate-300 p-4 space-y-3">
           <div class="flex items-center gap-1.5 border-b border-slate-200 pb-2">
             <i data-lucide="share-2" class="w-4 h-4 text-slate-700"></i>
-            <h3 class="font-bold text-slate-900 text-xs">الملفات والتصدير</h3>
+            <h3 class="font-bold text-slate-900 text-xs" id="ui-filesHeader">الملفات والتصدير</h3>
           </div>
 
           <div class="space-y-2">
             <button onclick="exportProjectJSON()" class="w-full px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-900 font-bold text-xs rounded border border-slate-300 transition flex items-center justify-center gap-1.5">
               <i data-lucide="file-json" class="w-3.5 h-3.5"></i>
-              <span>تصدير ملف المشروع (JSON)</span>
+              <span id="ui-exportJsonBtn">تصدير ملف المشروع (JSON)</span>
             </button>
 
             <label class="w-full px-3 py-1.5 bg-slate-50 hover:bg-slate-100 text-slate-800 font-bold text-xs rounded border border-slate-300 border-dashed transition flex items-center justify-center gap-1.5 cursor-pointer">
               <i data-lucide="upload" class="w-3.5 h-3.5"></i>
-              <span>استيراد ملف JSON</span>
+              <span id="ui-importJsonBtn">استيراد ملف JSON</span>
               <input type="file" id="importJsonInput" accept=".json" class="hidden" onchange="importProjectJSON(event)">
             </label>
           </div>
@@ -658,15 +595,252 @@
   <!-- Footer -->
   <footer class="bg-white border-t border-slate-300 py-2.5 text-center text-xs text-slate-500 no-print">
     <div class="max-w-7xl mx-auto px-4 flex items-center justify-between">
-      <span>مخطط ومحسن تفصيل بروفيلات الألمنيوم والزجاج © 2026</span>
+      <span id="ui-footerText">مخطط ومحسن تفصيل بروفيلات الألمنيوم والزجاج © 2026</span>
       <span class="font-mono text-[11px] text-slate-400">Pure Engineering CAD System</span>
     </div>
   </footer>
 
-  <!-- ============================================== -->
-  <!-- JAVASCRIPT LOGIC (CLEAN CAD A4 ARCHITECTURE) -->
-  <!-- ============================================== -->
+  <!-- ========================================================================= -->
+  <!-- JAVASCRIPT: BILINGUAL ENGINE + STRICT LATIN/ENGLISH NUMBERS (0-9) -->
+  <!-- ========================================================================= -->
   <script>
+    let currentLang = 'ar'; // 'ar' | 'en'
+
+    const i18n = {
+      ar: {
+        appTitle: 'محسن ومخطط قص وتفصيل الألمنيوم والزجاج الهندسي',
+        appSubtitle: 'تخصيم متسلسل وهندسي مستقل لكل قطاع | أرقام ومقاسات بالمليمتر (كميات وأطوال فقط)',
+        stockLength: 'طول العود الخام',
+        bladeKerf: 'سماكة السلاح (Kerf)',
+        minOffcut: 'الحد الأدنى للفضلة',
+        trimCut: 'قصة تنظيف (Trim)',
+        useOffcutsFirst: 'استهلاك الفضلات أولاً',
+        calcBtn: 'حساب وتوليد المخطط الهندسي والزجاج',
+        tabWindows: '1. جدول النوافذ وتفصيل المقاسات',
+        tabSystems: '2. تعريف قطاعات السيستم (مفصولة بالنوع)',
+        tabParts: '3. قطع الألمنيوم المحسوبة للقص',
+        tabOffcuts: '4. مخزون الفضلات',
+        tabSheet: '5. ورقة الفني ومخطط القص والزجاج',
+        tabProjects: '6. المشاريع والتصدير',
+        saveBtn: 'حفظ',
+        winScheduleTitle: 'جدول مقاسات النوافذ وحسابات التخصيم المتسلسل (Windows & Glass Schedule)',
+        winScheduleSubtitle: 'اختر نوع الوحدة وسيقوم النظام بتطبيق المنطق الهندسي وتفصيل الدرف والزجاج الصافي تلقائياً',
+        addUnitBtn: 'إضافة نافذة جديدة',
+        sysHeader: 'أنظمة القطاعات المخصصة (مفصولة هندسياً حسب نوع النظام)',
+        sysSubHeader: 'لكل نوع نظام منطق ومقاطع تختلف تماماً عن غيره:',
+        addSlidingBtn: '+ سيستم سحاب',
+        addHingedBtn: '+ سيستم مفصلي',
+        addDoorBtn: '+ سيستم أبواب',
+        addFixedBtn: '+ سيستم ثابت',
+        catSlidingTitle: '1. أنظمة السحاب (Sliding) ⬅ تتكون الدرفة من: [درفة جنب + درفة شنكل + درفة كعب]',
+        catHingedTitle: '2. أنظمة الشبابيك المفصلية والقلاب (Casement) ⬅ تتكون من: [حلق مفصلي + درفة مفصلي موحدة + باكتة]',
+        catDoorTitle: '3. أنظمة الأبواب المفصلية (Doors) ⬅ تتكون من: [حلق باب 3 جهات + قائم باب + كعب سفلي + باكتة]',
+        catFixedTitle: '4. الأنظمة الثابتة (Fixed) ⬅ تتكون فقط من: [حلق ثابت + باكتة زجاج] (بدون أي درف نهائياً)',
+        partsHeader: 'قائمة قطع الألمنيوم المحسوبة للقص (مفصلة حسب نوع القطاع)',
+        refreshPartsBtn: 'تحديث الحسابات',
+        offcutsHeader: 'مخزون الفضلات المتوفرة بالورشة (Offcuts Stock)',
+        addOffcutBtn: '+ إضافة فضلة',
+        clearOffcutsBtn: 'مسح الكل',
+        sheetToolbarTitle: 'مخطط وأمر تشغيل قص الألمنيوم وتفصيل الزجاج للورشة (CAD Shop & Glass Schedule)',
+        printBtn: 'طباعة المخطط الهندسي (A4 Print / PDF)',
+        pdfBtn: 'تحميل PDF مباشر',
+        excelBtn: 'Excel',
+        sheetTitle: 'مخطط وأمر تشغيل قص بروفيلات الألمنيوم وتفصيل الزجاج',
+        metaProj: 'المشروع:',
+        metaClient: 'العميل:',
+        metaDate: 'التاريخ:',
+        emptySheetMsg: 'يرجى تشغيل "حساب وتوليد المخطط الهندسي" لعرض لوحات القص والبيانات.',
+        projectDataHeader: 'بيانات المشروع',
+        projNameLabel: 'اسم المشروع',
+        clientNameLabel: 'اسم العميل',
+        notesLabel: 'ملاحظات التشغيل',
+        saveProjBtn: 'حفظ المشروع',
+        newProjBtn: 'جديد',
+        savedProjectsHeader: 'المشاريع المحفوظة',
+        filesHeader: 'الملفات والتصدير',
+        exportJsonBtn: 'تصدير ملف المشروع (JSON)',
+        importJsonBtn: 'استيراد ملف JSON',
+        footerText: 'مخطط ومحسن تفصيل بروفيلات الألمنيوم والزجاج © 2026',
+        
+        // Dynamic Table Heads
+        th_code: 'كود النافذة',
+        th_type: 'نوع الوحدة',
+        th_frameSize: 'مقاس الحلق (W × H)',
+        th_qty: 'العدد',
+        th_matchingSystem: 'نظام القطاع المطابق',
+        th_sashDetail: 'تفصيل الدرفة الصافي (Ws × Hs)',
+        th_glassDetail: 'مقاس الزجاج الصافي (Wg × Hg)',
+        th_sysName: 'اسم السيستم',
+        th_frameCode: 'كود الحلق',
+        th_sideStile: 'درفة جنب',
+        th_interlock: 'درفة شنكل',
+        th_rail: 'درفة كعب',
+        th_sashCode: 'درفة مفصلي',
+        th_beadCode: 'باكتة زجاج',
+        th_doorStile: 'قائم الباب',
+        th_doorBotRail: 'كعب الباب السفلي',
+        th_fixedFrame: 'حلق ثابت',
+        th_sashWidth: 'عرض الدرفة (mm)',
+        th_heightClearance: 'خلوص الارتفاع (mm)',
+        th_widthOverlap: 'تراكب العرض (mm)',
+        th_glassPocket: 'فرزة الزجاج (mm)',
+        th_widthDeduct: 'خصم العرض (mm)',
+        th_heightDeduct: 'خصم الارتفاع (mm)',
+        th_frameThick: 'سماكة الفريم (mm)',
+        th_glassClearance: 'خلوص الزجاج (mm)',
+        
+        // Parts Table
+        th_targetProfile: 'القطاع المطلوب سحبه',
+        th_partLabel: 'الوحدة ومسمى القطعة',
+        th_dimType: 'النوع (W/H)',
+        th_length: 'الطول (mm)',
+        th_angles: 'الزوايا',
+        
+        // Offcuts
+        th_offcutLength: 'الطول (mm)',
+        th_angle1: 'زاوية 1',
+        th_angle2: 'زاوية 2',
+        th_location: 'موقع الفضلة',
+
+        // Sheet sections
+        sec1Title: '1. قائمة النوافذ الداخلة في أمر القص والتفصيل',
+        sec2Title: '2. إذن سحب الأعواد من المستودع',
+        sec3Title: '3. خرائط ومخططات القص التنفيذية على المنشار (2D Bar Maps + Cut Schedule)',
+        sec4Title: '4. كشف تفصيل ومقاسات ومساحات الزجاج (Glass Cutting Schedule)',
+        newBars: 'أعواد جديدة (6000mm)',
+        reqOffcuts: 'الفضلات المطلوبة',
+        used: 'المستهلك',
+        remain: 'المتبقي',
+        offcutValid: 'فضلة صالحة',
+        scrap: 'هالك',
+        doneCheck: 'تم [✔]',
+        totalPanesLabel: 'إجمالي ألواح الزجاج',
+        totalAreaLabel: 'المساحة الكلية',
+        areaPerPane: 'مساحة اللوح (m²)',
+        totArea: 'إجمالي المساحة (m²)',
+        noSashDirect: 'بدون درف (حلق مباشر)',
+        totalWinSummary: 'إجمالي النوافذ',
+        panesUnit: 'لوح',
+        unitsUnit: 'وحدة',
+      },
+      en: {
+        appTitle: 'Aluminum & Glass CAD Cutting Optimizer',
+        appSubtitle: 'Dedicated Cascading Optimization per System | Millimeters & Quantities Only',
+        stockLength: 'Stock Length',
+        bladeKerf: 'Blade Kerf',
+        minOffcut: 'Min Offcut',
+        trimCut: 'Trim Cut',
+        useOffcutsFirst: 'Use Offcuts First',
+        calcBtn: 'Calculate CAD & Glass Schedule',
+        tabWindows: '1. Windows & Glass Schedule',
+        tabSystems: '2. Systems & Profiles Setup',
+        tabParts: '3. Derived Cutting Pieces',
+        tabOffcuts: '4. Offcuts Stock',
+        tabSheet: '5. Workshop CAD & Glass Sheet',
+        tabProjects: '6. Projects & Export',
+        saveBtn: 'Save',
+        winScheduleTitle: 'Windows & Glass Fabrication Schedule',
+        winScheduleSubtitle: 'Select unit type to automatically apply its dedicated cascading deduction logic',
+        addUnitBtn: '+ Add Window / Unit',
+        sysHeader: 'Profile Systems Setup (Separated by Architectural Type)',
+        sysSubHeader: 'Each system type features its dedicated profile extrusions and deduction math:',
+        addSlidingBtn: '+ Sliding System',
+        addHingedBtn: '+ Casement System',
+        addDoorBtn: '+ Door System',
+        addFixedBtn: '+ Fixed System',
+        catSlidingTitle: '1. Sliding Systems ⬅ Sash Anatomy: [Side Stile + Interlock + Rail]',
+        catHingedTitle: '2. Casement Windows ⬅ Anatomy: [Casement Frame + Sash + Glass Bead]',
+        catDoorTitle: '3. Hinged Doors ⬅ Anatomy: [3-Sided Frame + Door Stile + Bottom Rail + Bead]',
+        catFixedTitle: '4. Fixed Windows ⬅ Anatomy: [Fixed Frame + Glass Bead (No Sash)]',
+        partsHeader: 'Derived Aluminum Cutting Pieces (Grouped by Profile)',
+        refreshPartsBtn: 'Refresh Calculations',
+        offcutsHeader: 'Available Offcuts Stock in Workshop',
+        addOffcutBtn: '+ Add Offcut',
+        clearOffcutsBtn: 'Clear All',
+        sheetToolbarTitle: 'Workshop CAD Cutting Maps & Glass Schedule',
+        printBtn: 'Print CAD Order (A4 / PDF)',
+        pdfBtn: 'Download PDF',
+        excelBtn: 'Excel',
+        sheetTitle: 'Aluminum Profile Cutting & Glass Fabrication Order',
+        metaProj: 'Project:',
+        metaClient: 'Client:',
+        metaDate: 'Date:',
+        emptySheetMsg: 'Please click "Calculate CAD & Glass Schedule" to generate drawings.',
+        projectDataHeader: 'Project Details',
+        projNameLabel: 'Project Name',
+        clientNameLabel: 'Client Name',
+        notesLabel: 'Fabrication Notes',
+        saveProjBtn: 'Save Project',
+        newProjBtn: 'New',
+        savedProjectsHeader: 'Saved Projects',
+        filesHeader: 'Files & Export',
+        exportJsonBtn: 'Export Project (JSON)',
+        importJsonBtn: 'Import JSON File',
+        footerText: 'Aluminum & Glass CAD Optimizer © 2026',
+
+        // Dynamic Table Heads
+        th_code: 'Unit Code',
+        th_type: 'Unit Type',
+        th_frameSize: 'Frame (W × H)',
+        th_qty: 'Qty',
+        th_matchingSystem: 'Matching System',
+        th_sashDetail: 'Net Sash Cut (Ws × Hs)',
+        th_glassDetail: 'Net Glass Cut (Wg × Hg)',
+        th_sysName: 'System Name',
+        th_frameCode: 'Frame Code',
+        th_sideStile: 'Side Stile',
+        th_interlock: 'Interlock',
+        th_rail: 'Rail',
+        th_sashCode: 'Casement Sash',
+        th_beadCode: 'Glass Bead',
+        th_doorStile: 'Door Stile',
+        th_doorBotRail: 'Bottom Rail',
+        th_fixedFrame: 'Fixed Frame',
+        th_sashWidth: 'Sash Width (mm)',
+        th_heightClearance: 'Height Clear. (mm)',
+        th_widthOverlap: 'Overlap (mm)',
+        th_glassPocket: 'Pocket Depth (mm)',
+        th_widthDeduct: 'Width Deduct (mm)',
+        th_heightDeduct: 'Height Deduct (mm)',
+        th_frameThick: 'Frame Thick. (mm)',
+        th_glassClearance: 'Glass Clear. (mm)',
+
+        // Parts Table
+        th_targetProfile: 'Target Stock Profile',
+        th_partLabel: 'Unit & Part Identity',
+        th_dimType: 'Type (W/H)',
+        th_length: 'Length (mm)',
+        th_angles: 'Angles',
+
+        // Offcuts
+        th_offcutLength: 'Length (mm)',
+        th_angle1: 'Angle 1',
+        th_angle2: 'Angle 2',
+        th_location: 'Location',
+
+        // Sheet sections
+        sec1Title: '1. Windows & Units Fabrication List',
+        sec2Title: '2. Stock Requisition & Warehouse Pull List',
+        sec3Title: '3. 2D Bar Cutting Maps & Machine Step Schedule',
+        sec4Title: '4. Glass Cutting & Pane Fabrication Schedule',
+        newBars: 'New Bars (6000mm)',
+        reqOffcuts: 'Required Offcuts',
+        used: 'Used',
+        remain: 'Remain',
+        offcutValid: 'Reusable Offcut',
+        scrap: 'Scrap',
+        doneCheck: 'Done [✔]',
+        totalPanesLabel: 'TOTAL PANES',
+        totalAreaLabel: 'TOTAL AREA',
+        areaPerPane: 'Area / Pane (m²)',
+        totArea: 'Total Area (m²)',
+        noSashDirect: 'Fixed Frame (No Sash)',
+        totalWinSummary: 'Total Units',
+        panesUnit: 'panes',
+        unitsUnit: 'units',
+      }
+    };
+
     let currentProject = {
       name: 'Project-01',
       client: 'Client-01',
@@ -674,17 +848,22 @@
       updatedAt: new Date().toISOString()
     };
 
-    // 4 Independent Categories of Systems
+    // Bilingual Default Systems
     let systems = [
       // 1. Sliding Systems
       {
         id: 1,
         category: 'sliding',
-        name: 'نظام سحاب 100mm (Saraya / Standard)',
-        frameCode: 'FR-100 (Frame 100mm)',
-        sideStileCode: 'SA-SIDE (Side Stile)',
-        interlockCode: 'SA-INTER (Interlock)',
-        railCode: 'SA-RAIL (Top/Bot Rail)',
+        name_ar: 'نظام سحاب 10سم (سرايا / قياسي)',
+        name_en: '100mm Sliding System (Saraya / Standard)',
+        frameCode_ar: 'حلق سحاب 10سم (FR-100)',
+        frameCode_en: 'Frame 100mm (FR-100)',
+        sideStileCode_ar: 'درفة جنب (SA-SIDE)',
+        sideStileCode_en: 'Side Stile (SA-SIDE)',
+        interlockCode_ar: 'درفة شنكل (SA-INTER)',
+        interlockCode_en: 'Interlock (SA-INTER)',
+        railCode_ar: 'درفة كعب (SA-RAIL)',
+        railCode_en: 'Top/Bottom Rail (SA-RAIL)',
         frameThickness: 45,
         sashWidth: 65,
         heightClearance: 75,
@@ -696,11 +875,16 @@
       {
         id: 2,
         category: 'sliding',
-        name: 'نظام سحاب 120mm جامبو (Jumbo Sliding)',
-        frameCode: 'FR-120 (Frame 120mm)',
-        sideStileCode: 'SA-SIDE-12 (Side Stile 12)',
-        interlockCode: 'SA-INTER-12 (Interlock 12)',
-        railCode: 'SA-RAIL-12 (Rail 12)',
+        name_ar: 'نظام سحاب 12سم جامبو (Super Saraya)',
+        name_en: '120mm Jumbo Sliding (Super Saraya)',
+        frameCode_ar: 'حلق سحاب 12سم (FR-120)',
+        frameCode_en: 'Frame 120mm (FR-120)',
+        sideStileCode_ar: 'درفة جنب 12 (SA-SIDE-12)',
+        sideStileCode_en: 'Side Stile 12 (SA-SIDE-12)',
+        interlockCode_ar: 'درفة شنكل 12 (SA-INTER-12)',
+        interlockCode_en: 'Interlock 12 (SA-INTER-12)',
+        railCode_ar: 'درفة كعب 12 (SA-RAIL-12)',
+        railCode_en: 'Rail 12 (SA-RAIL-12)',
         frameThickness: 50,
         sashWidth: 75,
         heightClearance: 80,
@@ -714,10 +898,14 @@
       {
         id: 3,
         category: 'hinged-window',
-        name: 'نظام مفصلي شبابيك 50mm (Casement Window)',
-        frameCode: 'FR-50 (Casement Frame)',
-        sashCode: 'SA-50 (Casement Sash)',
-        beadCode: 'BD-20 (Glass Bead)',
+        name_ar: 'نظام مفصلي شبابيك 50مم (Casement)',
+        name_en: '50mm Casement Window System',
+        frameCode_ar: 'حلق مفصلي (FR-50)',
+        frameCode_en: 'Casement Frame (FR-50)',
+        sashCode_ar: 'درفة مفصلي (SA-50)',
+        sashCode_en: 'Casement Sash (SA-50)',
+        beadCode_ar: 'باكتة زجاج (BD-20)',
+        beadCode_en: 'Glass Bead (BD-20)',
         frameThickness: 50,
         sashWidth: 68,
         widthDeduction: 86,
@@ -731,11 +919,16 @@
       {
         id: 4,
         category: 'hinged-door',
-        name: 'نظام باب مفصلي 50mm (Hinged Door)',
-        frameCode: 'DFR-50 (Door Frame 3-Sides)',
-        doorStileCode: 'DST-85 (Door Stile 85mm)',
-        doorBottomRailCode: 'DBOT-120 (Door Bottom Rail)',
-        beadCode: 'BD-20 (Glass Bead)',
+        name_ar: 'نظام باب مفصلي 50مم (Hinged Door)',
+        name_en: '50mm Hinged Door System',
+        frameCode_ar: 'حلق باب 3 جهات (DFR-50)',
+        frameCode_en: 'Door Frame 3-Sides (DFR-50)',
+        doorStileCode_ar: 'قائم باب عريض (DST-85)',
+        doorStileCode_en: 'Door Stile (DST-85)',
+        doorBottomRailCode_ar: 'كعب باب سفلي (DBOT-120)',
+        doorBottomRailCode_en: 'Door Bottom Rail (DBOT-120)',
+        beadCode_ar: 'باكتة زجاج باب (BD-20)',
+        beadCode_en: 'Door Glass Bead (BD-20)',
         frameThickness: 50,
         doorStileWidth: 85,
         widthDeduction: 100,
@@ -749,9 +942,12 @@
       {
         id: 5,
         category: 'fixed',
-        name: 'نظام ثابت 50mm (Fixed Frame)',
-        frameCode: 'FR-50 (Fixed Frame)',
-        beadCode: 'BD-20 (Glass Bead)',
+        name_ar: 'نظام ثابت 50مم (Fixed Frame)',
+        name_en: '50mm Fixed Window System',
+        frameCode_ar: 'حلق ثابت (FR-50)',
+        frameCode_en: 'Fixed Frame (FR-50)',
+        beadCode_ar: 'باكتة زجاج (BD-20)',
+        beadCode_en: 'Glass Bead (BD-20)',
         frameThickness: 45,
         glassPocketDepth: 16,
         glassClearance: 4,
@@ -781,6 +977,213 @@
     let nextWindowId = 6;
     let nextSystemId = 6;
     let nextOffcutId = 3;
+
+    function getSysName(s) {
+      return (currentLang === 'ar' ? (s.name_ar || s.name) : (s.name_en || s.name));
+    }
+    function getSysFrame(s) {
+      return (currentLang === 'ar' ? (s.frameCode_ar || s.frameCode) : (s.frameCode_en || s.frameCode));
+    }
+    function getSysSide(s) {
+      return (currentLang === 'ar' ? (s.sideStileCode_ar || s.sideStileCode) : (s.sideStileCode_en || s.sideStileCode));
+    }
+    function getSysInter(s) {
+      return (currentLang === 'ar' ? (s.interlockCode_ar || s.interlockCode) : (s.interlockCode_en || s.interlockCode));
+    }
+    function getSysRail(s) {
+      return (currentLang === 'ar' ? (s.railCode_ar || s.railCode) : (s.railCode_en || s.railCode));
+    }
+    function getSysSash(s) {
+      return (currentLang === 'ar' ? (s.sashCode_ar || s.sashCode) : (s.sashCode_en || s.sashCode));
+    }
+    function getSysBead(s) {
+      return (currentLang === 'ar' ? (s.beadCode_ar || s.beadCode) : (s.beadCode_en || s.beadCode));
+    }
+    function getSysDoorStile(s) {
+      return (currentLang === 'ar' ? (s.doorStileCode_ar || s.doorStileCode) : (s.doorStileCode_en || s.doorStileCode));
+    }
+    function getSysDoorBot(s) {
+      return (currentLang === 'ar' ? (s.doorBottomRailCode_ar || s.doorBottomRailCode) : (s.doorBottomRailCode_en || s.doorBottomRailCode));
+    }
+
+    function toggleLanguage() {
+      currentLang = (currentLang === 'ar' ? 'en' : 'ar');
+      document.documentElement.lang = currentLang;
+      document.documentElement.dir = (currentLang === 'ar' ? 'rtl' : 'ltr');
+      
+      const btnLabel = document.getElementById('langSwitchLabel');
+      if (btnLabel) btnLabel.textContent = (currentLang === 'ar' ? 'English' : 'عربي');
+
+      updateStaticUIText();
+      renderSystemsTable();
+      renderWindowsSchedule();
+      recalculateAllPartsFromWindows();
+      renderOffcuts();
+      if (lastOptimizationResult) {
+        renderWorkshopSheet(lastOptimizationResult.allBars, lastOptimizationResult.kerf, lastOptimizationResult.trimCut, lastOptimizationResult.minOffcut);
+      }
+      lucide.createIcons();
+    }
+
+    function updateStaticUIText() {
+      const t = i18n[currentLang];
+      const setTxt = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
+
+      setTxt('ui-appTitle', t.appTitle);
+      setTxt('ui-appSubtitle', t.appSubtitle);
+      setTxt('ui-stockLength', t.stockLength);
+      setTxt('ui-bladeKerf', t.bladeKerf);
+      setTxt('ui-minOffcut', t.minOffcut);
+      setTxt('ui-trimCut', t.trimCut);
+      setTxt('ui-useOffcutsFirst', t.useOffcutsFirst);
+      setTxt('ui-calcBtn', t.calcBtn);
+      setTxt('ui-tabWindows', t.tabWindows);
+      setTxt('ui-tabSystems', t.tabSystems);
+      setTxt('ui-tabParts', t.tabParts);
+      setTxt('ui-tabOffcuts', t.tabOffcuts);
+      setTxt('ui-tabSheet', t.tabSheet);
+      setTxt('ui-tabProjects', t.tabProjects);
+      setTxt('ui-saveBtn', t.saveBtn);
+      setTxt('ui-winScheduleTitle', t.winScheduleTitle);
+      setTxt('ui-winScheduleSubtitle', t.winScheduleSubtitle);
+      setTxt('ui-addUnitBtn', t.addUnitBtn);
+      setTxt('ui-sysHeader', t.sysHeader);
+      setTxt('ui-sysSubHeader', t.sysSubHeader);
+      setTxt('ui-addSlidingBtn', t.addSlidingBtn);
+      setTxt('ui-addHingedBtn', t.addHingedBtn);
+      setTxt('ui-addDoorBtn', t.addDoorBtn);
+      setTxt('ui-addFixedBtn', t.addFixedBtn);
+      setTxt('ui-catSlidingTitle', t.catSlidingTitle);
+      setTxt('ui-catHingedTitle', t.catHingedTitle);
+      setTxt('ui-catDoorTitle', t.catDoorTitle);
+      setTxt('ui-catFixedTitle', t.catFixedTitle);
+      setTxt('ui-partsHeader', t.partsHeader);
+      setTxt('ui-refreshPartsBtn', t.refreshPartsBtn);
+      setTxt('ui-offcutsHeader', t.offcutsHeader);
+      setTxt('ui-addOffcutBtn', t.addOffcutBtn);
+      setTxt('ui-clearOffcutsBtn', t.clearOffcutsBtn);
+      setTxt('ui-sheetToolbarTitle', t.sheetToolbarTitle);
+      setTxt('ui-printBtn', t.printBtn);
+      setTxt('ui-pdfBtn', t.pdfBtn);
+      setTxt('ui-excelBtn', t.excelBtn);
+      setTxt('printDocTitle', t.sheetTitle);
+      setTxt('ui-metaProj', t.metaProj);
+      setTxt('ui-metaClient', t.metaClient);
+      setTxt('ui-metaDate', t.metaDate);
+      setTxt('ui-emptySheetMsg', t.emptySheetMsg);
+      setTxt('ui-projectDataHeader', t.projectDataHeader);
+      setTxt('ui-projNameLabel', t.projNameLabel);
+      setTxt('ui-clientNameLabel', t.clientNameLabel);
+      setTxt('ui-notesLabel', t.notesLabel);
+      setTxt('ui-saveProjBtn', t.saveProjBtn);
+      setTxt('ui-newProjBtn', t.newProjBtn);
+      setTxt('ui-savedProjectsHeader', t.savedProjectsHeader);
+      setTxt('ui-filesHeader', t.filesHeader);
+      setTxt('ui-exportJsonBtn', t.exportJsonBtn);
+      setTxt('ui-importJsonBtn', t.importJsonBtn);
+      setTxt('ui-footerText', t.footerText);
+
+      // Table Headers
+      const winHead = document.getElementById('windowsHeadRow');
+      if (winHead) {
+        winHead.innerHTML = `
+          <th class="py-1.5 px-2 text-center w-8 font-mono">#</th>
+          <th class="py-1.5 px-2">${t.th_code}</th>
+          <th class="py-1.5 px-2">${t.th_type}</th>
+          <th class="py-1.5 px-2 text-center font-mono">${t.th_frameSize}</th>
+          <th class="py-1.5 px-2 text-center font-mono">${t.th_qty}</th>
+          <th class="py-1.5 px-2">${t.th_matchingSystem}</th>
+          <th class="py-1.5 px-2 text-center border-x border-slate-300 bg-slate-50">${t.th_sashDetail}</th>
+          <th class="py-1.5 px-2 text-center border-x border-slate-300 bg-slate-50 font-mono">${t.th_glassDetail}</th>
+          <th class="py-1.5 px-2 text-center w-14"></th>
+        `;
+      }
+
+      const slidingHead = document.getElementById('slidingHeadRow');
+      if (slidingHead) {
+        slidingHead.innerHTML = `
+          <th class="py-1.5 px-2">${t.th_sysName}</th>
+          <th class="py-1.5 px-2 font-mono">${t.th_frameCode}</th>
+          <th class="py-1.5 px-2 font-mono">${t.th_sideStile}</th>
+          <th class="py-1.5 px-2 font-mono">${t.th_interlock}</th>
+          <th class="py-1.5 px-2 font-mono">${t.th_rail}</th>
+          <th class="py-1.5 px-2 text-center">${t.th_sashWidth}</th>
+          <th class="py-1.5 px-2 text-center">${t.th_heightClearance}</th>
+          <th class="py-1.5 px-2 text-center">${t.th_widthOverlap}</th>
+          <th class="py-1.5 px-2 text-center">${t.th_glassPocket}</th>
+          <th class="py-1.5 px-2 text-center w-8"></th>
+        `;
+      }
+
+      const hingedHead = document.getElementById('hingedHeadRow');
+      if (hingedHead) {
+        hingedHead.innerHTML = `
+          <th class="py-1.5 px-2">${t.th_sysName}</th>
+          <th class="py-1.5 px-2 font-mono">${t.th_frameCode}</th>
+          <th class="py-1.5 px-2 font-mono">${t.th_sashCode}</th>
+          <th class="py-1.5 px-2 font-mono">${t.th_beadCode}</th>
+          <th class="py-1.5 px-2 text-center">${t.th_sashWidth}</th>
+          <th class="py-1.5 px-2 text-center">${t.th_widthDeduct}</th>
+          <th class="py-1.5 px-2 text-center">${t.th_heightDeduct}</th>
+          <th class="py-1.5 px-2 text-center">${t.th_glassPocket}</th>
+          <th class="py-1.5 px-2 text-center w-8"></th>
+        `;
+      }
+
+      const doorHead = document.getElementById('doorHeadRow');
+      if (doorHead) {
+        doorHead.innerHTML = `
+          <th class="py-1.5 px-2">${t.th_sysName}</th>
+          <th class="py-1.5 px-2 font-mono">${t.th_frameCode}</th>
+          <th class="py-1.5 px-2 font-mono">${t.th_doorStile}</th>
+          <th class="py-1.5 px-2 font-mono">${t.th_doorBotRail}</th>
+          <th class="py-1.5 px-2 font-mono">${t.th_beadCode}</th>
+          <th class="py-1.5 px-2 text-center">${t.th_sashWidth}</th>
+          <th class="py-1.5 px-2 text-center">${t.th_widthDeduct}</th>
+          <th class="py-1.5 px-2 text-center">${t.th_heightDeduct}</th>
+          <th class="py-1.5 px-2 text-center w-8"></th>
+        `;
+      }
+
+      const fixedHead = document.getElementById('fixedHeadRow');
+      if (fixedHead) {
+        fixedHead.innerHTML = `
+          <th class="py-1.5 px-2">${t.th_sysName}</th>
+          <th class="py-1.5 px-2 font-mono">${t.th_fixedFrame}</th>
+          <th class="py-1.5 px-2 font-mono">${t.th_beadCode}</th>
+          <th class="py-1.5 px-2 text-center">${t.th_frameThick}</th>
+          <th class="py-1.5 px-2 text-center">${t.th_glassPocket}</th>
+          <th class="py-1.5 px-2 text-center">${t.th_glassClearance}</th>
+          <th class="py-1.5 px-2 text-center w-8"></th>
+        `;
+      }
+
+      const partsHead = document.getElementById('partsHeadRow');
+      if (partsHead) {
+        partsHead.innerHTML = `
+          <th class="pb-1.5">${t.th_targetProfile}</th>
+          <th class="pb-1.5">${t.th_partLabel}</th>
+          <th class="pb-1.5 text-center font-mono">${t.th_dimType}</th>
+          <th class="pb-1.5 text-center font-mono">${t.th_length}</th>
+          <th class="pb-1.5 text-center font-mono">${t.th_qty}</th>
+          <th class="pb-1.5 text-center font-mono">${t.th_angles}</th>
+          <th class="pb-1.5 text-center"></th>
+        `;
+      }
+
+      const offcutsHead = document.getElementById('offcutsHeadRow');
+      if (offcutsHead) {
+        offcutsHead.innerHTML = `
+          <th class="pb-1.5">${t.th_targetProfile}</th>
+          <th class="pb-1.5 text-center font-mono">${t.th_offcutLength}</th>
+          <th class="pb-1.5 text-center font-mono">${t.th_qty}</th>
+          <th class="pb-1.5 text-center font-mono">${t.th_angle1}</th>
+          <th class="pb-1.5 text-center font-mono">${t.th_angle2}</th>
+          <th class="pb-1.5">${t.th_location}</th>
+          <th class="pb-1.5 text-center"></th>
+        `;
+      }
+    }
 
     function switchTab(tabId) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
@@ -818,19 +1221,19 @@
           numSashes = 2;
           sashW = Math.round((W + sys.widthOverlap) / 2);
           sashH = Math.round(H - sys.heightClearance);
-          sashTypeLabel = '2 Sashes (Side/Inter/Rail)';
+          sashTypeLabel = (currentLang === 'ar' ? '2 درفة سحاب (جنب/شنكل/كعب)' : '2 Sashes (Side/Inter/Rail)');
           panesPerUnit = 2 * qty;
         } else if (unit.type === 'sliding-3') {
           numSashes = 3;
           sashW = Math.round((W + 2 * sys.widthOverlap) / 3);
           sashH = Math.round(H - sys.heightClearance);
-          sashTypeLabel = '3 Sashes';
+          sashTypeLabel = (currentLang === 'ar' ? '3 درف سحاب' : '3 Sashes');
           panesPerUnit = 3 * qty;
         } else if (unit.type === 'sliding-4') {
           numSashes = 4;
           sashW = Math.round((W + 2 * sys.widthOverlap) / 4);
           sashH = Math.round(H - sys.heightClearance);
-          sashTypeLabel = '4 Sashes';
+          sashTypeLabel = (currentLang === 'ar' ? '4 درف سحاب' : '4 Sashes');
           panesPerUnit = 4 * qty;
         }
         glassW = Math.round(sashW - (2 * sys.sashWidth) + (2 * sys.glassPocketDepth) - sys.glassClearance);
@@ -842,7 +1245,7 @@
         numSashes = 1;
         sashW = Math.max(100, Math.round(W - (sys.widthDeduction || 86)));
         sashH = Math.max(100, Math.round(H - (sys.heightDeduction || 86)));
-        sashTypeLabel = '1 Hinged Sash';
+        sashTypeLabel = (currentLang === 'ar' ? 'درفة مفصلي موحدة' : '1 Hinged Sash');
         panesPerUnit = 1 * qty;
         glassW = Math.round(sashW - (2 * (sys.sashWidth || 68)) + (2 * sys.glassPocketDepth) - sys.glassClearance);
         glassH = Math.round(sashH - (2 * (sys.sashWidth || 68)) + (2 * sys.glassPocketDepth) - sys.glassClearance);
@@ -853,7 +1256,7 @@
         numSashes = 1;
         sashW = Math.max(100, Math.round(W - (sys.widthDeduction || 100)));
         sashH = Math.max(100, Math.round(H - (sys.heightDeduction || 65)));
-        sashTypeLabel = '1 Door Leaf (Stile/Rail)';
+        sashTypeLabel = (currentLang === 'ar' ? 'درفة باب (قائم وكعب)' : '1 Door Leaf (Stile/Rail)');
         panesPerUnit = 1 * qty;
         glassW = Math.round(sashW - (2 * (sys.doorStileWidth || 85)) + (2 * sys.glassPocketDepth) - sys.glassClearance);
         glassH = Math.round(sashH - (85 + 120) + (2 * sys.glassPocketDepth) - sys.glassClearance);
@@ -864,7 +1267,7 @@
         numSashes = 0;
         sashW = W;
         sashH = H;
-        sashTypeLabel = 'Fixed (Direct Frame)';
+        sashTypeLabel = (currentLang === 'ar' ? 'ثابت (مباشر بالحلق)' : 'Fixed (Direct Frame)');
         panesPerUnit = 1 * qty;
         glassW = Math.round(W - (2 * sys.frameThickness) + (2 * sys.glassPocketDepth) - sys.glassClearance);
         glassH = Math.round(H - (2 * sys.frameThickness) + (2 * sys.glassPocketDepth) - sys.glassClearance);
@@ -891,6 +1294,7 @@
       const tbody = document.getElementById('windowsBody');
       if (!tbody) return;
 
+      const t = i18n[currentLang];
       let totalGlassPanes = 0;
       let totalGlassArea = 0;
 
@@ -902,7 +1306,7 @@
 
         const filteredSystems = systems.filter(s => s.category === matchingCategory);
         const sysOptions = filteredSystems.map(s => 
-          `<option value="${s.id}" ${s.id === u.systemId ? 'selected' : ''}>${s.name}</option>`
+          `<option value="${s.id}" ${s.id === u.systemId ? 'selected' : ''}>${getSysName(s)}</option>`
         ).join('');
 
         const cascade = computeCascadeForUnit(u);
@@ -918,17 +1322,17 @@
             </td>
             <td class="py-1.5 px-2">
               <select onchange="changeUnitType(${u.id}, this.value)" class="px-2 py-1 border border-slate-300 rounded bg-white text-slate-900 font-medium">
-                <option value="sliding-2" ${u.type === 'sliding-2' ? 'selected' : ''}>سحاب (2 درفة)</option>
-                <option value="sliding-3" ${u.type === 'sliding-3' ? 'selected' : ''}>سحاب (3 درف)</option>
-                <option value="sliding-4" ${u.type === 'sliding-4' ? 'selected' : ''}>سحاب (4 درف)</option>
-                <option value="hinged-window" ${u.type === 'hinged-window' ? 'selected' : ''}>شباك مفصلي</option>
-                <option value="hinged-door" ${u.type === 'hinged-door' ? 'selected' : ''}>باب مفصلي</option>
-                <option value="fixed" ${u.type === 'fixed' ? 'selected' : ''}>ثابت (بدون درف)</option>
+                <option value="sliding-2" ${u.type === 'sliding-2' ? 'selected' : ''}>${currentLang === 'ar' ? 'سحاب (2 درفة)' : 'Sliding (2 Sashes)'}</option>
+                <option value="sliding-3" ${u.type === 'sliding-3' ? 'selected' : ''}>${currentLang === 'ar' ? 'سحاب (3 درف)' : 'Sliding (3 Sashes)'}</option>
+                <option value="sliding-4" ${u.type === 'sliding-4' ? 'selected' : ''}>${currentLang === 'ar' ? 'سحاب (4 درف)' : 'Sliding (4 Sashes)'}</option>
+                <option value="hinged-window" ${u.type === 'hinged-window' ? 'selected' : ''}>${currentLang === 'ar' ? 'شباك مفصلي' : 'Casement Window'}</option>
+                <option value="hinged-door" ${u.type === 'hinged-door' ? 'selected' : ''}>${currentLang === 'ar' ? 'باب مفصلي' : 'Hinged Door'}</option>
+                <option value="fixed" ${u.type === 'fixed' ? 'selected' : ''}>${currentLang === 'ar' ? 'ثابت (بدون درف)' : 'Fixed Frame (No Sash)'}</option>
               </select>
             </td>
             <td class="py-1.5 px-2 text-center font-bold font-mono">
-              <input type="number" value="${u.width}" onchange="updateWindowUnit(${u.id}, 'width', +this.value)" class="w-16 px-1 py-1 border rounded text-center"> × 
-              <input type="number" value="${u.height}" onchange="updateWindowUnit(${u.id}, 'height', +this.value)" class="w-16 px-1 py-1 border rounded text-center">
+              <input type="number" value="${u.width}" onchange="updateWindowUnit(${u.id}, 'width', +this.value)" class="w-16 px-1 py-1 border rounded text-center font-mono"> × 
+              <input type="number" value="${u.height}" onchange="updateWindowUnit(${u.id}, 'height', +this.value)" class="w-16 px-1 py-1 border rounded text-center font-mono">
             </td>
             <td class="py-1.5 px-2 text-center">
               <input type="number" value="${u.qty}" min="1" max="100" onchange="updateWindowUnit(${u.id}, 'qty', +this.value)" class="w-12 px-1 py-1 border rounded text-center font-mono font-bold">
@@ -940,20 +1344,20 @@
             </td>
             
             <td class="py-1.5 px-2 text-center font-mono font-bold text-slate-900 border-x border-slate-200">
-              ${cascade.numSashes > 0 ? `${cascade.sashW} × ${cascade.sashH} mm <span class="block text-[10px] font-normal text-slate-500 font-sans">(${cascade.sashTypeLabel})</span>` : '<span class="text-slate-400 font-sans">بدون درف (حلق مباشر)</span>'}
+              ${cascade.numSashes > 0 ? `${cascade.sashW} × ${cascade.sashH} mm <span class="block text-[10px] font-normal text-slate-500 font-sans">(${cascade.sashTypeLabel})</span>` : `<span class="text-slate-400 font-sans">${t.noSashDirect}</span>`}
             </td>
 
             <td class="py-1.5 px-2 text-center font-mono font-bold text-slate-900 border-x border-slate-200 bg-slate-50/50">
               ${cascade.glassW} × ${cascade.glassH} mm
-              <span class="block text-[10px] font-normal text-slate-600 font-mono">(${cascade.panesPerUnit} panes • ${cascade.totalGlassArea} m²)</span>
+              <span class="block text-[10px] font-normal text-slate-600 font-mono">(${cascade.panesPerUnit} ${t.panesUnit} • ${cascade.totalGlassArea} m²)</span>
             </td>
 
             <td class="py-1.5 px-2 text-center">
               <div class="flex items-center justify-center gap-1">
-                <button onclick="duplicateWindowUnit(${u.id})" class="text-slate-400 hover:text-slate-700" title="تكرار">
+                <button onclick="duplicateWindowUnit(${u.id})" class="text-slate-400 hover:text-slate-700" title="Duplicate">
                   <i data-lucide="copy" class="w-3.5 h-3.5"></i>
                 </button>
-                <button onclick="removeWindowUnit(${u.id})" class="text-slate-400 hover:text-rose-600" title="حذف">
+                <button onclick="removeWindowUnit(${u.id})" class="text-slate-400 hover:text-rose-600" title="Delete">
                   <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                 </button>
               </div>
@@ -962,9 +1366,12 @@
         `;
       }).join('');
 
-      document.getElementById('totalUnitsCount').textContent = windowUnits.reduce((s, u) => s + (u.qty || 1), 0);
-      document.getElementById('totalGlassPanesCount').textContent = totalGlassPanes;
-      document.getElementById('totalGlassAreaSquareMeters').textContent = totalGlassArea.toFixed(2);
+      const totalWins = windowUnits.reduce((s, u) => s + (u.qty || 1), 0);
+      document.getElementById('windowsSummaryRow').innerHTML = `
+        ${t.totalWinSummary}: <strong class="text-slate-900 font-mono font-bold">${totalWins}</strong> ${t.unitsUnit} | 
+        ${t.totalPanesLabel}: <strong class="text-slate-900 font-mono font-bold">${totalGlassPanes}</strong> ${t.panesUnit} | 
+        ${t.totalAreaLabel}: <strong class="text-slate-900 font-mono font-bold">${totalGlassArea.toFixed(2)}</strong> m²
+      `;
 
       lucide.createIcons();
     }
@@ -1010,7 +1417,7 @@
     }
 
     function removeWindowUnit(id) {
-      if (windowUnits.length <= 1) { alert('يجب الإبقاء على نافذة واحدة على الأقل.'); return; }
+      if (windowUnits.length <= 1) { alert('Keep at least 1 unit.'); return; }
       windowUnits = windowUnits.filter(u => u.id !== id);
       renderWindowsSchedule();
       recalculateAllPartsFromWindows();
@@ -1034,11 +1441,11 @@
         const slidingList = systems.filter(s => s.category === 'sliding');
         slidingBody.innerHTML = slidingList.map(s => `
           <tr class="hover:bg-slate-50">
-            <td class="py-1.5 px-2 font-bold"><input type="text" value="${s.name}" onchange="updateSystem(${s.id}, 'name', this.value)" class="w-44 px-1.5 py-1 border rounded bg-white"></td>
-            <td class="py-1.5 px-2 font-mono"><input type="text" value="${s.frameCode}" onchange="updateSystem(${s.id}, 'frameCode', this.value)" class="w-28 px-1 py-0.5 border rounded"></td>
-            <td class="py-1.5 px-2 font-mono"><input type="text" value="${s.sideStileCode}" onchange="updateSystem(${s.id}, 'sideStileCode', this.value)" class="w-28 px-1 py-0.5 border rounded font-bold"></td>
-            <td class="py-1.5 px-2 font-mono"><input type="text" value="${s.interlockCode}" onchange="updateSystem(${s.id}, 'interlockCode', this.value)" class="w-28 px-1 py-0.5 border rounded font-bold"></td>
-            <td class="py-1.5 px-2 font-mono"><input type="text" value="${s.railCode}" onchange="updateSystem(${s.id}, 'railCode', this.value)" class="w-28 px-1 py-0.5 border rounded font-bold"></td>
+            <td class="py-1.5 px-2 font-bold"><input type="text" value="${getSysName(s)}" onchange="updateSystem(${s.id}, '${currentLang === 'ar' ? 'name_ar' : 'name_en'}', this.value)" class="w-44 px-1.5 py-1 border rounded bg-white"></td>
+            <td class="py-1.5 px-2 font-mono"><input type="text" value="${getSysFrame(s)}" onchange="updateSystem(${s.id}, '${currentLang === 'ar' ? 'frameCode_ar' : 'frameCode_en'}', this.value)" class="w-28 px-1 py-0.5 border rounded"></td>
+            <td class="py-1.5 px-2 font-mono"><input type="text" value="${getSysSide(s)}" onchange="updateSystem(${s.id}, '${currentLang === 'ar' ? 'sideStileCode_ar' : 'sideStileCode_en'}', this.value)" class="w-28 px-1 py-0.5 border rounded font-bold"></td>
+            <td class="py-1.5 px-2 font-mono"><input type="text" value="${getSysInter(s)}" onchange="updateSystem(${s.id}, '${currentLang === 'ar' ? 'interlockCode_ar' : 'interlockCode_en'}', this.value)" class="w-28 px-1 py-0.5 border rounded font-bold"></td>
+            <td class="py-1.5 px-2 font-mono"><input type="text" value="${getSysRail(s)}" onchange="updateSystem(${s.id}, '${currentLang === 'ar' ? 'railCode_ar' : 'railCode_en'}', this.value)" class="w-28 px-1 py-0.5 border rounded font-bold"></td>
             <td class="py-1.5 px-2 text-center"><input type="number" value="${s.sashWidth}" onchange="updateSystem(${s.id}, 'sashWidth', +this.value)" class="w-12 px-1 py-0.5 border rounded text-center font-mono font-bold"></td>
             <td class="py-1.5 px-2 text-center"><input type="number" value="${s.heightClearance}" onchange="updateSystem(${s.id}, 'heightClearance', +this.value)" class="w-12 px-1 py-0.5 border rounded text-center font-mono font-bold"></td>
             <td class="py-1.5 px-2 text-center"><input type="number" value="${s.widthOverlap}" onchange="updateSystem(${s.id}, 'widthOverlap', +this.value)" class="w-12 px-1 py-0.5 border rounded text-center font-mono font-bold"></td>
@@ -1053,10 +1460,10 @@
         const hingedList = systems.filter(s => s.category === 'hinged-window');
         hingedBody.innerHTML = hingedList.map(s => `
           <tr class="hover:bg-slate-50">
-            <td class="py-1.5 px-2 font-bold"><input type="text" value="${s.name}" onchange="updateSystem(${s.id}, 'name', this.value)" class="w-44 px-1.5 py-1 border rounded bg-white"></td>
-            <td class="py-1.5 px-2 font-mono"><input type="text" value="${s.frameCode}" onchange="updateSystem(${s.id}, 'frameCode', this.value)" class="w-32 px-1 py-0.5 border rounded"></td>
-            <td class="py-1.5 px-2 font-mono"><input type="text" value="${s.sashCode}" onchange="updateSystem(${s.id}, 'sashCode', this.value)" class="w-32 px-1 py-0.5 border rounded font-bold"></td>
-            <td class="py-1.5 px-2 font-mono"><input type="text" value="${s.beadCode}" onchange="updateSystem(${s.id}, 'beadCode', this.value)" class="w-28 px-1 py-0.5 border rounded font-bold"></td>
+            <td class="py-1.5 px-2 font-bold"><input type="text" value="${getSysName(s)}" onchange="updateSystem(${s.id}, '${currentLang === 'ar' ? 'name_ar' : 'name_en'}', this.value)" class="w-44 px-1.5 py-1 border rounded bg-white"></td>
+            <td class="py-1.5 px-2 font-mono"><input type="text" value="${getSysFrame(s)}" onchange="updateSystem(${s.id}, '${currentLang === 'ar' ? 'frameCode_ar' : 'frameCode_en'}', this.value)" class="w-32 px-1 py-0.5 border rounded"></td>
+            <td class="py-1.5 px-2 font-mono"><input type="text" value="${getSysSash(s)}" onchange="updateSystem(${s.id}, '${currentLang === 'ar' ? 'sashCode_ar' : 'sashCode_en'}', this.value)" class="w-32 px-1 py-0.5 border rounded font-bold"></td>
+            <td class="py-1.5 px-2 font-mono"><input type="text" value="${getSysBead(s)}" onchange="updateSystem(${s.id}, '${currentLang === 'ar' ? 'beadCode_ar' : 'beadCode_en'}', this.value)" class="w-28 px-1 py-0.5 border rounded font-bold"></td>
             <td class="py-1.5 px-2 text-center"><input type="number" value="${s.sashWidth}" onchange="updateSystem(${s.id}, 'sashWidth', +this.value)" class="w-14 px-1 py-0.5 border rounded text-center font-mono font-bold"></td>
             <td class="py-1.5 px-2 text-center"><input type="number" value="${s.widthDeduction}" onchange="updateSystem(${s.id}, 'widthDeduction', +this.value)" class="w-14 px-1 py-0.5 border rounded text-center font-mono font-bold"></td>
             <td class="py-1.5 px-2 text-center"><input type="number" value="${s.heightDeduction}" onchange="updateSystem(${s.id}, 'heightDeduction', +this.value)" class="w-14 px-1 py-0.5 border rounded text-center font-mono font-bold"></td>
@@ -1071,11 +1478,11 @@
         const doorList = systems.filter(s => s.category === 'hinged-door');
         doorBody.innerHTML = doorList.map(s => `
           <tr class="hover:bg-slate-50">
-            <td class="py-1.5 px-2 font-bold"><input type="text" value="${s.name}" onchange="updateSystem(${s.id}, 'name', this.value)" class="w-44 px-1.5 py-1 border rounded bg-white"></td>
-            <td class="py-1.5 px-2 font-mono"><input type="text" value="${s.frameCode}" onchange="updateSystem(${s.id}, 'frameCode', this.value)" class="w-32 px-1 py-0.5 border rounded"></td>
-            <td class="py-1.5 px-2 font-mono"><input type="text" value="${s.doorStileCode}" onchange="updateSystem(${s.id}, 'doorStileCode', this.value)" class="w-32 px-1 py-0.5 border rounded font-bold"></td>
-            <td class="py-1.5 px-2 font-mono"><input type="text" value="${s.doorBottomRailCode}" onchange="updateSystem(${s.id}, 'doorBottomRailCode', this.value)" class="w-32 px-1 py-0.5 border rounded font-bold"></td>
-            <td class="py-1.5 px-2 font-mono"><input type="text" value="${s.beadCode}" onchange="updateSystem(${s.id}, 'beadCode', this.value)" class="w-24 px-1 py-0.5 border rounded"></td>
+            <td class="py-1.5 px-2 font-bold"><input type="text" value="${getSysName(s)}" onchange="updateSystem(${s.id}, '${currentLang === 'ar' ? 'name_ar' : 'name_en'}', this.value)" class="w-44 px-1.5 py-1 border rounded bg-white"></td>
+            <td class="py-1.5 px-2 font-mono"><input type="text" value="${getSysFrame(s)}" onchange="updateSystem(${s.id}, '${currentLang === 'ar' ? 'frameCode_ar' : 'frameCode_en'}', this.value)" class="w-32 px-1 py-0.5 border rounded"></td>
+            <td class="py-1.5 px-2 font-mono"><input type="text" value="${getSysDoorStile(s)}" onchange="updateSystem(${s.id}, '${currentLang === 'ar' ? 'doorStileCode_ar' : 'doorStileCode_en'}', this.value)" class="w-32 px-1 py-0.5 border rounded font-bold"></td>
+            <td class="py-1.5 px-2 font-mono"><input type="text" value="${getSysDoorBot(s)}" onchange="updateSystem(${s.id}, '${currentLang === 'ar' ? 'doorBottomRailCode_ar' : 'doorBottomRailCode_en'}', this.value)" class="w-32 px-1 py-0.5 border rounded font-bold"></td>
+            <td class="py-1.5 px-2 font-mono"><input type="text" value="${getSysBead(s)}" onchange="updateSystem(${s.id}, '${currentLang === 'ar' ? 'beadCode_ar' : 'beadCode_en'}', this.value)" class="w-24 px-1 py-0.5 border rounded"></td>
             <td class="py-1.5 px-2 text-center"><input type="number" value="${s.doorStileWidth}" onchange="updateSystem(${s.id}, 'doorStileWidth', +this.value)" class="w-14 px-1 py-0.5 border rounded text-center font-mono font-bold"></td>
             <td class="py-1.5 px-2 text-center"><input type="number" value="${s.widthDeduction}" onchange="updateSystem(${s.id}, 'widthDeduction', +this.value)" class="w-14 px-1 py-0.5 border rounded text-center font-mono font-bold"></td>
             <td class="py-1.5 px-2 text-center"><input type="number" value="${s.heightDeduction}" onchange="updateSystem(${s.id}, 'heightDeduction', +this.value)" class="w-14 px-1 py-0.5 border rounded text-center font-mono font-bold"></td>
@@ -1089,9 +1496,9 @@
         const fixedList = systems.filter(s => s.category === 'fixed');
         fixedBody.innerHTML = fixedList.map(s => `
           <tr class="hover:bg-slate-50">
-            <td class="py-1.5 px-2 font-bold"><input type="text" value="${s.name}" onchange="updateSystem(${s.id}, 'name', this.value)" class="w-48 px-1.5 py-1 border rounded bg-white"></td>
-            <td class="py-1.5 px-2 font-mono"><input type="text" value="${s.frameCode}" onchange="updateSystem(${s.id}, 'frameCode', this.value)" class="w-36 px-1 py-0.5 border rounded"></td>
-            <td class="py-1.5 px-2 font-mono"><input type="text" value="${s.beadCode}" onchange="updateSystem(${s.id}, 'beadCode', this.value)" class="w-32 px-1 py-0.5 border rounded font-bold"></td>
+            <td class="py-1.5 px-2 font-bold"><input type="text" value="${getSysName(s)}" onchange="updateSystem(${s.id}, '${currentLang === 'ar' ? 'name_ar' : 'name_en'}', this.value)" class="w-48 px-1.5 py-1 border rounded bg-white"></td>
+            <td class="py-1.5 px-2 font-mono"><input type="text" value="${getSysFrame(s)}" onchange="updateSystem(${s.id}, '${currentLang === 'ar' ? 'frameCode_ar' : 'frameCode_en'}', this.value)" class="w-36 px-1 py-0.5 border rounded"></td>
+            <td class="py-1.5 px-2 font-mono"><input type="text" value="${getSysBead(s)}" onchange="updateSystem(${s.id}, '${currentLang === 'ar' ? 'beadCode_ar' : 'beadCode_en'}', this.value)" class="w-32 px-1 py-0.5 border rounded font-bold"></td>
             <td class="py-1.5 px-2 text-center"><input type="number" value="${s.frameThickness}" onchange="updateSystem(${s.id}, 'frameThickness', +this.value)" class="w-16 px-1 py-0.5 border rounded text-center font-mono font-bold"></td>
             <td class="py-1.5 px-2 text-center"><input type="number" value="${s.glassPocketDepth}" onchange="updateSystem(${s.id}, 'glassPocketDepth', +this.value)" class="w-16 px-1 py-0.5 border rounded text-center font-mono font-bold"></td>
             <td class="py-1.5 px-2 text-center"><input type="number" value="${s.glassClearance}" onchange="updateSystem(${s.id}, 'glassClearance', +this.value)" class="w-16 px-1 py-0.5 border rounded text-center font-mono font-bold"></td>
@@ -1116,11 +1523,16 @@
         systems.push({
           id: nextSystemId++,
           category: 'sliding',
-          name: `Custom Sliding #${idx}`,
-          frameCode: 'FR-CUSTOM',
-          sideStileCode: 'SA-SIDE-C',
-          interlockCode: 'SA-INTER-C',
-          railCode: 'SA-RAIL-C',
+          name_ar: `نظام سحاب مخصص #${idx}`,
+          name_en: `Custom Sliding #${idx}`,
+          frameCode_ar: 'حلق مخصص (FR-C)',
+          frameCode_en: 'Custom Frame (FR-C)',
+          sideStileCode_ar: 'درفة جنب مخصصة (SA-S-C)',
+          sideStileCode_en: 'Custom Side Stile (SA-S-C)',
+          interlockCode_ar: 'شنكل مخصص (SA-I-C)',
+          interlockCode_en: 'Custom Interlock (SA-I-C)',
+          railCode_ar: 'كعب مخصص (SA-R-C)',
+          railCode_en: 'Custom Rail (SA-R-C)',
           frameThickness: 45,
           sashWidth: 65,
           heightClearance: 75,
@@ -1133,10 +1545,14 @@
         systems.push({
           id: nextSystemId++,
           category: 'hinged-window',
-          name: `Custom Casement #${idx}`,
-          frameCode: 'FR-HINGE-C',
-          sashCode: 'SA-HINGE-C',
-          beadCode: 'BD-20',
+          name_ar: `مفصلي مخصص #${idx}`,
+          name_en: `Custom Casement #${idx}`,
+          frameCode_ar: 'حلق مفصلي (FR-H-C)',
+          frameCode_en: 'Casement Frame (FR-H-C)',
+          sashCode_ar: 'درفة مفصلي (SA-H-C)',
+          sashCode_en: 'Casement Sash (SA-H-C)',
+          beadCode_ar: 'باكتة زجاج (BD-20)',
+          beadCode_en: 'Glass Bead (BD-20)',
           frameThickness: 50,
           sashWidth: 68,
           widthDeduction: 86,
@@ -1149,11 +1565,16 @@
         systems.push({
           id: nextSystemId++,
           category: 'hinged-door',
-          name: `Custom Door #${idx}`,
-          frameCode: 'DFR-DOOR-C',
-          doorStileCode: 'DST-DOOR-C',
-          doorBottomRailCode: 'DBOT-DOOR-C',
-          beadCode: 'BD-20',
+          name_ar: `باب مخصص #${idx}`,
+          name_en: `Custom Door #${idx}`,
+          frameCode_ar: 'حلق باب (DFR-C)',
+          frameCode_en: 'Door Frame (DFR-C)',
+          doorStileCode_ar: 'قائم باب (DST-C)',
+          doorStileCode_en: 'Door Stile (DST-C)',
+          doorBottomRailCode_ar: 'كعب باب (DBOT-C)',
+          doorBottomRailCode_en: 'Door Bottom Rail (DBOT-C)',
+          beadCode_ar: 'باكتة زجاج (BD-20)',
+          beadCode_en: 'Glass Bead (BD-20)',
           frameThickness: 50,
           doorStileWidth: 85,
           widthDeduction: 100,
@@ -1166,9 +1587,12 @@
         systems.push({
           id: nextSystemId++,
           category: 'fixed',
-          name: `Custom Fixed #${idx}`,
-          frameCode: 'FR-FIXED-C',
-          beadCode: 'BD-20',
+          name_ar: `ثابت مخصص #${idx}`,
+          name_en: `Custom Fixed #${idx}`,
+          frameCode_ar: 'حلق ثابت (FR-FIX-C)',
+          frameCode_en: 'Fixed Frame (FR-FIX-C)',
+          beadCode_ar: 'باكتة زجاج (BD-20)',
+          beadCode_en: 'Glass Bead (BD-20)',
           frameThickness: 45,
           glassPocketDepth: 16,
           glassClearance: 4,
@@ -1181,7 +1605,7 @@
     }
 
     function removeSystem(id) {
-      if (systems.length <= 1) { alert('يجب الإبقاء على سيستم واحد على الأقل.'); return; }
+      if (systems.length <= 1) { alert('Keep at least 1 system.'); return; }
       systems = systems.filter(s => s.id !== id);
       renderSystemsTable();
       renderWindowsSchedule();
@@ -1189,7 +1613,7 @@
     }
 
     // =========================================================================
-    // RECALCULATE PARTS WITH STRICT PER-SYSTEM ARCHITECTURE
+    // RECALCULATE PARTS WITH STRICT PER-SYSTEM ARCHITECTURE & DYNAMIC LABELS
     // =========================================================================
     function recalculateAllPartsFromWindows() {
       let newParts = [];
@@ -1205,20 +1629,20 @@
       };
 
       systems.forEach(s => {
-        addProfile(s.frameCode, 'frame', s.frameThickness, s.scrap45);
+        addProfile(getSysFrame(s), 'frame', s.frameThickness, s.scrap45);
         if (s.category === 'sliding') {
-          addProfile(s.sideStileCode, 'sash', s.sashWidth, s.scrap45);
-          addProfile(s.interlockCode, 'sash', s.sashWidth, s.scrap45);
-          addProfile(s.railCode, 'sash', s.sashWidth, s.scrap45);
+          addProfile(getSysSide(s), 'sash', s.sashWidth, s.scrap45);
+          addProfile(getSysInter(s), 'sash', s.sashWidth, s.scrap45);
+          addProfile(getSysRail(s), 'sash', s.sashWidth, s.scrap45);
         } else if (s.category === 'hinged-window') {
-          addProfile(s.sashCode, 'sash', s.sashWidth, s.scrap45);
-          addProfile(s.beadCode, 'bead', 20, 15);
+          addProfile(getSysSash(s), 'sash', s.sashWidth, s.scrap45);
+          addProfile(getSysBead(s), 'bead', 20, 15);
         } else if (s.category === 'hinged-door') {
-          addProfile(s.doorStileCode, 'sash', s.doorStileWidth, s.scrap45);
-          addProfile(s.doorBottomRailCode, 'sash', 120, s.scrap45);
-          addProfile(s.beadCode, 'bead', 20, 15);
+          addProfile(getSysDoorStile(s), 'sash', s.doorStileWidth, s.scrap45);
+          addProfile(getSysDoorBot(s), 'sash', 120, s.scrap45);
+          addProfile(getSysBead(s), 'bead', 20, 15);
         } else if (s.category === 'fixed') {
-          addProfile(s.beadCode, 'bead', 20, 15);
+          addProfile(getSysBead(s), 'bead', 20, 15);
         }
       });
       profiles = syncProfiles;
@@ -1235,82 +1659,82 @@
 
         // 1. SLIDING UNITS
         if (unit.type.startsWith('sliding')) {
-          const frameProf = getProf(sys.frameCode);
-          const sideProf = getProf(sys.sideStileCode);
-          const interProf = getProf(sys.interlockCode);
-          const railProf = getProf(sys.railCode);
+          const frameProf = getProf(getSysFrame(sys));
+          const sideProf = getProf(getSysSide(sys));
+          const interProf = getProf(getSysInter(sys));
+          const railProf = getProf(getSysRail(sys));
 
-          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProf.id, dimType: 'W', label: `${code} - حلق أفقي`, length: W, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProf.id, dimType: 'H', label: `${code} - حلق رأسي`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProf.id, dimType: 'W', label: `${code} - ${currentLang === 'ar' ? 'حلق أفقي' : 'Frame Horiz'}`, length: W, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProf.id, dimType: 'H', label: `${code} - ${currentLang === 'ar' ? 'حلق رأسي' : 'Frame Vert'}`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 45 });
 
           if (unit.type === 'sliding-2') {
-            newParts.push({ id: partCounter++, unitCode: code, profileId: sideProf.id, dimType: 'H', label: `${code} - درفة جنب`, length: cascade.sashH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-            newParts.push({ id: partCounter++, unitCode: code, profileId: interProf.id, dimType: 'H', label: `${code} - درفة شنكل`, length: cascade.sashH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-            newParts.push({ id: partCounter++, unitCode: code, profileId: railProf.id, dimType: 'W', label: `${code} - درفة كعب`, length: cascade.sashW, qty: 4 * qty, startAngle: 45, endAngle: 45 });
+            newParts.push({ id: partCounter++, unitCode: code, profileId: sideProf.id, dimType: 'H', label: `${code} - ${currentLang === 'ar' ? 'درفة جنب' : 'Side Stile'}`, length: cascade.sashH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+            newParts.push({ id: partCounter++, unitCode: code, profileId: interProf.id, dimType: 'H', label: `${code} - ${currentLang === 'ar' ? 'درفة شنكل' : 'Interlock'}`, length: cascade.sashH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+            newParts.push({ id: partCounter++, unitCode: code, profileId: railProf.id, dimType: 'W', label: `${code} - ${currentLang === 'ar' ? 'درفة كعب' : 'Rail'}`, length: cascade.sashW, qty: 4 * qty, startAngle: 45, endAngle: 45 });
           } else if (unit.type === 'sliding-3') {
-            newParts.push({ id: partCounter++, unitCode: code, profileId: sideProf.id, dimType: 'H', label: `${code} - درفة جنب`, length: cascade.sashH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-            newParts.push({ id: partCounter++, unitCode: code, profileId: interProf.id, dimType: 'H', label: `${code} - درفة شنكل`, length: cascade.sashH, qty: 4 * qty, startAngle: 45, endAngle: 45 });
-            newParts.push({ id: partCounter++, unitCode: code, profileId: railProf.id, dimType: 'W', label: `${code} - درفة كعب`, length: cascade.sashW, qty: 6 * qty, startAngle: 45, endAngle: 45 });
+            newParts.push({ id: partCounter++, unitCode: code, profileId: sideProf.id, dimType: 'H', label: `${code} - ${currentLang === 'ar' ? 'درفة جنب' : 'Side Stile'}`, length: cascade.sashH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+            newParts.push({ id: partCounter++, unitCode: code, profileId: interProf.id, dimType: 'H', label: `${code} - ${currentLang === 'ar' ? 'درفة شنكل' : 'Interlock'}`, length: cascade.sashH, qty: 4 * qty, startAngle: 45, endAngle: 45 });
+            newParts.push({ id: partCounter++, unitCode: code, profileId: railProf.id, dimType: 'W', label: `${code} - ${currentLang === 'ar' ? 'درفة كعب' : 'Rail'}`, length: cascade.sashW, qty: 6 * qty, startAngle: 45, endAngle: 45 });
           } else if (unit.type === 'sliding-4') {
-            newParts.push({ id: partCounter++, unitCode: code, profileId: sideProf.id, dimType: 'H', label: `${code} - درفة جنب`, length: cascade.sashH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-            newParts.push({ id: partCounter++, unitCode: code, profileId: interProf.id, dimType: 'H', label: `${code} - درفة شنكل`, length: cascade.sashH, qty: 4 * qty, startAngle: 45, endAngle: 45 });
-            newParts.push({ id: partCounter++, unitCode: code, profileId: railProf.id, dimType: 'W', label: `${code} - درفة كعب`, length: cascade.sashW, qty: 8 * qty, startAngle: 45, endAngle: 45 });
+            newParts.push({ id: partCounter++, unitCode: code, profileId: sideProf.id, dimType: 'H', label: `${code} - ${currentLang === 'ar' ? 'درفة جنب' : 'Side Stile'}`, length: cascade.sashH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+            newParts.push({ id: partCounter++, unitCode: code, profileId: interProf.id, dimType: 'H', label: `${code} - ${currentLang === 'ar' ? 'درفة شنكل' : 'Interlock'}`, length: cascade.sashH, qty: 4 * qty, startAngle: 45, endAngle: 45 });
+            newParts.push({ id: partCounter++, unitCode: code, profileId: railProf.id, dimType: 'W', label: `${code} - ${currentLang === 'ar' ? 'درفة كعب' : 'Rail'}`, length: cascade.sashW, qty: 8 * qty, startAngle: 45, endAngle: 45 });
           }
         }
 
         // 2. HINGED WINDOWS
         else if (unit.type === 'hinged-window') {
-          const frameProf = getProf(sys.frameCode);
-          const sashProf = getProf(sys.sashCode);
-          const beadProf = getProf(sys.beadCode);
+          const frameProf = getProf(getSysFrame(sys));
+          const sashProf = getProf(getSysSash(sys));
+          const beadProf = getProf(getSysBead(sys));
 
-          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProf.id, dimType: 'W', label: `${code} - حلق مفصلي أفقي`, length: W, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProf.id, dimType: 'H', label: `${code} - حلق مفصلي رأسي`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProf.id, dimType: 'W', label: `${code} - ${currentLang === 'ar' ? 'حلق مفصلي أفقي' : 'Casement Frame Horiz'}`, length: W, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProf.id, dimType: 'H', label: `${code} - ${currentLang === 'ar' ? 'حلق مفصلي رأسي' : 'Casement Frame Vert'}`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 45 });
 
-          newParts.push({ id: partCounter++, unitCode: code, profileId: sashProf.id, dimType: 'W', label: `${code} - درفة مفصلي عرضي`, length: cascade.sashW, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-          newParts.push({ id: partCounter++, unitCode: code, profileId: sashProf.id, dimType: 'H', label: `${code} - درفة مفصلي رأسي`, length: cascade.sashH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: sashProf.id, dimType: 'W', label: `${code} - ${currentLang === 'ar' ? 'درفة مفصلي عرضي' : 'Casement Sash Horiz'}`, length: cascade.sashW, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: sashProf.id, dimType: 'H', label: `${code} - ${currentLang === 'ar' ? 'درفة مفصلي رأسي' : 'Casement Sash Vert'}`, length: cascade.sashH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
 
-          newParts.push({ id: partCounter++, unitCode: code, profileId: beadProf.id, dimType: 'W', label: `${code} - باكتة زجاج عرضي`, length: cascade.glassW, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-          newParts.push({ id: partCounter++, unitCode: code, profileId: beadProf.id, dimType: 'H', label: `${code} - باكتة زجاج رأسي`, length: cascade.glassH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: beadProf.id, dimType: 'W', label: `${code} - ${currentLang === 'ar' ? 'باكتة زجاج عرضي' : 'Glass Bead Horiz'}`, length: cascade.glassW, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: beadProf.id, dimType: 'H', label: `${code} - ${currentLang === 'ar' ? 'باكتة زجاج رأسي' : 'Glass Bead Vert'}`, length: cascade.glassH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
         }
 
         // 3. HINGED DOORS
         else if (unit.type === 'hinged-door') {
-          const frameProf = getProf(sys.frameCode);
-          const stileProf = getProf(sys.doorStileCode);
-          const botRailProf = getProf(sys.doorBottomRailCode);
-          const beadProf = getProf(sys.beadCode);
+          const frameProf = getProf(getSysFrame(sys));
+          const stileProf = getProf(getSysDoorStile(sys));
+          const botRailProf = getProf(getSysDoorBot(sys));
+          const beadProf = getProf(getSysBead(sys));
 
-          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProf.id, dimType: 'W', label: `${code} - حلق باب علوي`, length: W, qty: 1 * qty, startAngle: 45, endAngle: 45 });
-          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProf.id, dimType: 'H', label: `${code} - حلق باب جانبي`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 90 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProf.id, dimType: 'W', label: `${code} - ${currentLang === 'ar' ? 'حلق باب علوي' : 'Door Top Frame'}`, length: W, qty: 1 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProf.id, dimType: 'H', label: `${code} - ${currentLang === 'ar' ? 'حلق باب جانبي' : 'Door Side Frame'}`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 90 });
 
-          newParts.push({ id: partCounter++, unitCode: code, profileId: stileProf.id, dimType: 'H', label: `${code} - قائم باب جانبي`, length: cascade.sashH, qty: 2 * qty, startAngle: 90, endAngle: 90 });
-          newParts.push({ id: partCounter++, unitCode: code, profileId: stileProf.id, dimType: 'W', label: `${code} - رأس باب علوي`, length: cascade.sashW, qty: 1 * qty, startAngle: 90, endAngle: 90 });
-          newParts.push({ id: partCounter++, unitCode: code, profileId: botRailProf.id, dimType: 'W', label: `${code} - كعب باب سفلي`, length: cascade.sashW, qty: 1 * qty, startAngle: 90, endAngle: 90 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: stileProf.id, dimType: 'H', label: `${code} - ${currentLang === 'ar' ? 'قائم باب جانبي' : 'Door Stile'}`, length: cascade.sashH, qty: 2 * qty, startAngle: 90, endAngle: 90 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: stileProf.id, dimType: 'W', label: `${code} - ${currentLang === 'ar' ? 'رأس باب علوي' : 'Door Top Rail'}`, length: cascade.sashW, qty: 1 * qty, startAngle: 90, endAngle: 90 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: botRailProf.id, dimType: 'W', label: `${code} - ${currentLang === 'ar' ? 'كعب باب سفلي' : 'Door Bottom Rail'}`, length: cascade.sashW, qty: 1 * qty, startAngle: 90, endAngle: 90 });
 
-          newParts.push({ id: partCounter++, unitCode: code, profileId: beadProf.id, dimType: 'W', label: `${code} - باكتة زجاج باب`, length: cascade.glassW, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-          newParts.push({ id: partCounter++, unitCode: code, profileId: beadProf.id, dimType: 'H', label: `${code} - باكتة زجاج باب`, length: cascade.glassH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: beadProf.id, dimType: 'W', label: `${code} - ${currentLang === 'ar' ? 'باكتة زجاج باب عرضي' : 'Door Bead Horiz'}`, length: cascade.glassW, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: beadProf.id, dimType: 'H', label: `${code} - ${currentLang === 'ar' ? 'باكتة زجاج باب رأسي' : 'Door Bead Vert'}`, length: cascade.glassH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
         }
 
         // 4. FIXED WINDOWS (NO SASH - ONLY FRAME + BEAD)
         else {
-          const frameProf = getProf(sys.frameCode);
-          const beadProf = getProf(sys.beadCode);
+          const frameProf = getProf(getSysFrame(sys));
+          const beadProf = getProf(getSysBead(sys));
 
-          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProf.id, dimType: 'W', label: `${code} - حلق ثابت أفقي`, length: W, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProf.id, dimType: 'H', label: `${code} - حلق ثابت رأسي`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProf.id, dimType: 'W', label: `${code} - ${currentLang === 'ar' ? 'حلق ثابت أفقي' : 'Fixed Frame Horiz'}`, length: W, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: frameProf.id, dimType: 'H', label: `${code} - ${currentLang === 'ar' ? 'حلق ثابت رأسي' : 'Fixed Frame Vert'}`, length: H, qty: 2 * qty, startAngle: 45, endAngle: 45 });
 
-          newParts.push({ id: partCounter++, unitCode: code, profileId: beadProf.id, dimType: 'W', label: `${code} - باكتة زجاج ثابت أفقي`, length: cascade.glassW, qty: 2 * qty, startAngle: 45, endAngle: 45 });
-          newParts.push({ id: partCounter++, unitCode: code, profileId: beadProf.id, dimType: 'H', label: `${code} - باكتة زجاج ثابت رأسي`, length: cascade.glassH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: beadProf.id, dimType: 'W', label: `${code} - ${currentLang === 'ar' ? 'باكتة زجاج ثابت أفقي' : 'Fixed Bead Horiz'}`, length: cascade.glassW, qty: 2 * qty, startAngle: 45, endAngle: 45 });
+          newParts.push({ id: partCounter++, unitCode: code, profileId: beadProf.id, dimType: 'H', label: `${code} - ${currentLang === 'ar' ? 'باكتة زجاج ثابت رأسي' : 'Fixed Bead Vert'}`, length: cascade.glassH, qty: 2 * qty, startAngle: 45, endAngle: 45 });
         }
 
         // Glass Schedule
         newGlass.push({
           unitCode: code,
           unitName: unit.code,
-          systemName: sys.name,
+          systemName: getSysName(sys),
           sashType: cascade.sashTypeLabel,
-          sashSize: cascade.numSashes > 0 ? `${cascade.sashW} × ${cascade.sashH} mm` : 'Fixed Frame (No Sash)',
+          sashSize: cascade.numSashes > 0 ? `${cascade.sashW} × ${cascade.sashH} mm` : (currentLang === 'ar' ? 'بدون درف (حلق مباشر)' : 'Fixed Frame (No Sash)'),
           glassW: cascade.glassW,
           glassH: cascade.glassH,
           qtyPanes: cascade.panesPerUnit,
@@ -1413,7 +1837,7 @@
     }
 
     function clearOffcuts() {
-      if (confirm('مسح كافة الفضلات من المخزون؟')) { offcuts = []; renderOffcuts(); }
+      if (confirm('Clear all offcuts?')) { offcuts = []; renderOffcuts(); }
     }
 
     function runAdvancedOptimization() {
@@ -1425,7 +1849,7 @@
 
       recalculateAllPartsFromWindows();
 
-      if (parts.length === 0) { alert('يرجى إدخال نافذة واحدة على الأقل.'); return; }
+      if (parts.length === 0) { alert(currentLang === 'ar' ? 'يرجى إدخال نافذة واحدة على الأقل.' : 'Please add at least 1 unit.'); return; }
 
       let profileResults = [];
 
@@ -1457,7 +1881,7 @@
           const profileOffcuts = offcuts.filter(o => o.profileId === profile.id);
           profileOffcuts.forEach(o => {
             for (let i = 0; i < o.qty; i++) {
-              availableOffcuts.push({ id: o.id, length: o.length, startAngle: o.startAngle || 90, endAngle: o.endAngle || 90, isOffcut: true, location: o.location || 'Offcut' });
+              availableOffcuts.push({ id: o.id, length: o.length, startAngle: o.startAngle || 90, endAngle: o.endAngle || 90, isOffcut: true, location: o.location || 'Stock' });
             }
           });
           availableOffcuts.sort((a, b) => a.length - b.length);
@@ -1672,7 +2096,7 @@
         segmentsHtml += `
           <div style="width: ${remainPct}%; min-width: 32px;" class="h-full ${isUseful ? 'cad-offcut-pattern text-slate-950' : 'bg-slate-200 text-slate-600'} border-r-2 border-slate-900 flex flex-col items-center justify-center text-center px-1 font-mono font-bold flex-shrink-0">
             <span class="text-[10px] font-black leading-none">${bar.remainingLength}</span>
-            <span class="text-[8px] font-sans leading-none mt-0.5">${isUseful ? 'فضلة' : 'هالك'}</span>
+            <span class="text-[8px] font-sans leading-none mt-0.5">${isUseful ? (currentLang === 'ar' ? 'فضلة' : 'Offcut') : (currentLang === 'ar' ? 'هالك' : 'Scrap')}</span>
           </div>
         `;
       }
@@ -1685,12 +2109,13 @@
     }
 
     // =========================================================================
-    // RENDER WORKSHOP TECHNICIAN SHEET (A4 DRAFTING + INTEGRATED TABLES)
+    // RENDER WORKSHOP TECHNICIAN SHEET (BILINGUAL A4 DRAFTING)
     // =========================================================================
     function renderWorkshopSheet(allBars, kerf, trimCut, minOffcut) {
       const container = document.getElementById('technicianSheetContainer');
       if (!container) return;
 
+      const t = i18n[currentLang];
       const projName = document.getElementById('projectInputName')?.value || currentProject.name || 'Project-01';
       const clientName = document.getElementById('projectInputClient')?.value || currentProject.client || '—';
       const dateStr = new Date().toISOString().slice(0, 10);
@@ -1701,7 +2126,7 @@
       document.getElementById('printTimestamp').textContent = new Date().toISOString().replace('T', ' ').slice(0, 19);
 
       if (allBars.length === 0) {
-        container.innerHTML = `<p class="text-center py-12 text-slate-400 text-xs">لا توجد بيانات قص</p>`;
+        container.innerHTML = `<p class="text-center py-12 text-slate-400 text-xs">${t.emptySheetMsg}</p>`;
         return;
       }
 
@@ -1729,44 +2154,47 @@
           
           <div class="lg:col-span-7 border-2 border-slate-900 rounded p-2 bg-white space-y-1 tech-card">
             <div class="flex items-center justify-between border-b border-slate-900 pb-1 text-xs font-bold">
-              <span class="text-slate-900">1. قائمة النوافذ الداخلة في أمر القص والتفصيل</span>
+              <span class="text-slate-900">${t.sec1Title}</span>
               <span class="font-mono">COUNT: ${windowUnits.reduce((s, u) => s + (u.qty || 1), 0)} UNITS</span>
             </div>
             
             <table class="w-full text-xs text-right border border-slate-300 font-mono">
               <thead>
                 <tr class="bg-slate-100 text-slate-900 border-b border-slate-300 font-bold text-[10px]">
-                  <th class="py-0.5 px-1.5 font-mono">Code</th>
-                  <th class="py-0.5 px-1.5 text-center font-mono">Frame (W × H)</th>
-                  <th class="py-0.5 px-1.5 text-center font-mono">Qty</th>
-                  <th class="py-0.5 px-1.5 font-sans">السيستم / القطاع</th>
+                  <th class="py-0.5 px-1.5 font-mono">${t.th_code}</th>
+                  <th class="py-0.5 px-1.5 text-center font-mono">${t.th_frameSize}</th>
+                  <th class="py-0.5 px-1.5 text-center font-mono">${t.th_qty}</th>
+                  <th class="py-0.5 px-1.5 font-sans">${t.th_matchingSystem}</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-200 text-[10px]">
-                ${windowUnits.map(u => `
-                  <tr>
-                    <td class="py-0.5 px-1.5 font-bold">${u.code}</td>
-                    <td class="py-0.5 px-1.5 text-center font-bold">${u.width} × ${u.height} mm</td>
-                    <td class="py-0.5 px-1.5 text-center font-bold">${u.qty}</td>
-                    <td class="py-0.5 px-1.5 font-sans text-[10px]">${systems.find(s => s.id === u.systemId)?.name || '—'}</td>
-                  </tr>
-                `).join('')}
+                ${windowUnits.map(u => {
+                  const sysObj = systems.find(s => s.id === u.systemId);
+                  return `
+                    <tr>
+                      <td class="py-0.5 px-1.5 font-bold">${u.code}</td>
+                      <td class="py-0.5 px-1.5 text-center font-bold">${u.width} × ${u.height} mm</td>
+                      <td class="py-0.5 px-1.5 text-center font-bold">${u.qty}</td>
+                      <td class="py-0.5 px-1.5 font-sans text-[10px]">${sysObj ? getSysName(sysObj) : '—'}</td>
+                    </tr>
+                  `;
+                }).join('')}
               </tbody>
             </table>
           </div>
 
           <div class="lg:col-span-5 border-2 border-slate-900 rounded p-2 bg-white space-y-1 tech-card">
             <div class="flex items-center justify-between border-b border-slate-900 pb-1 text-xs font-bold">
-              <span class="text-slate-900">2. إذن سحب الأعواد من المستودع</span>
+              <span class="text-slate-900">${t.sec2Title}</span>
               <span class="font-mono">TOTAL: ${totalNewBarsAll} BARS</span>
             </div>
 
             <table class="w-full text-xs text-right border border-slate-300 font-mono">
               <thead>
                 <tr class="bg-slate-100 text-slate-900 border-b border-slate-300 font-bold text-[10px]">
-                  <th class="py-0.5 px-1.5 font-sans">القطاع المطلوب</th>
-                  <th class="py-0.5 px-1.5 text-center font-mono">New Bars</th>
-                  <th class="py-0.5 px-1.5 font-sans">الفضلات المطلوبة</th>
+                  <th class="py-0.5 px-1.5 font-sans">${t.th_targetProfile}</th>
+                  <th class="py-0.5 px-1.5 text-center font-mono">${t.newBars}</th>
+                  <th class="py-0.5 px-1.5 font-sans">${t.reqOffcuts}</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-200 text-[10px]">
@@ -1774,7 +2202,7 @@
                   <tr>
                     <td class="py-0.5 px-1.5 font-bold font-sans">${r.code}</td>
                     <td class="py-0.5 px-1.5 text-center font-bold">${r.newBars}</td>
-                    <td class="py-0.5 px-1.5 text-[9px] text-slate-700">
+                    <td class="py-0.5 px-1.5 text-[9px] text-slate-700 font-mono">
                       ${r.offcuts.length > 0 ? r.offcuts.map(o => `${o.length}mm`).join(', ') : '—'}
                     </td>
                   </tr>
@@ -1788,7 +2216,7 @@
         <!-- SECTION 2: 2D CAD CUTTING DIAGRAMS PER BAR (A4 COMPACT & CLEAN) -->
         <div class="space-y-3">
           <div class="border-b-2 border-slate-900 pb-1 flex items-center justify-between font-mono text-xs font-bold">
-            <span class="text-xs sm:text-sm text-slate-900 font-sans">3. خرائط ومخططات القص التنفيذية على المنشار (2D Bar Maps + Cut Schedule)</span>
+            <span class="text-xs sm:text-sm text-slate-900 font-sans">${t.sec3Title}</span>
             <span class="text-slate-600">KERF: ${kerf}mm | TRIM: ${trimCut}mm</span>
           </div>
       `;
@@ -1811,9 +2239,9 @@
                 <span class="text-slate-600 text-[11px]">(${bar.isOffcut ? 'Offcut: ' + bar.stockLength + ' mm' : 'Stock: ' + bar.stockLength + ' mm'})</span>
               </div>
               <div class="text-[11px] text-slate-700 font-mono">
-                USED: <strong>${bar.usedLength} mm</strong> | 
-                REMAIN: <strong>${bar.remainingLength} mm</strong> 
-                (${isRemainUseful ? 'Offcut' : 'Scrap'})
+                ${t.used}: <strong>${bar.usedLength} mm</strong> | 
+                ${t.remain}: <strong>${bar.remainingLength} mm</strong> 
+                (${isRemainUseful ? t.offcutValid : t.scrap})
               </div>
             </div>
 
@@ -1827,12 +2255,12 @@
               <thead>
                 <tr class="bg-slate-100 text-slate-900 border-b border-slate-300 font-bold text-[10px]">
                   <th class="py-0.5 px-1.5 text-center w-6">#</th>
-                  <th class="py-0.5 px-1.5 font-sans">الوحدة ومسمى القطعة</th>
-                  <th class="py-0.5 px-1.5 text-center">Type</th>
-                  <th class="py-0.5 px-1.5 text-center text-xs font-black">Length (mm)</th>
-                  <th class="py-0.5 px-1.5 text-center">Angle 1</th>
-                  <th class="py-0.5 px-1.5 text-center">Angle 2</th>
-                  <th class="py-0.5 px-1.5 text-center w-12 font-sans">تم [✔]</th>
+                  <th class="py-0.5 px-1.5 font-sans">${t.th_partLabel}</th>
+                  <th class="py-0.5 px-1.5 text-center">${t.th_dimType}</th>
+                  <th class="py-0.5 px-1.5 text-center text-xs font-black">${t.th_length}</th>
+                  <th class="py-0.5 px-1.5 text-center">${t.th_angle1}</th>
+                  <th class="py-0.5 px-1.5 text-center">${t.th_angle2}</th>
+                  <th class="py-0.5 px-1.5 text-center w-12 font-sans">${t.doneCheck}</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-200 text-[10px]">
@@ -1872,25 +2300,25 @@
           <div class="flex flex-wrap items-center justify-between border-b-2 border-slate-900 pb-1 font-mono text-xs">
             <div class="flex items-center gap-2">
               <span class="w-2.5 h-2.5 bg-slate-900 inline-block rounded"></span>
-              <h3 class="font-sans text-xs sm:text-sm font-bold text-slate-900">4. كشف تفصيل ومقاسات ومساحات الزجاج (Glass Cutting Schedule)</h3>
+              <h3 class="font-sans text-xs sm:text-sm font-bold text-slate-900">${t.sec4Title}</h3>
             </div>
             <div class="text-xs text-slate-900 font-bold bg-slate-100 px-2 py-0.5 rounded border border-slate-300 font-mono">
-              TOTAL PANES: <strong>${totalPanesSum}</strong> | TOTAL AREA: <strong>${totalAreaSum} m²</strong>
+              ${t.totalPanesLabel}: <strong>${totalPanesSum}</strong> | ${t.totalAreaLabel}: <strong>${totalAreaSum} m²</strong>
             </div>
           </div>
 
           <table class="w-full text-xs text-right border border-slate-300 font-mono">
             <thead>
               <tr class="bg-slate-100 text-slate-900 border-b border-slate-300 font-bold text-[10px]">
-                <th class="py-0.5 px-1.5">Code</th>
-                <th class="py-0.5 px-1.5 font-sans">نوع الوحدة</th>
-                <th class="py-0.5 px-1.5 font-sans">السيستم</th>
-                <th class="py-0.5 px-1.5 text-center">Sash Size (Ws × Hs)</th>
-                <th class="py-0.5 px-1.5 text-center font-black text-xs bg-slate-200/60 border-x border-slate-300">Glass Cut (Wg × Hg)</th>
-                <th class="py-0.5 px-1.5 text-center">Panes</th>
-                <th class="py-0.5 px-1.5 text-center">Area / Pane (m²)</th>
-                <th class="py-0.5 px-1.5 text-center">Total Area (m²)</th>
-                <th class="py-0.5 px-1.5 text-center w-12 font-sans">تم [✔]</th>
+                <th class="py-0.5 px-1.5">${t.th_code}</th>
+                <th class="py-0.5 px-1.5 font-sans">${t.th_type}</th>
+                <th class="py-0.5 px-1.5 font-sans">${t.th_matchingSystem}</th>
+                <th class="py-0.5 px-1.5 text-center">${t.th_sashDetail}</th>
+                <th class="py-0.5 px-1.5 text-center font-black text-xs bg-slate-200/60 border-x border-slate-300">${t.th_glassDetail}</th>
+                <th class="py-0.5 px-1.5 text-center">${t.th_qty}</th>
+                <th class="py-0.5 px-1.5 text-center">${t.areaPerPane}</th>
+                <th class="py-0.5 px-1.5 text-center">${t.totArea}</th>
+                <th class="py-0.5 px-1.5 text-center w-12 font-sans">${t.doneCheck}</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-slate-200 text-[10px]">
@@ -1951,7 +2379,7 @@
         
         renderSavedProjectsList();
         updateSubtitleAndBadges();
-        if (notify) alert('تم حفظ المشروع بنجاح!');
+        if (notify) alert(currentLang === 'ar' ? 'تم حفظ المشروع بنجاح!' : 'Project saved successfully!');
       } catch (e) {
         console.error(e);
       }
@@ -1968,7 +2396,7 @@
       const keys = Object.keys(allProjects);
       if (countEl) countEl.textContent = keys.length;
       if (keys.length === 0) {
-        listEl.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">لا توجد مشاريع محفوظة</p>`;
+        listEl.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">${currentLang === 'ar' ? 'لا توجد مشاريع محفوظة' : 'No saved projects'}</p>`;
         return;
       }
 
@@ -1979,7 +2407,7 @@
             <p class="text-[10px] text-slate-500 font-mono">${allProjects[k].meta.client || '—'}</p>
           </div>
           <div class="flex items-center gap-1">
-            <button onclick="loadSavedProject('${encodeURIComponent(k)}')" class="px-2 py-0.5 bg-slate-900 text-white font-bold rounded">فتح</button>
+            <button onclick="loadSavedProject('${encodeURIComponent(k)}')" class="px-2 py-0.5 bg-slate-900 text-white font-bold rounded">${currentLang === 'ar' ? 'فتح' : 'Open'}</button>
             <button onclick="deleteSavedProject('${encodeURIComponent(k)}')" class="text-slate-400 hover:text-rose-600 p-1">✕</button>
           </div>
         </div>
@@ -2016,12 +2444,12 @@
       renderOffcuts();
       updateSubtitleAndBadges();
       switchTab('tab-windows');
-      alert(`تم فتح المشروع: ${currentProject.name}`);
+      alert(`${currentLang === 'ar' ? 'تم فتح المشروع:' : 'Opened project:'} ${currentProject.name}`);
     }
 
     function deleteSavedProject(encodedKey) {
       const key = decodeURIComponent(encodedKey);
-      if (confirm(`حذف المشروع: "${key}"؟`)) {
+      if (confirm(`${currentLang === 'ar' ? 'حذف المشروع:' : 'Delete project:'} "${key}"?`)) {
         let allProjects = JSON.parse(localStorage.getItem('aluminum_opt_cascade_projects') || '{}');
         delete allProjects[key];
         localStorage.setItem('aluminum_opt_cascade_projects', JSON.stringify(allProjects));
@@ -2030,7 +2458,7 @@
     }
 
     function createNewProject() {
-      if (confirm('إنشاء مشروع جديد ومسح البيانات الحالية؟')) {
+      if (confirm(currentLang === 'ar' ? 'إنشاء مشروع جديد ومسح البيانات الحالية؟' : 'Create new project and clear current data?')) {
         currentProject = { name: 'Project-' + Math.floor(Math.random() * 1000), client: '', notes: '', updatedAt: new Date().toISOString() };
         windowUnits = [{ id: 1, code: 'W-01', systemId: 1, type: 'sliding-2', width: 1200, height: 1200, qty: 1 }];
         offcuts = [];
@@ -2105,17 +2533,17 @@
             updateSubtitleAndBadges();
             saveCurrentProject(false);
             switchTab('tab-windows');
-            alert('تم استيراد المشروع بنجاح!');
+            alert(currentLang === 'ar' ? 'تم استيراد المشروع بنجاح!' : 'Project imported successfully!');
           }
         } catch(err) {
-          alert('خطأ في استيراد الملف: ' + err.message);
+          alert('Error importing JSON: ' + err.message);
         }
       };
       reader.readAsText(file);
     }
 
     function exportSheetToPDF() {
-      if (!lastOptimizationResult) { alert('يرجى تشغيل الحساب أولاً.'); return; }
+      if (!lastOptimizationResult) { alert(currentLang === 'ar' ? 'يرجى تشغيل الحساب أولاً.' : 'Please calculate schedule first.'); return; }
       switchTab('tab-sheet');
 
       const element = document.getElementById('printableSheetContent');
@@ -2140,7 +2568,7 @@
     }
 
     function exportToExcel() {
-      if (!lastOptimizationResult) { alert('يرجى تشغيل الحساب أولاً.'); return; }
+      if (!lastOptimizationResult) { alert(currentLang === 'ar' ? 'يرجى تشغيل الحساب أولاً.' : 'Please calculate schedule first.'); return; }
       const wb = XLSX.utils.book_new();
 
       let glassData = [
@@ -2214,6 +2642,7 @@
       document.getElementById('projectInputClient').value = currentProject.client || '';
       document.getElementById('projectInputNotes').value = currentProject.notes || '';
 
+      updateStaticUIText();
       renderSystemsTable();
       renderWindowsSchedule();
       recalculateAllPartsFromWindows();
